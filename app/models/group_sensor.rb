@@ -1,0 +1,2 @@
+class GroupSensor < ApplicationRecord
+end

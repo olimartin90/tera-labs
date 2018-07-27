@@ -1,0 +1,2 @@
+class SingleSensor < ApplicationRecord
+end
