@@ -7,12 +7,23 @@ Rails.application.routes.draw do
   # get '/signup' => 'users#new'
   # post '/users' => 'users#create'
 
-  root to: 'users#index'
+  # root to: 'users#index'
+  root to: 'site#home'
 
   # resources :users, only: [:new, :create, :show, :index] do
   #   resources :group_sensors, only: [:new, :create, :destroy] do
   #     resources :single_sensors, only: [:create, :edit, :update, :destroy]
   #     end
   # end
+
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:new, :create, :show, :index]
+        # resources :group_sensors, only: [:new, :create, :destroy] do
+        #   resources :single_sensors, only: [:create, :edit, :update, :destroy]
+        # end
+      
+    end
+  end
 
 end

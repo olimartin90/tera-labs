@@ -2,7 +2,29 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const axios = require('axios');
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: []
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:3001/api/v1/users")
+      .then(response => {
+        console.log(response);
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div className="App">

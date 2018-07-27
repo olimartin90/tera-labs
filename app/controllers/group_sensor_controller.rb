@@ -1,2 +1,0 @@
-class GroupSensorController < ApplicationController
-end
