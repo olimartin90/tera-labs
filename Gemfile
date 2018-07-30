@@ -45,4 +45,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # React on Rails
-gem 'react_on_rails'
+gem 'react_on_rails', '11.0.9'
