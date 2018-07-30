@@ -12,11 +12,11 @@ const salinity = [];
 const respiration = [];
 const ph = [];
 const potassium = [];
-const updateInterval = 2000;
+const updateInterval = 5000;
 //initial values
 let yValue1, yValue2, yValue3, yValue4, yValue5,
     yValue6, yValue7, yValue8, yValue9 = 0
-let xValue = 1304188200000;
+let xValue = 1532728195000;
 class GroupSensor extends Component {
   constructor() {
     super();
@@ -24,7 +24,7 @@ class GroupSensor extends Component {
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
   componentDidMount(){
-    this.updateChart(20);
+    this.updateChart(50);
     setInterval(this.updateChart, updateInterval);
   }
   toggleDataSeries(e) {
@@ -36,75 +36,47 @@ class GroupSensor extends Component {
     }
     this.chart.render();
   }
+  setSensor(sensor, x, y) {
+    sensor.push({
+      x: x,
+      y: y
+    });
+    if (sensor.length > 50 ) {
+      sensor.shift();
+    }
+  }
   updateChart(count) {
     count = count || 1;
     for (let i = 0; i < count; i++) {
       xValue += 3600000; // 1 hour
-
       // Soil moisture in awc
-      yValue1 = Math.round((Math.random())*10)/10;
-
+      yValue1 = Math.round(((Math.random()*0.5)+0.2)*10)/10;
       // Aeration in %
-      yValue2 = Math.round((Math.random()+19)*10)/10;
-
+      yValue2 = Math.round(((Math.random()*10.5)+15.5)*10)/10;
       // Soil temp in oF
       yValue3 = Math.floor(Math.random()*(350-340+1)+50);
-
       // Nitrate in ppm
       yValue4 = Math.floor(Math.random()*(350-340+1)+80);
-
       // Phosphorus in ppm
       yValue5 = Math.floor(Math.random()*(350-340+1)+80);
-
       // Salinity in dS/m
-      yValue6 = Math.round((Math.random())*10)/10;
-
+      yValue6 = Math.round(((Math.random()*0.5)+0.2)*10)/10;
       // Respiration in %
-      yValue7 = Math.round((Math.random())*100)/100;
-
+      yValue7 = Math.round(((Math.random()*0.05)+0.02)*100)/100;
       // pH
-      yValue8 = Math.round((Math.random()+6)*10)/10;
-
+      yValue8 = Math.round(((Math.random()*3.2)+5.2)*10)/10;
       // Potassium in ppm
       yValue9 = Math.floor(Math.random()*(350-340+1)+80);
 
-
-      moisture.push({
-        x: xValue,
-        y: yValue1
-      });
-      aeration.push({
-        x: xValue,
-        y: yValue2
-      });
-      temp.push({
-        x: xValue,
-        y: yValue3
-      });
-      nitrate.push({
-        x: xValue,
-        y: yValue4
-      });
-      phosphorus.push({
-        x: xValue,
-        y: yValue5
-      });
-      salinity.push({
-        x: xValue,
-        y: yValue6
-      });
-      respiration.push({
-        x: xValue,
-        y: yValue7
-      });
-      ph.push({
-        x: xValue,
-        y: yValue8
-      });
-      potassium.push({
-        x: xValue,
-        y: yValue9
-      });
+      this.setSensor(moisture, xValue, yValue1)
+      this.setSensor(aeration, xValue, yValue2)
+      this.setSensor(temp, xValue, yValue3)
+      this.setSensor(nitrate, xValue, yValue4)
+      this.setSensor(phosphorus, xValue, yValue5)
+      this.setSensor(salinity, xValue, yValue6)
+      this.setSensor(respiration, xValue, yValue7)
+      this.setSensor(ph, xValue, yValue8)
+      this.setSensor(potassium, xValue, yValue9)
     }
     this.chart.options.data[0].legendText = " Soil Moisture: " + yValue1 + " awc";
     this.chart.options.data[1].legendText = " Aeration: " + yValue2 + " %";
@@ -148,6 +120,7 @@ class GroupSensor extends Component {
       data: [
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           percentFormatString: "#,#",
@@ -157,6 +130,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           percentFormatString: "#,#",
@@ -166,6 +140,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           yValueFormatString: "# F",
@@ -175,6 +150,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           showInLegend: true,
@@ -183,6 +159,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           showInLegend: true,
@@ -191,6 +168,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           percentFormatString: "#,#",
@@ -200,6 +178,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           percentFormatString: "#,0#",
@@ -209,6 +188,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           showInLegend: true,
@@ -217,6 +197,7 @@ class GroupSensor extends Component {
         },
         {
           type: "spline",
+          markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
           showInLegend: true,
