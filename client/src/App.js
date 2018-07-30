@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Error from "./components/Error";
@@ -35,7 +34,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter> 
+      <BrowserRouter>
         <div>
           <Navigation />
           <Switch>
