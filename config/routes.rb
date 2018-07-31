@@ -18,11 +18,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:new, :create, :show, :index]
-        # resources :group_sensors, only: [:new, :create, :destroy] do
-        #   resources :single_sensors, only: [:create, :edit, :update, :destroy]
-        # end
-      
+      resources :users, only: [:index, :new, :create, :show] do
+        resources :group_sensors, only: [:index, :create, :show, :update, :destroy] do
+          resources :single_sensors, only: [:index, :create, :show, :update, :destroy]
+        end
+      end
     end
   end
 

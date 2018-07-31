@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_26_202431) do
+ActiveRecord::Schema.define(version: 2018_07_31_192935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2018_07_26_202431) do
     t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_group_sensors_on_user_id"
   end
 
   create_table "single_sensors", force: :cascade do |t|
@@ -30,6 +32,8 @@ ActiveRecord::Schema.define(version: 2018_07_26_202431) do
     t.float "set_max"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "group_sensor_id"
+    t.index ["group_sensor_id"], name: "index_single_sensors_on_group_sensor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,4 +47,6 @@ ActiveRecord::Schema.define(version: 2018_07_26_202431) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "group_sensors", "users"
+  add_foreign_key "single_sensors", "group_sensors"
 end
