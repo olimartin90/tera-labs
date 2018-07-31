@@ -6,14 +6,25 @@ body {
  .container {
    margin: 0;
    width: 100%;
+   padding-left: 0px;
+   padding-right: 0px;
+
  }
+
+
 
  .row {
 
- margin-top: 50px;
+ margin-top: ;
  margin-bottom: 50px;
+ padding-bottom: 35px;
+ padding-left: -15px;
+ padding-right: -15px;
+
  }
-/* First section */
+
+/* First background image */
+
 .bg {
 
     background-image: url("/paysage3_blur.jpg");
@@ -42,61 +53,85 @@ body {
 
 .subteralabs {
   color: white;
+  padding-top: 150px;
   font-family: 'Permanent Marker', cursive;
   font-size: 35px;
 }
 
-/* Second section */
 
 
+/* Second background image */
 
-.collect {
-  margin-top: 30px;
-  width: 75%
+
+.backgroundimage2 {
+  height: 300px;
+  width: 100%;
+  background-image: url("/paysage4.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
 }
 
-.collecticon {
 
+.graphimage {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.display {
-  margin-top: 30px;
-  width: 75%
-}
-
-.displayicon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.monitor {
-  margin-top: 30px;
-  width: 75%
-}
-
-.monitoricon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 90px;
 }
 
 
-.codismoncontent {
-  font-size: 17px;
+/* Third background image */
+
+.backgroundimage3 {
+  height: 300px;
+  width: 100%;
+  background-image: url("/paysage5.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
 }
+
 
 
 .advancedfeatures {
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
+  margin-top: 30px;
+  font-size: 32px;
+  font-family: 'Comfortaa', cursive;
 }
 
-.howdowehelpyou {
+
+
+/*  Styles that applies for multiple tags*/
+
+.sectiondisplay {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.iconh4 {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+.h4 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.pcontent {
+  font-size: 18px;
+  font-family: 'Comfortaa', cursive;
 }
