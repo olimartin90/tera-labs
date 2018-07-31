@@ -44,65 +44,83 @@ group2 = user1.group_sensors.create!({
 
 SingleSensor.destroy_all
 
-sensor1 = group1.single_sensors.create!({
-  data_type: "Soil Moisture",
-  data_value: 0.6,
-  set_min: 0.2,
-  set_max: 0.8
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Soil Moisture",
+    data_value: rand(0.1..0.7),
+    set_min: 0.2,
+    set_max: 0.8
+  })
+end
 
-sensor2 = group1.single_sensors.create!({
-  data_type: "Aeration",
-  data_value: 19.2,
-  set_min: 15,
-  set_max: 23
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Aeration",
+    data_value: rand(16.2..22.6),
+    set_min: 15,
+    set_max: 23
+  })
+end
 
-sensor3 = group1.single_sensors.create!({
-  data_type: "Soil Temp",
-  data_value: 50,
-  set_min: 44,
-  set_max: 58
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Soil Temp",
+    data_value: rand(45..56),
+    set_min: 44,
+    set_max: 58
+  })
+end
 
-sensor4 = group1.single_sensors.create!({
-  data_type: "Nitrate",
-  data_value: 82,
-  set_min: 74,
-  set_max: 89
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Nitrate",
+    data_value: rand(75..92),
+    set_min: 74,
+    set_max: 89
+  })
+end
 
-sensor5 = group1.single_sensors.create!({
-  data_type: "Phosphorus",
-  data_value: 84,
-  set_min: 74,
-  set_max: 89
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Phosphorus",
+    data_value: rand(74..88),
+    set_min: 74,
+    set_max: 89
+  })
+end
 
-sensor6 = group1.single_sensors.create!({
-  data_type: "Salinity",
-  data_value: 0.6,
-  set_min: 0.4,
-  set_max: 1
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Salinity",
+    data_value: rand(0.4..0.9),
+    set_min: 0.4,
+    set_max: 1
+  })
+end
 
-sensor7 = group1.single_sensors.create!({
-  data_type: "Respiration",
-  data_value: 0.04,
-  set_min: 0.02,
-  set_max: 0.08
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Respiration",
+    data_value: rand(0.02..0.07),
+    set_min: 0.02,
+    set_max: 0.08
+  })
+end
 
-sensor8 = group1.single_sensors.create!({
-  data_type: "pH",
-  data_value: 6.5,
-  set_min: 6,
-  set_max: 7
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "pH",
+    data_value: rand(6.1..6.8),
+    set_min: 6,
+    set_max: 7
+  })
+end
 
-sensor9 = group1.single_sensors.create!({
-  data_type: "Potassium",
-  data_value: 86,
-  set_min: 80,
-  set_max: 90
-})
+50.times do
+  group1.single_sensors.create!({
+    data_type: "Potassium",
+    data_value: rand(81..88),
+    set_min: 80,
+    set_max: 90
+  })
+end
