@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 
 import Home from "./components/Home";
@@ -21,7 +20,7 @@ class App extends Component {
     this.state = {
       users: []
     };
-    library.add(faStroopwafel)
+    library.add(fas)
   }
 
   componentDidMount() {

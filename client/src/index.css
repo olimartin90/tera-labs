@@ -3,3 +3,100 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+ .container {
+   margin: 0;
+   width: 100%;
+ }
+
+ .row {
+
+ margin-top: 50px;
+ margin-bottom: 50px;
+ }
+/* First section */
+.bg {
+
+    background-image: url("/paysage3_blur.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    padding-bottom: 550px;
+    z-index: 1;
+
+}
+
+.sectionone {
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.teralabs {
+  font-family: 'Fredoka One', cursive;
+  color: white;
+  font-size: 100px;
+}
+
+.subteralabs {
+  color: white;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 35px;
+}
+
+/* Second section */
+
+
+
+.collect {
+  margin-top: 30px;
+  width: 75%
+}
+
+.collecticon {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.display {
+  margin-top: 30px;
+  width: 75%
+}
+
+.displayicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monitor {
+  margin-top: 30px;
+  width: 75%
+}
+
+.monitoricon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.codismoncontent {
+  font-size: 17px;
+}
+
+
+.advancedfeatures {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.howdowehelpyou {
+  display: flex;
+  justify-content: flex-end;
+}
