@@ -1,5 +1,20 @@
-body {
-  margin: 0;
-  padding: 0;
+
+html {
+  min-height: 100%;
+  position: relative;
   font-family: sans-serif;
 }
+
+#footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  background-color: #F6BB42;
+}
+
+.footer-social-media-icone {
+  width: 35px;
+  height: 35px;
+}
+
+
