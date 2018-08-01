@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Map from "./Map";
 import GroupSensor from "./GroupSensor";
-const axios = require('axios');
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Map />
-        <GroupSensor group = {this.state.group}/>
+        <GroupSensor group={this.state.group} />
       </div>
     )
   }
