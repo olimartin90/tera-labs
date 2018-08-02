@@ -51,7 +51,7 @@ date = Time.now.to_i - 180000
   group1.single_sensors.create!([
     {
       data_type: "Soil Moisture",
-      data_value: rand(0.1..0.7).round(1),
+      data_value: rand(0.1..0.2).round(1),
       set_min: 0.2,
       set_max: 0.8,
       created_at: DateTime.strptime(date.to_s,'%s')
