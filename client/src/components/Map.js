@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import React, { Component } from 'react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 const axios = require('axios');
@@ -119,22 +119,22 @@ class SensorMap extends Component {
 
   handleValueName = e => {
     console.log(e.target.value)
-    this.setState({nameValue: e.target.value});
+    this.setState({ nameValue: e.target.value });
   }
   handleValueLatitude = e => {
     console.log(e.target.value)
-    this.setState({latitudeValue: e.target.value});
+    this.setState({ latitudeValue: e.target.value });
   }
   handleValueLongitude = e => {
     console.log(e.target.value)
-    this.setState({longitudeValue: e.target.value});
+    this.setState({ longitudeValue: e.target.value });
   }
 
   handleNewMarker = e => {
     console.log(this.state.latitudeValue)
-    const newMarker = {name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue}
+    const newMarker = { name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
     const addMarker = this.state.markers.concat(newMarker)
-    this.setState({markers: addMarker})
+    this.setState({ markers: addMarker })
     this.state.nameValue = "";
     this.state.latitudeValue = 0;
     this.state.longitudeValue = 0;
@@ -196,29 +196,29 @@ class SensorMap extends Component {
                 <label>
                   Name:
                   <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                </label>
-                <label>
-                  Latitude:
+                  </label>
+                  <label>
+                    Latitude:
                   <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
                   <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
                 </label>
                 <label>
                   Longitude:
                   <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                </label>
-                <input type="submit" value="Submit" />
-                <input type="button" value="close" onClick={() => {
-              console.log('modal closed ')
-              close()
-            }}/>
-              </form>
-            </div>
+                  </label>
+                  <input type="submit" value="Submit" />
+                  <input type="button" value="close" onClick={() => {
+                    console.log('modal closed ')
+                    close()
+                  }} />
+                </form>
+              </div>
             )}
-            </Popup>
-            </Row>
-          </div>
-        )
-    }
+          </Popup>
+        </Row>
+      </div>
+    )
+  }
 }
 
 export default GoogleApiWrapper({
