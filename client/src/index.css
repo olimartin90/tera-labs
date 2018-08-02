@@ -1,137 +1,142 @@
-body {
-  margin: 0;
-  padding: 0;
+
+html {
+  min-height: 100%;
+  position: relative;
   font-family: sans-serif;
 }
+
  .container {
    margin: 0;
    width: 100%;
    padding-left: 0px;
    padding-right: 0px;
-
  }
 
-
-
- .row {
-
- margin-top: ;
- margin-bottom: 50px;
- padding-bottom: 35px;
- padding-left: -15px;
- padding-right: -15px;
+ /* .row {
+   margin-top: ;
+   padding-left: -15px;
+   padding-right: -15px;
 
  }
 
 /* First background image */
 
-.bg {
-
-    background-image: url("/paysage3_blur.jpg");
+.row1 {
+    background-image: url("/paysage1dd.png");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
-    padding-bottom: 550px;
+    height: 115vh;
     z-index: 1;
 
 }
 
-.sectionone {
+.row2 {
 
+  height: 115vh;
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+
 }
 
-.teralabs {
-  font-family: 'Fredoka One', cursive;
+.row3 {
+  background-image: url("/background2d.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 115vh;
+  padding-bottom: 50px;
+  z-index: 1;
+
+}
+
+
+ .teralabs {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bolder;
   color: white;
   font-size: 100px;
 }
 
-.subteralabs {
+.teralabsdescription {
+
+  margin-top: 200px;
   color: white;
-  padding-top: 150px;
-  font-family: 'Permanent Marker', cursive;
-  font-size: 35px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  width: 75%;
+}
+
+.loginregisterform {
+  height: 50%;
+  margin-top: 75px;
+  width: 75%;
+  background-color: blue;
 }
 
 
 
-/* Second background image */
-
-
-.backgroundimage2 {
-  height: 300px;
-  width: 100%;
-  background-image: url("/paysage4.jpg");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 1;
-}
 
 
 .graphimage {
-  display: flex;
+  width: 600px;
+  height: 450px;
+  margin-left: 20px;
+  box-shadow: 10px 10px 20px lightgray;
+}
+
+.mapimage {
+
+  width: 600px;
+  height: 450px;
+  margin-left: 20px;
+  margin-top: 20px;
+  box-shadow: 10px 10px 20px black;
+}
+
+.h41 {
+  margin-bottom: 100px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 45px;
+  font-weight: bolder;
+  color: black;
+  width: 75%;
+}
+
+.h42 {
+  margin-bottom: 100px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 45px;
+  font-weight: bolder;
+  color: white;
+  width: 75%;
+}
+
+.p1 {
+ width: 75%;
+ font-size: 20px;
+ font-weight: 300;
+ color: black;
+}
+
+.p2 {
+  width: 75%;
+  font-size: 20px;
+  font-weight: 500;
+  color: #e6e9ef;
+}
+
+
+
+#footer {
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  margin-top: 90px;
+  background-color: #F6BB42;
 }
 
-
-/* Third background image */
-
-.backgroundimage3 {
-  height: 300px;
-  width: 100%;
-  background-image: url("/paysage5.jpg");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 1;
-}
-
-
-
-.advancedfeatures {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-  margin-top: 30px;
-  font-size: 32px;
-  font-family: 'Comfortaa', cursive;
-}
-
-
-
-/*  Styles that applies for multiple tags*/
-
-.sectiondisplay {
-  margin-top: 30px;
-  width: 100%;
-}
-
-.iconh4 {
-  display: flex;
-  justify-content: center;
-}
-
-.icon {
-  font-size: 32px;
-}
-
-.h4 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  margin-left: 10px;
-}
-
-.pcontent {
-  font-size: 18px;
-  font-family: 'Comfortaa', cursive;
+.footer-social-media-icone {
+  width: 35px;
+  height: 35px;
 }
