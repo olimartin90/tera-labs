@@ -19,7 +19,7 @@ class Register extends Component {
         password: document.getElementById("password").value,
         password_confirmation: document.getElementById("password_confirmation").value,
         company_name: document.getElementById("company_name").value,
-        phone_number: document.getElementById("phone_number").value,
+        phone_number: document.getElementById("phone").value,
         avatar: document.getElementById("avatar").value
       }
     })
@@ -43,7 +43,7 @@ class Register extends Component {
           <input id="password" placeholder="password" />
           <input id="password_confirmation" placeholder="confirm password" />
           <input id="company_name" placeholder="company name" />
-          <input id="phone_number" placeholder="phone number" />
+          <input id="phone" placeholder="phone number" />
           <input id="avatar" placeholder="avatar" />
           <button onClick={this.handleRegister}>Submit</button>
         </form>
