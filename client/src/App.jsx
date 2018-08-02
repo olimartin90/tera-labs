@@ -4,41 +4,35 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Error from "./components/Error";
-import Navigation from "./components/Navigation";
+import Header from "./components/Header";
+// import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
-
-const axios = require('axios');
+// const axios = require('axios');
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      users: []
-    };
+      currentUser: null
+    }
+    this.updateCurrentUser = this.updateCurrentUser.bind(this);
   }
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/v1/users")
-      .then(response => {
-        console.log(response);
-        this.setState({
-          users: response.data
-        });
-        console.log(this.state.users)
-      })
-      .catch(error => console.log(error));
+  updateCurrentUser(email) {
+    this.setState({
+      currentUser: email
+    })
   }
 
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Navigation />
+          <Header updateCurrentUser={this.updateCurrentUser} />
           <Switch>
-            <Route path="/" component={Home} exact/>
+            <Route path="/" component={Home} exact />
             <Route path="/dashboard" component={Dashboard} />
             <Route component={Error} />
           </Switch>

@@ -3,7 +3,6 @@ import { Grid, Row } from 'react-bootstrap';
 
 import SensorMap from "./Map";
 import GroupSensor from "./GroupSensor";
-const axios = require('axios');
 
 class Dashboard extends Component {
   constructor(props) {
