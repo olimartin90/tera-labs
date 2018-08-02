@@ -145,13 +145,13 @@ class SensorMap extends Component {
     render() {
 
 
-      let iconMarker = new window.google.maps.MarkerImage(
-        url,
-        null, /* size is determined at runtime */
-        null, /* origin is 0,0 */
-        null, /* anchor is bottom center of the scaled image */
-        new window.google.maps.Size(32, 32)
-      );
+      // let iconMarker = new window.google.maps.MarkerImage(
+      //   url,
+      //   null, /* size is determined at runtime */
+      //   null, /* origin is 0,0 */
+      //   null, /* anchor is bottom center of the scaled image */
+      //   new window.google.maps.Size(32, 32)
+      // );
 
 
 // *************** return the markers from the state and send it to the final return ****************
@@ -159,7 +159,7 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-          <Marker onClick={this.onMarkerClick} icon={iconMarker} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} /> 
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} /> 
         )
       })
 
