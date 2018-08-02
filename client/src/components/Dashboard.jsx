@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Row } from 'react-bootstrap';
 import SensorMap from "./Map";
-import GroupSensor from "./GroupSensor";
+import SingleSensor from "./SingleSensor";
 
 const Modal = require("react-bootstrap/lib/Modal")
 const Button = require("react-bootstrap/lib/Button")
@@ -12,7 +12,7 @@ class Dashboard extends Component {
     this.handleHide = this.handleHide.bind(this);
     this.state = {
       show: false,
-      group: []
+      sensor: []
     };
   }
   handleHide() {
@@ -46,7 +46,7 @@ class Dashboard extends Component {
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <GroupSensor group={this.state.group} />
+                  <SingleSensor sensor={this.state.sensor} />
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.handleHide}>Close</Button>
