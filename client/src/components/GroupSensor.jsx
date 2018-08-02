@@ -13,8 +13,8 @@ let yValue1, yValue2, yValue3, yValue4, yValue5,
 let xValue = (new Date()).getTime();
 
 class GroupSensor extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.updateChart = this.updateChart.bind(this);
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
     this.getGroupFromJSON()
@@ -48,7 +48,7 @@ class GroupSensor extends Component {
   }
   getGroupFromJSON(){
     axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors/1")
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
       .then(response => {
         this.setState({
           group_name: response.data.name
@@ -58,7 +58,7 @@ class GroupSensor extends Component {
   }
   getSensorsFromJSON(){
     axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors`)
       .then(response => {
         console.log(response.data)
         this.loadSensorsFromDB("Soil Moisture",
@@ -92,6 +92,7 @@ class GroupSensor extends Component {
       .catch(error => console.log(error));
   }
   sendSensorToJSON(sensorData){
+    // TODO....
     axios
       .post("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
       .then(response => {
@@ -105,7 +106,8 @@ class GroupSensor extends Component {
       date = new Date(dateCreated).getTime()
     outputArray.push({
       x: date,
-      y: value
+      y: value,
+      markerColor: 'black'
     });
     if (outputArray.length > 50 ) {
       outputArray.shift();
@@ -119,7 +121,7 @@ class GroupSensor extends Component {
   }
   updateChart() {
     // Soil moisture in awc
-    yValue1 = Math.round(((Math.random()*0.5)+0.2)*10)/10;
+    yValue1 = Math.round(((Math.random()*-0.08)+0.2)*10)/10;
     // Aeration in %
     yValue2 = Math.round(((Math.random()*10.5)+15.5)*10)/10;
     // Soil temp in oF
@@ -150,14 +152,14 @@ class GroupSensor extends Component {
     this.addSensorsToState(this.state.potassium, xValue, yValue9)
 
     this.chart.options.data[0].legendText = " Soil Moisture: " + yValue1 + " awc";
-    this.chart.options.data[1].legendText = " Aeration: " + yValue2 + " %";
-    this.chart.options.data[2].legendText = " Soil Temp: " + yValue3 + " °F";
-    this.chart.options.data[3].legendText = " Nitrate: " + yValue4 + " ppm";
-    this.chart.options.data[4].legendText = " Phosphorus: " + yValue5 + " ppm";
-    this.chart.options.data[5].legendText = " Salinity: " + yValue6 + " dS/m";
-    this.chart.options.data[6].legendText = " Respiration: " + yValue7 + " %";
-    this.chart.options.data[7].legendText = " pH: " + yValue8;
-    this.chart.options.data[8].legendText = " Potassium: " + yValue9 + " ppm";
+    // this.chart.options.data[1].legendText = " Aeration: " + yValue2 + " %";
+    // this.chart.options.data[2].legendText = " Soil Temp: " + yValue3 + " °F";
+    // this.chart.options.data[3].legendText = " Nitrate: " + yValue4 + " ppm";
+    // this.chart.options.data[4].legendText = " Phosphorus: " + yValue5 + " ppm";
+    // this.chart.options.data[5].legendText = " Salinity: " + yValue6 + " dS/m";
+    // this.chart.options.data[6].legendText = " Respiration: " + yValue7 + " %";
+    // this.chart.options.data[7].legendText = " pH: " + yValue8;
+    // this.chart.options.data[8].legendText = " Potassium: " + yValue9 + " ppm";
     this.chart.render();
   }
   render() {
@@ -169,28 +171,32 @@ class GroupSensor extends Component {
         text: `Soil Health - Probe #${this.state.group_name}`
       },
       axisX: {
-        title: "chart updates every hour",
         intervalType: "hour",
         valueFormatString: "DD MMM hh:mm tt"
       },
       axisY:{
-        suffix: " %",
         includeZero: false,
-        maximum: 100
+        stripLines: [
+          {
+            startValue: 0.2,
+            endValue: 0.8,
+            color: '#DCDDDD  '
+          }
+        ]
       },
       toolTip: {
         shared: true
       },
       legend: {
-        cursor:"pointer",
+        cursor:"default",
         verticalAlign: "top",
         fontSize: 18,
         fontColor: "dimGrey",
-        itemclick : this.toggleDataSeries
       },
       data: [
         {
           type: "spline",
+          lineColor: 'green',
           markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
@@ -198,93 +204,93 @@ class GroupSensor extends Component {
           showInLegend: true,
           name: "Soil Moisture",
           dataPoints: this.state.moisture
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "#.# '%'",
-          showInLegend: true,
-          name: "Aeration",
-          dataPoints: this.state.aeration
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "# '°F'",
-          showInLegend: true,
-          name: "Soil Temp",
-          dataPoints: this.state.temp
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "# 'ppm'",
-          showInLegend: true,
-          name: "Nitrate",
-          dataPoints: this.state.nitrate
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "# 'ppm'",
-          showInLegend: true,
-          name: "Phosphorus",
-          dataPoints: this.state.phosphorus
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "0.# 'dS/m'",
-          showInLegend: true,
-          name: "Salinity",
-          dataPoints: this.state.salinity
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "0.## '%'",
-          showInLegend: true,
-          name: "Respiration",
-          dataPoints: this.state.respiration
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          showInLegend: true,
-          name: "pH",
-          dataPoints: this.state.ph
-        },
-        {
-          type: "spline",
-          markerSize: 0,
-          xValueType: "dateTime",
-          xValueFormatString: "DD MMM hh:mm tt",
-          yValueFormatString: "# 'ppm'",
-          showInLegend: true,
-          name: "Potassium",
-          dataPoints: this.state.potassium
         }
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "#.# '%'",
+        //   showInLegend: true,
+        //   name: "Aeration",
+        //   dataPoints: this.state.aeration
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "# '°F'",
+        //   showInLegend: true,
+        //   name: "Soil Temp",
+        //   dataPoints: this.state.temp
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "# 'ppm'",
+        //   showInLegend: true,
+        //   name: "Nitrate",
+        //   dataPoints: this.state.nitrate
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "# 'ppm'",
+        //   showInLegend: true,
+        //   name: "Phosphorus",
+        //   dataPoints: this.state.phosphorus
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "0.# 'dS/m'",
+        //   showInLegend: true,
+        //   name: "Salinity",
+        //   dataPoints: this.state.salinity
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "0.## '%'",
+        //   showInLegend: true,
+        //   name: "Respiration",
+        //   dataPoints: this.state.respiration
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   showInLegend: true,
+        //   name: "pH",
+        //   dataPoints: this.state.ph
+        // },
+        // {
+        //   type: "spline",
+        //   markerSize: 0,
+        //   xValueType: "dateTime",
+        //   xValueFormatString: "DD MMM hh:mm tt",
+        //   yValueFormatString: "# 'ppm'",
+        //   showInLegend: true,
+        //   name: "Potassium",
+        //   dataPoints: this.state.potassium
+        // }
       ]
     }
     return (
       <div>
         <CanvasJSChart options = {options}
-          onRef={ref => this.chart = ref}
-        />
+            onRef={ref => this.chart = ref}/>
         {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
       </div>
     );
