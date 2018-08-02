@@ -12,14 +12,14 @@ user1 = User.create!({
   first_name: 'Olivier',
   last_name: 'Martin',
   email: 'olivier@example.com',
-  password_digest: '1qaz'
+  password: '1q2w3e'
 })
 
 user2 = User.create!({
   first_name: 'Phil',
   last_name: 'Bolduc',
   email: 'phil@example.com',
-  password_digest: '1234'
+  password: 'e3w2q1'
 })
 
 GroupSensor.destroy_all
