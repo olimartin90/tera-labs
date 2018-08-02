@@ -12,17 +12,17 @@ class Footer extends Component {
                 <div id="footer">
                     <div className="container">
                         <div className="col-12 col-sm-6 col-lg-3">
-                            <h6>Quick Links</h6> 
+                            <h6>Quick Links</h6>
                                 <ul className="list-unstyled">
                                     <li><a href="#">Home</a></li>
-                                    <li><a href="#">What's new</a></li>
+                                    <li><a href="#">Whats new</a></li>
                                     <li><a href="#">Support</a></li>
                                     <li><a href="#">My account</a></li>
                                     <li><a href="#">Cancel subscription</a></li>
                                 </ul>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-3">
-                            <h6>Information</h6> 
+                            <h6>Information</h6>
                                 <ul className="list-unstyled">
                                     <li><a href="#">About us</a></li>
                                     <li><a href="#">Jobs</a></li>
@@ -32,16 +32,16 @@ class Footer extends Component {
                                 </ul>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-3">
-                            <h6>Our location</h6> 
+                            <h6>Our location</h6>
                                 <ul className="list-unstyled">
-                                    <li>Wework l'Avenue</li>
+                                    <li>Wework lAvenue</li>
                                     <li>1275 Avenue Des Canadiens-De-Montréal</li>
                                     <li>Montréal, QC H3B 5E8</li>
                                     <li>418-932-9966</li>
                                 </ul>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-3">
-                            <h6>Follow us</h6> 
+                            <h6>Follow us</h6>
                                 <ul className="list-unstyled">
                                     <Image className="footer-social-media-icone" src={process.env.PUBLIC_URL + '/Facebook.svg'} alt="171x180" />
                                     <Image className="footer-social-media-icone" src={process.env.PUBLIC_URL + '/Instagram.svg'} alt="171x180" />

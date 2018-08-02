@@ -5,6 +5,131 @@ html {
   font-family: sans-serif;
 }
 
+ .container {
+   margin: 0;
+   width: 100%;
+   padding-left: 0px;
+   padding-right: 0px;
+ }
+
+ /* .row {
+   margin-top: ;
+   padding-left: -15px;
+   padding-right: -15px;
+
+ }
+
+/* First background image */
+
+.row1 {
+    background-image: url("/paysage1dd.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 115vh;
+    z-index: 1;
+
+}
+
+.row2 {
+
+  height: 115vh;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.row3 {
+  background-image: url("/background2d.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 115vh;
+  padding-bottom: 50px;
+  z-index: 1;
+
+}
+
+
+ .teralabs {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bolder;
+  color: white;
+  font-size: 100px;
+}
+
+.teralabsdescription {
+
+  margin-top: 200px;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  width: 75%;
+}
+
+.loginregisterform {
+  height: 50%;
+  margin-top: 75px;
+  width: 75%;
+  background-color: blue;
+}
+
+
+
+
+
+.graphimage {
+  width: 600px;
+  height: 450px;
+  margin-left: 20px;
+  box-shadow: 10px 10px 20px lightgray;
+}
+
+.mapimage {
+
+  width: 600px;
+  height: 450px;
+  margin-left: 20px;
+  margin-top: 20px;
+  box-shadow: 10px 10px 20px black;
+}
+
+.h41 {
+  margin-bottom: 100px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 45px;
+  font-weight: bolder;
+  color: black;
+  width: 75%;
+}
+
+.h42 {
+  margin-bottom: 100px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 45px;
+  font-weight: bolder;
+  color: white;
+  width: 75%;
+}
+
+.p1 {
+ width: 75%;
+ font-size: 20px;
+ font-weight: 300;
+ color: black;
+}
+
+.p2 {
+  width: 75%;
+  font-size: 20px;
+  font-weight: 500;
+  color: #e6e9ef;
+}
+
+
+
 #footer {
   bottom: 0;
   width: 100%;
