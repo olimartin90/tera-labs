@@ -140,3 +140,16 @@ html {
   width: 35px;
   height: 35px;
 }
+
+.number2 {
+  z-index: 1 !important;
+  position:static !important;
+  padding-bottom: 200px;
+}
+.map-wrapper {
+  padding-top: 50%;
+}
+
+.top-cont {
+  padding-bottom: 15%;
+}

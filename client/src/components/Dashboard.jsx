@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Grid, Row } from 'react-bootstrap';
 
-import Map from "./Map";
+import SensorMap from "./Map";
 import GroupSensor from "./GroupSensor";
-const axios = require('axios');
 
 class Dashboard extends Component {
   constructor(props) {
@@ -13,10 +13,18 @@ class Dashboard extends Component {
   }
   render() {
     return (
-      <div>
-        <Map />
-        <GroupSensor group = {this.state.group}/>
-      </div>
+      <Grid className="top-cont">
+        <Row >
+          <div >
+            <SensorMap />
+          </div>
+        </Row>
+        <Row>
+          <div>
+            <GroupSensor className="number2" group = {this.state.group}/>
+          </div>
+        </Row>
+      </Grid>
     )
   }
 }
