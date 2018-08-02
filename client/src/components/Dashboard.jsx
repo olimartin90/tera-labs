@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Map from "./Map";
+import { Grid, Row } from 'react-bootstrap';
+import SensorMap from "./Map";
 import GroupSensor from "./GroupSensor";
 
 const Modal = require("react-bootstrap/lib/Modal")
@@ -19,38 +20,42 @@ class Dashboard extends Component {
   }
   render() {
     return (
-      <div>
-        <Map />
-        <div className="modal-container" style={{ height: 200 }}>
-          <Button
-            bsStyle="primary"
-            bsSize="large"
-            onClick={() => this.setState({ show: true })}
-          >
-            sensors
-          </Button>
+      <Grid className="top-cont">
+        <Row>
+          <div>
+            <SensorMap />
+            <div className="modal-container" style={{ height: 200 }}>
+              <Button
+                bsStyle="primary"
+                bsSize="large"
+                onClick={() => this.setState({ show: true })}
+              >
+                sensors
+              </Button>
 
-          <Modal
-            show={this.state.show}
-            onHide={this.handleHide}
-            container={this}
-              aria-labelledby="contained-modal-title"
-            bsSize="large"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title">
-                Teralabs
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <GroupSensor group={this.state.group} />
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={this.handleHide}>Close</Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
-      </div>
+              <Modal
+                show={this.state.show}
+                onHide={this.handleHide}
+                container={this}
+                  aria-labelledby="contained-modal-title"
+                bsSize="large"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title">
+                    Teralabs
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <GroupSensor group={this.state.group} />
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={this.handleHide}>Close</Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
+          </div>
+        </Row>
+      </Grid>
     )
   }
 }
