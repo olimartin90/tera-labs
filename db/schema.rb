@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_235309) do
+ActiveRecord::Schema.define(version: 2018_08_02_201038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "datapoints", force: :cascade do |t|
+    t.float "data_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "single_sensor_id"
+    t.index ["single_sensor_id"], name: "index_datapoints_on_single_sensor_id"
+  end
 
   create_table "group_sensors", force: :cascade do |t|
     t.string "name"
@@ -27,7 +35,6 @@ ActiveRecord::Schema.define(version: 2018_08_01_235309) do
 
   create_table "single_sensors", force: :cascade do |t|
     t.string "data_type"
-    t.float "data_value"
     t.float "set_min"
     t.float "set_max"
     t.datetime "created_at", null: false
@@ -56,6 +63,7 @@ ActiveRecord::Schema.define(version: 2018_08_01_235309) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "datapoints", "single_sensors"
   add_foreign_key "group_sensors", "users"
   add_foreign_key "single_sensors", "group_sensors"
 end

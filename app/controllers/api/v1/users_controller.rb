@@ -57,8 +57,8 @@ module Api::V1
         :first_name,
         :last_name,
         :email,
-        :password,
-        :password_confirmation
+        :phone,
+        :encrypted_password,
       )
     end
 

@@ -3,7 +3,7 @@ module Api::V1
   class GroupSensorsController < ApplicationController
 
     def index
-      render json: GroupSensor.all
+      render json: GroupSensor.where(user_id: params[:user_id])
     end
 
     def new
@@ -17,7 +17,7 @@ module Api::V1
     end
 
     def show
-      group = GroupSensor.find(params[:id])
+      group = GroupSensor.where(user_id: params[:user_id], id: params[:id])
       render json: group
     end
 
@@ -31,7 +31,8 @@ module Api::V1
       params.require(:group_sensor).permit(
         :name,
         :latitude,
-        :longitude
+        :longitude,
+        :user_id
       )
     end
   end

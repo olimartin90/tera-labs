@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # root to: 'site#home'
 
   post 'auth_user' => 'authentication#authenticate_user'
-  
+
   get 'home' => 'home#index'
 
   # resources :users, only: [:new, :create, :show, :index] do
@@ -27,7 +27,9 @@ Rails.application.routes.draw do
       resources :authentication, only: [:create]
       resources :users, only: [:index, :new, :create, :show] do
         resources :group_sensors, only: [:index, :create, :show, :update, :destroy] do
-          resources :single_sensors, only: [:index, :create, :show, :update, :destroy]
+          resources :single_sensors, only: [:index, :create, :show, :update, :destroy] do
+            resources :datapoints, only: [:index, :create, :show, :destroy]
+          end
         end
       end
     end

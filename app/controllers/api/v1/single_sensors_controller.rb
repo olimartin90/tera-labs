@@ -3,7 +3,7 @@ module Api::V1
   class SingleSensorsController < ApplicationController
 
     def index
-      render json: SingleSensor.all
+      render json: SingleSensor.where(group_sensor_id: params[:group_sensor_id])
     end
 
     def new
@@ -17,7 +17,7 @@ module Api::V1
     end
 
     def show
-      sensor = SingleSensor.find(params[:id])
+      sensor = SingleSensor.where(group_sensor_id: params[:group_sensor_id], id: params[:id])
       render json: sensor
     end
 
@@ -32,7 +32,8 @@ module Api::V1
         :data_type,
         :data_value,
         :set_min,
-        :set_max
+        :set_max,
+        :group_sensor_id
       )
     end
   end

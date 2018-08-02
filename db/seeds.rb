@@ -44,73 +44,101 @@ group2 = user1.group_sensors.create!({
 
 SingleSensor.destroy_all
 
+
+moisture = group1.single_sensors.create!({
+  data_type: "Soil Moisture",
+  set_min: 0.2,
+  set_max: 0.8
+})
+
+aeration = group1.single_sensors.create!({
+  data_type: "Aeration",
+  set_min: 15,
+  set_max: 23
+})
+
+temp = group1.single_sensors.create!({
+  data_type: "Soil Temp",
+  set_min: 44,
+  set_max: 58
+})
+
+nitrate = group1.single_sensors.create!({
+  data_type: "Nitrate",
+  set_min: 74,
+  set_max: 89
+})
+
+phosphorus = group1.single_sensors.create!({
+  data_type: "Phosphorus",
+  set_min: 74,
+  set_max: 89
+})
+
+salinity = group1.single_sensors.create!({
+  data_type: "Salinity",
+  set_min: 0.4,
+  set_max: 1
+})
+
+respiration = group1.single_sensors.create!({
+  data_type: "Respiration",
+  set_min: 0.02,
+  set_max: 0.08
+})
+
+ph = group1.single_sensors.create!({
+  data_type: "pH",
+  set_min: 6,
+  set_max: 7
+})
+
+potassium = group1.single_sensors.create!({
+  data_type: "Potassium",
+  set_min: 80,
+  set_max: 90
+})
+
+Datapoint.destroy_all
+
 date = Time.now.to_i - 180000
 
 50.times do
   date += 3600
-  group1.single_sensors.create!([
-    {
-      data_type: "Soil Moisture",
-      data_value: rand(0.1..0.7).round(1),
-      set_min: 0.2,
-      set_max: 0.8,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Aeration",
-      data_value: rand(16.2..22.6).round(1),
-      set_min: 15,
-      set_max: 23,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Soil Temp",
-      data_value: rand(45..56),
-      set_min: 44,
-      set_max: 58,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Nitrate",
-      data_value: rand(75..92),
-      set_min: 74,
-      set_max: 89,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Phosphorus",
-      data_value: rand(74..88),
-      set_min: 74,
-      set_max: 89,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Salinity",
-      data_value: rand(0.4..0.9).round(1),
-      set_min: 0.4,
-      set_max: 1,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Respiration",
-      data_value: rand(0.02..0.07).round(2),
-      set_min: 0.02,
-      set_max: 0.08,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "pH",
-      data_value: rand(6.1..6.8).round(1),
-      set_min: 6,
-      set_max: 7,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    },
-    {
-      data_type: "Potassium",
-      data_value: rand(81..88),
-      set_min: 80,
-      set_max: 90,
-      created_at: DateTime.strptime(date.to_s,'%s')
-    }
-  ])
+  moisture.datapoints.create!({
+    data_value: rand(0.1..0.2).round(1),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  aeration.datapoints.create!({
+    data_value: rand(16.2..22.6).round(1),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  temp.datapoints.create!({
+    data_value: rand(45..56),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  nitrate.datapoints.create!({
+    data_value: rand(75..92),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  phosphorus.datapoints.create!({
+    data_value: rand(74..88),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  salinity.datapoints.create!({
+    data_value: rand(0.4..0.9).round(1),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  respiration.datapoints.create!({
+    data_value: rand(0.02..0.07).round(2),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  ph.datapoints.create!({
+    data_value: rand(6.1..6.8).round(1),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
+  potassium.datapoints.create!({
+    data_value: rand(81..88),
+    created_at: DateTime.strptime(date.to_s,'%s')
+  })
 end
