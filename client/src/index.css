@@ -8,7 +8,6 @@ html {
 #footer {
   bottom: 0;
   width: 100%;
-  position: absolute;
   background-color: #F6BB42;
 }
 
@@ -17,4 +16,15 @@ html {
   height: 35px;
 }
 
+.number2 {
+  z-index: 1 !important;
+  position:static !important;
+  padding-bottom: 200px;
+}
+.map-wrapper {
+  padding-top: 50%;
+}
 
+.top-cont {
+  padding-bottom: 15%;
+}
