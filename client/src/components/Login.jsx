@@ -11,9 +11,16 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
+
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.state = {
-      toDashboard: false
+      toDashboard: false,
+      show: false
     };
   }
 
@@ -40,6 +47,45 @@ class Login extends Component {
       })
   }
 
+  handleRegister(e) {
+    e.preventDefault();
+    const first_name = e.target.elements["first_name"].value
+    const last_name = e.target.elements["last_name"].value
+    const email = e.target.elements["email"].value
+    const password = e.target.elements["password"].value
+    const password_confirmation = e.target.elements["password_confirmation"].value
+    const company_name = e.target.elements["company_name"].value
+    const phone = e.target.elements["phone"].value
+    const avatar = e.target.elements["avatar"].value
+    axios.post('/api/v1/users', {
+      user: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation,
+        company_name: company_name,
+        phone: phone,
+        avatar: avatar
+      }
+    })
+      .then(response => {
+        // this.props.changePage("delete");
+        this.props.updateCurrentUser(response.data.user.email);
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
   // displayRegister(e) => {
 
   // }
@@ -47,7 +93,6 @@ class Login extends Component {
   render() {
     if (this.state.toDashboard === true) {
       return <Redirect to='/dashboard' />
-      // return <h1>Helloo</h1>
     }
     return (
       // <div>
@@ -90,7 +135,11 @@ class Login extends Component {
               <Button type="submit">Sign in</Button>
             </Col>
           </FormGroup>
-          {/* <a hef="#" onClick={}>Register Here /> */}
+          <div>
+            <a hef="#" onClick={this.handleShow}>Register Here</a>
+
+
+          </div>
         </Form>;
       </div>
       // </div>
