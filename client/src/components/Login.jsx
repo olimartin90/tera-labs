@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Popup from "reactjs-popup";
 import Register from "./Register";
 
 const axios = require('axios');
@@ -19,7 +20,6 @@ class Login extends Component {
       }
     })
       .then(response => {
-        console.log("kdkdkd", response.data)
         this.props.changePage("delete");
         this.props.updateCurrentUser(response.data.user.email);
         localStorage.setItem("auth_token", response.data.auth_token);
@@ -39,7 +39,11 @@ class Login extends Component {
           <button onClick={this.handleLogin}>Submit</button>
         </form>
         <button onClick={() => this.props.changePage("dashboard")}>Go to Dashboard</button>
-        <a href="/" id="register">If you don't have an account you can Register here</a>
+        <Popup trigger={<button>Register here</button>} position="right center">
+          <div>
+            <Register />
+          </div>
+        </Popup>
       </div>
     )
   };
