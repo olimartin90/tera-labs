@@ -23,7 +23,6 @@ class Dashboard extends Component {
         <Row>
           <div>
             <GroupSensor className="number2" group = {this.state.group}/>
-            <GroupSensor className="number2" group = {this.state.group}/>
           </div>
         </Row>
       </Grid>
