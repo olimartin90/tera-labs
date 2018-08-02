@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Image, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 // import { NavLink } from "react-router-dom";
 
 
@@ -8,9 +9,10 @@ import { Image, Col } from 'react-bootstrap';
 class Footer extends Component {
     render () {
         return (
-            <footer>
-                <div id="footer">
-                    <div className="container">
+
+            <footer className="page-footer">
+                <div id="footer" className="container-fluid">
+                     <Row>
                         <div className="col-12 col-sm-6 col-lg-3">
                             <h6>Quick Links</h6>
                                 <ul className="list-unstyled">
@@ -48,10 +50,13 @@ class Footer extends Component {
                                     <Image className="footer-social-media-icone" src={process.env.PUBLIC_URL + '/LinkedIn.svg'} alt="171x180" />
                                 </ul>
                         </div>
-                    </div>
-                    <div className="container">
-                                <p>&copy; 2018 Terra-labs, Inc. All rights reserved. Terms of use and privacy policy.</p>
-                    </div>
+                        </Row>
+
+
+                    <Row>
+                      <p>&copy; 2018 Terra-labs, Inc. All rights reserved. Terms of use and privacy policy.</p>
+                    </Row>
+
                 </div>
             </footer>
         )
