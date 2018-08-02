@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Popup from "reactjs-popup";
+import { Component } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import Register from "./Register";
 
 const axios = require('axios');
@@ -39,11 +40,7 @@ class Login extends Component {
           <button onClick={this.handleLogin}>Submit</button>
         </form>
         <button onClick={() => this.props.changePage("dashboard")}>Go to Dashboard</button>
-        <Popup trigger={<button>Register here</button>} position="right center">
-          <div>
-            <Register />
-          </div>
-        </Popup>
+
       </div>
     )
   };
