@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row } from 'react-bootstrap';
 import Popup from "reactjs-popup";
+const axios = require('axios');
 
 
 
@@ -20,13 +21,29 @@ class SensorMap extends Component {
     this.handleValueName = this.handleValueName.bind(this);
     this.handleValueLatitude = this.handleValueLatitude.bind(this);
     this.handleValueNLongitude = this.handleValueLongitude.bind(this);
-
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.getGroupFromJSON = this.getGroupFromJSON.bind(this);
+    this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
+    this.getGroupFromJSON()
+    this.getSensorsFromJSON()
+    
     this.state = {
       markers: [
         {
-          name: "sensor1",
-          latitude: 38.844885,
-          longitude: -87.181807
+          id: 4,
+          name: "",
+          latitude: 40.64885,
+          longitude: -88.191807,
+          moisture: 0,
+          aeration: 0,
+          temp: 0,
+          nitrate: 0,
+          phosphorus: 0,
+          salinity: 0,
+          respiration: 0,
+          ph: 0,
+          potassium: 0
+
         },
         {
           name: "sensor2",
@@ -41,14 +58,63 @@ class SensorMap extends Component {
       ],
       nameValue: "",
       latitudeValue: 0,
-      longitudeValue: 0
+      longitudeValue: 0,
+      hideSensorInfo: true
     }
   }
 
+  getGroupFromJSON(){
+    axios
+      .get("http://localhost:3001/api/v1/users/1/group_sensors")
+      .then(response => {
+        // console.log(response)
+        for (var marker of response.data){
+          // console.log(marker)
+          const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude}
+          const addMarker = this.state.markers.concat(newMarker)
+          this.setState({markers: addMarker})
+        }
+      })
+      .catch(error => console.log(error));
+  }
+
+  getSensorsFromJSON(){
+    axios
+      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
+      .then(response => {
+
+        for (var groupSensor of this.state.markers) {
+          for (var sensor of response.data){
+            if (groupSensor.id === sensor.group_sensor_id){
+              
+              let data_type = sensor.data_type
+              groupSensor[data_type] = sensor.data_value
+
+              let sensorMin = sensor.set_min
+              let data_typeMin = data_type + "Min"
+              groupSensor[data_typeMin] = sensorMin
+
+              let sensorMax = sensor.set_max
+              let data_typeMax = data_type + "Max"
+              groupSensor[data_typeMax] = sensorMax
+
+
+            }
+          }          
+          console.log(groupSensor)
+        }
+      })
+      .catch(error => console.log(error));
+  }
+
+
   onMarkerClick(props, marker, e) {
-    // for (var item of this.state.markers){
-    console.log(props)
-    // }
+    this.setState({isHidden: !this.state.isHidden})
+    if (this.state.isHidden) {
+      console.log("is hidden")
+    } else {
+      console.log("is shown")
+    }
   }
 
   handleValueName = e => {
@@ -76,55 +142,68 @@ class SensorMap extends Component {
   }
 
 
-  render() {
+    render() {
 
-    // *************** return the markers from the state and send it to the final return ****************
-    let markers = this.state.markers
 
-    const listOfMarkers = markers.map((item, index) => {
-      return (
-        <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{ lat: item.latitude, lng: item.longitude }} />
-      )
-    })
+      // let iconMarker = new window.google.maps.MarkerImage(
+      //   url,
+      //   null, /* size is determined at runtime */
+      //   null, /* origin is 0,0 */
+      //   null, /* anchor is bottom center of the scaled image */
+      //   new window.google.maps.Size(32, 32)
+      // );
 
-    // ***************** final return ***************************
-    return (
-      <div>
-        <div className="embed-responsive map-wrapper">
-          <Row>
-            <Map className="embed-responsive-item"
-              google={this.props.google}
-              style={style}
-              initialCenter={{
-                lat: 39.854885,
-                lng: -88.081807
-              }}
-              zoom={7}
-              onClick={this.onMapClicked}
-            >
 
-              <Marker onClick={this.onMarkerClick}
-                name={'Current location'} />
+// *************** return the markers from the state and send it to the final return ****************
+      let markers = this.state.markers
 
-              {listOfMarkers}
-            </Map>
-          </Row>
-        </div>
-        <Row className="top-cont" >
-          <Popup trigger={<button> Add new sensor</button>} position="right center" modal closeOnDocumentClick>
+      const listOfMarkers = markers.map((item, index) => {
+        return (
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} /> 
+        )
+      })
+
+      
+      
+// ***************** final return ***************************
+        return (
+          <div>
+            <div className="embed-responsive map-wrapper">
+              <Row>
+                <Map className="embed-responsive-item"
+                  google={this.props.google}
+                  style={style}
+                  initialCenter={{
+                    lat: 45.212059,
+                    lng: -73.738771
+                  }}
+                  zoom={15} 
+                  onClick={this.onMapClicked}
+              >
+          
+                  <Marker onClick={this.onMarkerClick}
+                          name={'Current location'} />
+
+                  {listOfMarkers}
+                </Map>
+              </Row>
+            </div>
+          <Row className="top-cont" >
+            <Popup trigger={<button> Add new sensor</button>} position="right center" modal closeOnDocumentClick>
             {close => (
-              <div>
-                <form onSubmit={this.handleNewMarker}>
-                  <label>
-                    Name:
+            <div>
+              <form onSubmit={this.handleNewMarker.bind(this)}>
+                <label>
+                  Name:
                   <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
                   </label>
                   <label>
                     Latitude:
                   <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                  </label>
-                  <label>
-                    Longitude:
+                  <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
+                </label>
+                <label>
+                  Longitude:
                   <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
                   </label>
                   <input type="submit" value="Submit" />
@@ -141,7 +220,6 @@ class SensorMap extends Component {
     )
   }
 }
-
 
 export default GoogleApiWrapper({
   apiKey: ("AIzaSyCRmv6SaTr9BTMU7yeXHarnU3v5zYGaLMk")

@@ -60,6 +60,7 @@ class GroupSensor extends Component {
     axios
       .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
       .then(response => {
+        console.log(response.data)
         this.loadSensorsFromDB("Soil Moisture",
                                 response.data,
                                 this.state.moisture)
