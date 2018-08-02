@@ -81,12 +81,6 @@ html {
 
 }
 
-
-.section0 {
-
-
-}
-
 .section1 {
   display: flex;
   align-items: center;
@@ -124,11 +118,8 @@ html {
   height: 50%;
   margin-top: 75px;
   width: 75%;
-  background-color: blue;
+  background-color: white;
 }
-
-
-
 
 
 .graphimage {
