@@ -119,8 +119,9 @@ html {
   /* display: flex;
   justify-content: flex-start; */
   /* height: 50%; */
-  margin-top: 75px;
+  margin-top: 10%;
   /* width: 75%; */
+  /* border: 1px solid red; */
   /* background-color: white; */
 }
 

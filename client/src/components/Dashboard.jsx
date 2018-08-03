@@ -38,7 +38,7 @@ class Dashboard extends Component {
       currentUserId: id
     })
   }
-  getGroupsFromJSON(){
+  getGroupsFromJSON() {
     axios
       .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
       .then(response => {
@@ -48,7 +48,7 @@ class Dashboard extends Component {
       })
       .catch(error => console.log(error));
   }
-  getSensorsFromJSON(){
+  getSensorsFromJSON() {
     axios
       .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors`)
       .then(response => {
@@ -62,14 +62,14 @@ class Dashboard extends Component {
     return (
       <div>
         <div>
-          <Header updateCurrentUser={this.updateCurrentUser} />
+          <Header currentUser={this.props.currentUser} />
           <span >{this.currentUser}</span>
         </div>
         <Grid className="top-cont">
           <Row>
             <div>
               <SensorMap />
-              <div className="modal-container" style={{height: 200}}>
+              <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
                   bsSize="large"

@@ -12,19 +12,22 @@ import Footer from "./components/Footer";
 
 class App extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     currentUser: null
-  //   }
-  //   this.updateCurrentUser = this.updateCurrentUser.bind(this);
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: ""
+    }
+    this.updateCurrentUser = this.updateCurrentUser.bind(this);
+  }
 
-  // updateCurrentUser(email) {
-  //   this.setState({
-  //     currentUser: email
-  //   })
-  // }
+  updateCurrentUser(email, userId) {
+    this.setState({
+      currentUser: {
+        email: email,
+        userId: userId
+      },
+    })
+  }
 
   render() {
     return (
@@ -32,8 +35,8 @@ class App extends Component {
         <div>
           {/* <Header updateCurrentUser={this.updateCurrentUser} /> */}
           <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/" render={() => <Home updateCurrentUser={this.updateCurrentUser} />} exact />
+            <Route path="/dashboard" render={() => <Dashboard currentUser={this.state.currentUser} />} />
             <Route component={Error} />
           </Switch>
           <Footer />
