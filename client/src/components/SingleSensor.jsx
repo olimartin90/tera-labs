@@ -39,7 +39,7 @@ class SingleSensor extends Component {
   // }
   getDataFromJSON(){
     axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${this.props.sensor.id}/datapoints`)
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1/datapoints`)
       .then(response => {
         this.loadDatapointsFromDB(response.data)
       })

@@ -22,7 +22,6 @@ class Dashboard extends Component {
       show: false,
       groups: [],
       group: {},
-      sensors: [],
       sensor: {}
     };
   }
@@ -43,8 +42,17 @@ class Dashboard extends Component {
       .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
       .then(response => {
         this.setState({
-          groups: response.data
-        }),
+          groups: {
+            id: response.data.id,
+            name: response.data.name,
+            latitude: response.data.latitude,
+            longitude: response.data.longitude,
+            sensors: []
+          }
+        })
+        // this.setState({
+        //   groups: response.data
+        // }),
         this.getSensorsFromJSON(response.data)
       })
       .catch(error => console.log(error));
@@ -55,7 +63,13 @@ class Dashboard extends Component {
       axios
       .get(`http://localhost:3001/api/v1/users/1/group_sensors/${group.id}/single_sensors`)
       .then(response => {
-        object[group.id] = response.data
+        group.sensors.push({
+          id: response.data.id,
+          data_type: response.data.data_type,
+          set_min: response.data.set_min,
+          set_max: response.data.set_max,
+          datapoints: []
+        })
       })
       .catch(error => console.log(error));
     })
@@ -97,8 +111,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensors} />
-                  {console.log('SensorDahboard: ', this.state.sensors)}
+                    <SingleSensor group={this.state.groups[0]}  />
+                  {console.log('SensorDahboard: ', this.state.groups[0])}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
