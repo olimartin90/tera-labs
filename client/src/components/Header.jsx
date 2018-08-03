@@ -7,33 +7,18 @@ import Logout from "./Logout";
 class Header extends Component {
   constructor(props) {
     super(props);
-    if (this.props.currentUser == null) {
-      this.state = {
-        page: "login"
-      }
-    } else {
-      this.state = {
-        page: "delete"
-      }
+    this.state = {
+      currentUser: this.email
     }
-    this.changePage = this.changePage.bind(this);
-  }
-
-  changePage(newPage) {
-    this.setState({
-      page: newPage
-    })
   }
 
   render() {
-    switch (this.state.page) {
-      case "register":
-        return <Register changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser} />
-      case "login":
-        return <Login changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser} />
-      case "delete":
-        return <Logout changePage={this.changePage} updateCurrentUser={this.props.updateCurrentUser} />
-    }
+    return (
+      <div>
+        <Logout />
+        <span >{this.state.currentUser}</span>
+      </div>
+    )
   };
 };
 
