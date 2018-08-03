@@ -115,12 +115,12 @@ html {
 }
 
 .loginregisterform {
+  
   /* display: flex;
   justify-content: flex-start; */
   /* height: 50%; */
   margin-top: 75px;
   /* width: 75%; */
-  border: 1px solid red;
   /* background-color: white; */
 }
 

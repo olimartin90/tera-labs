@@ -26,7 +26,7 @@ class SensorMap extends Component {
     this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
     this.getGroupFromJSON()
     this.getSensorsFromJSON()
-    
+
     this.state = {
       markers: [
         {
@@ -86,7 +86,7 @@ class SensorMap extends Component {
         for (var groupSensor of this.state.markers) {
           for (var sensor of response.data){
             if (groupSensor.id === sensor.group_sensor_id){
-              
+
               let data_type = sensor.data_type
               groupSensor[data_type] = sensor.data_value
 
@@ -100,7 +100,7 @@ class SensorMap extends Component {
 
 
             }
-          }          
+          }
           console.log(groupSensor)
         }
       })
@@ -110,6 +110,7 @@ class SensorMap extends Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({isHidden: !this.state.isHidden})
+     console.log(marker.name)
     if (this.state.isHidden) {
       console.log("is hidden")
     } else {
@@ -159,12 +160,12 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} /> 
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} />
         )
       })
 
-      
-      
+
+
 // ***************** final return ***************************
         return (
           <div>
@@ -177,10 +178,10 @@ class SensorMap extends Component {
                     lat: 45.212059,
                     lng: -73.738771
                   }}
-                  zoom={15} 
+                  zoom={15}
                   onClick={this.onMapClicked}
               >
-          
+
                   <Marker onClick={this.onMarkerClick}
                           name={'Current location'} />
 
