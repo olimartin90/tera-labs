@@ -7,14 +7,8 @@ import GoogleMapIconRed from '../map-marker-red.png'
 const axios = require('axios');
 
 
-<<<<<<< HEAD
-
 const style = { // Styling the map.
   width: '50%',
-=======
-const style = {
-  width: '100%',
->>>>>>> master
   height: '100%',
   position: "absolute",
   zIndex: "3",
@@ -116,8 +110,9 @@ class SensorMap extends Component {
     this.setState({isHidden: !this.state.isHidden})
 
       console.log(marker);
-      console.log(marker.name)
-      console.log(props)
+      console.log(marker.id);
+      // console.log(marker.name)
+
     if (this.state.isHidden) {
       console.log("is hidden")
     } else {
@@ -140,7 +135,7 @@ class SensorMap extends Component {
 
   handleNewMarker = e => {
     console.log(this.state.latitudeValue)
-    const newMarker = { name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
+    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
     const addMarker = this.state.markers.concat(newMarker)
     this.setState({ markers: addMarker })
     this.state.nameValue = "";
@@ -167,11 +162,8 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-<<<<<<< HEAD
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} />
-=======
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} />
->>>>>>> master
+          <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} />
+
         )
       })
 
@@ -179,62 +171,6 @@ class SensorMap extends Component {
 
 // ***************** final return ***************************
         return (
-<<<<<<< HEAD
-          <div>
-            <div className="embed-responsive map-wrapper">
-              <Row>
-              //Calling the map
-                <Map className="embed-responsive-item"
-                  google={this.props.google}
-                  style={style}
-                  initialCenter={{
-                    lat: 45.212059,
-                    lng: -73.738771
-                  }}
-                  zoom={15}
-                  onClick={this.onMapClicked}
-               >
-
-                  <Marker onClick={this.onMarkerClick}
-                          name={'Current location'} />
-
-                  {listOfMarkers}
-                </Map>
-
-              </Row>
-            </div>
-          <Row className="top-cont" >
-            <Popup trigger={<button> Add new sensor</button>} position="right center" modal closeOnDocumentClick>
-            {close => (
-            <div>
-              <form onSubmit={this.handleNewMarker.bind(this)}>
-                <label>
-                  Name:
-                  <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                  </label>
-                  <label>
-                    Latitude:
-                  <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                  <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                </label>
-                <label>
-                  Longitude:
-                  <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                  </label>
-                  <input type="submit" value="Submit" />
-                  <input type="button" value="close" onClick={() => {
-                    console.log('modal closed ')
-                    close()
-                  }} />
-                </form>
-              </div>
-            )}
-          </Popup>
-        </Row>
-      </div>
-=======
-
-
           <Grid>
                     <Row>
                     <Col md={9}></Col>
@@ -304,7 +240,6 @@ class SensorMap extends Component {
 
       </Grid>
 
->>>>>>> master
     )
   }
 }
