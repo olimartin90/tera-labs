@@ -23,7 +23,7 @@ class Home extends Component {
             </div>
             <Col xs={12} sm={12} md={6}>
               <div className="loginregisterform">
-                <Login />
+                <Login updateCurrentUser={this.props.updateCurrentUser} />
               </div>
             </Col>
           </Row>

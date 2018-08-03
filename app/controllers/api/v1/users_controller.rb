@@ -38,9 +38,11 @@ module Api::V1
         :first_name,
         :last_name,
         :email,
-        :phone,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        :company_name,
+        :phone,
+        :avatar
       )
     end
 
