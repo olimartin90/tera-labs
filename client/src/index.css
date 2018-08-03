@@ -115,12 +115,14 @@ html {
 }
 
 .loginregisterform {
-  height: 50%;
+  /* display: flex;
+  justify-content: flex-start; */
+  /* height: 50%; */
   margin-top: 75px;
-  width: 75%;
-  background-color: white;
+  /* width: 75%; */
+  border: 1px solid red;
+  /* background-color: white; */
 }
-
 
 .graphimage {
   width: 600px;
@@ -130,7 +132,6 @@ html {
 }
 
 .mapimage {
-
   width: 600px;
   height: 450px;
   margin-left: 50px;
@@ -203,11 +204,7 @@ html {
   }
 }
 
-
-
-
 .h41 {
-
   font-family: 'Oswald', sans-serif;
   font-size: 45px;
   font-weight: bolder;
@@ -224,7 +221,6 @@ html {
 }
 
 .p1 {
-
  width: 75%;
  font-size: 20px;
  font-weight: 300;
@@ -237,8 +233,6 @@ html {
   font-weight: 500;
   color: #e6e9ef;
 }
-
-
 
 #footer {
   bottom: 0;
@@ -261,4 +255,10 @@ html {
 
 .top-cont {
   padding-bottom: 15%;
+}
+
+.col2 {
+  /* display: flex;
+  justify-content: flex-end; */
+  border: 1px solid red;
 }
