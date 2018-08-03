@@ -25,7 +25,7 @@ class Register extends Component {
     })
       .then(response => {
         this.props.changePage("delete");
-        this.props.updateCurrentUser(response.data.user.email);
+        this.props.updateCurrentUser(response.data.user.email, response.data.user.id);
       })
       .catch(error => {
         console.log(error)

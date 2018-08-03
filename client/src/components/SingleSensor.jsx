@@ -14,51 +14,65 @@ let yValue = 0
 class SingleSensor extends Component {
   constructor(props) {
     super(props);
+    this.updateProps(this.props.sensor);
     this.updateChart = this.updateChart.bind(this);
-    this.getDataFromJSON()
-    this.getSensorFromJSON()
     this.state = {
       data_type: "",
+      userId: null,
+      groupId: null,
+      sensor: {},
       datapoints: []
     }
+    this.getDataFromJSON();
   }
   componentDidMount(){
     this.updateChart();
     setInterval(this.updateChart, updateInterval);
   }
-  getSensorFromJSON(){
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1`)
-      .then(response => {
-        this.setState({
-          data_type: response.data.data_type
-        })
-      })
-      .catch(error => console.log(error));
+  updateProps(sensor) {
+    this.setState({
+      sensor: sensor,
+      // data_type: sensor.data_type
+
+      // groupId: this.sensor.group_sensor_id,
+      // userId: user
+    })
   }
+  // getSensorFromJSON(){
+  //   axios
+  //     .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1`)
+  //     .then(response => {
+  //       this.setState({
+  //         data_type: response.data.data_type
+  //       })
+  //     })
+  //     .catch(error => console.log(error));
+  // }
   getDataFromJSON(){
+    // const userID = this.state.userId
+    const sensorId = this.state.sensor.id
     axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1/datapoints`)
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${sensorId}/datapoints`)
       .then(response => {
         this.loadDatapointsFromDB(response.data)
       })
       .catch(error => console.log(error));
   }
-  sendSensorToJSON(sensorData){
-    // TODO....
-    axios
-      .post("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
-      .then(response => {
+  // sendSensorToJSON(sensorData){
+  //   // TODO....
+  //   axios
+  //     .post("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
+  //     .then(response => {
 
-      })
-      .catch(error => console.log(error));
-  }
+  //     })
+  //     .catch(error => console.log(error));
+  // }
   loadDatapointsFromDB(inputArray){
     inputArray.forEach(data => {
-      this.addSensorToState(data.created_at, data.data_value)
+      this.addDataToState(data.created_at, data.data_value)
     })
   }
-  addSensorToState(dateCreated, value) {
+  addDataToState(dateCreated, value) {
     let date = dateCreated;
     if(typeof dateCreated !== Number)
       date = new Date(dateCreated).getTime()
@@ -93,7 +107,7 @@ class SingleSensor extends Component {
 
     xValue += 3600000
 
-    this.addSensorToState(xValue, yValue)
+    this.addDataToState(xValue, yValue)
     // this.addSensorsToState(this.state.aeration, xValue, yValue2)
     // this.addSensorsToState(this.state.temp, xValue, yValue3)
     // this.addSensorsToState(this.state.nitrate, xValue, yValue4)
@@ -103,7 +117,7 @@ class SingleSensor extends Component {
     // this.addSensorsToState(this.state.ph, xValue, yValue8)
     // this.addSensorsToState(this.state.potassium, xValue, yValue9)
 
-    this.chart.options.data[0].legendText = " Soil Moisture: " + yValue + " awc";
+    this.chart.options.data[0].legendText = ` Sensor: ${yValue} awc`;
     // this.chart.options.data[1].legendText = " Aeration: " + yValue2 + " %";
     // this.chart.options.data[2].legendText = " Soil Temp: " + yValue3 + " °F";
     // this.chart.options.data[3].legendText = " Nitrate: " + yValue4 + " ppm";
@@ -146,6 +160,7 @@ class SingleSensor extends Component {
         {
           type: "spline",
           lineColor: 'green',
+          color: 'green',
           markerSize: 0,
           xValueType: "dateTime",
           xValueFormatString: "DD MMM hh:mm tt",
@@ -158,11 +173,11 @@ class SingleSensor extends Component {
     }
     return (
       <div>
-        <CanvasJSChart options = {options}
-            onRef={ref => this.chart = ref}/>
+        <CanvasJSChart options = { options }
+            onRef = { ref => this.chart = ref }/>
         {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
       </div>
     );
   }
 }
-module.exports = SingleSensor;
+export default SingleSensor;

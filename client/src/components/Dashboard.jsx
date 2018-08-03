@@ -3,44 +3,81 @@ import { Grid, Row } from 'react-bootstrap';
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
+import GroupSensor from "./GroupSensor";
 
 const Modal = require("react-bootstrap/lib/Modal")
 const Button = require("react-bootstrap/lib/Button")
 
+const axios = require('axios');
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+    this.getGroupsFromJSON()
+    this.getSensorsFromJSON()
     this.handleHide = this.handleHide.bind(this);
-    this.updateCurrentUser = this.updateCurrentUser.bind(this);
+    // this.updateCurrentUser = this.updateCurrentUser.bind(this);
     this.state = {
       currentUser: null,
+      currentUserId: null,
       show: false,
-      sensor: []
+      groups: [],
+      sensors: [],
+      sensor: {}
     };
+  }
+  componentDidMount() {
+    this.updateCurrentUser(this.props.email, this.props.id)
   }
   handleHide() {
     this.setState({ show: false });
   }
-  updateCurrentUser(email) {
+  updateCurrentUser(email, id) {
     this.setState({
-      currentUser: email
+      currentUser: email,
+      currentUserId: id
     })
+  }
+  getGroupsFromJSON(){
+    axios
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
+      .then(response => {
+        this.setState({
+          groups: response.data
+        })
+      })
+      .catch(error => console.log(error));
+  }
+  getSensorsFromJSON(){
+    axios
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors`)
+      .then(response => {
+        this.setState({
+          sensors: response.data
+        })
+      })
+      .catch(error => console.log(error));
   }
   render() {
     return (
       <div>
         <div>
           <Header updateCurrentUser={this.updateCurrentUser} />
+          <span >{this.currentUser}</span>
         </div>
         <Grid className="top-cont">
           <Row>
             <div>
               <SensorMap />
-              <div className="modal-container" style={{ height: 200 }}>
+              <div className="modal-container" style={{height: 200}}>
                 <Button
                   bsStyle="primary"
                   bsSize="large"
-                  onClick={() => this.setState({ show: true })}
+                  onClick={() => {
+                    this.setState({
+                      show: true
+                    })
+                  }}
                 >
                   sensors
                 </Button>
@@ -49,7 +86,7 @@ class Dashboard extends Component {
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
-                    aria-labelledby="contained-modal-title"
+                  aria-labelledby="contained-modal-title"
                   bsSize="large"
                 >
                   <Modal.Header closeButton>
@@ -58,7 +95,7 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} />
+                    <SingleSensor sensor={this.state.sensors[3]} />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
