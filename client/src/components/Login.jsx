@@ -39,7 +39,7 @@ class Login extends Component {
         this.setState({
           toDashboard: true
         })
-        this.props.updateCurrentUser(response.data.user.email);
+        this.props.updateCurrentUser(response.data.user.email, response.data.user.id);
         localStorage.setItem("auth_token", response.data.auth_token);
       })
       .catch(error => {
