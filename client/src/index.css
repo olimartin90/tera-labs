@@ -238,6 +238,11 @@ html {
   color: #e6e9ef;
 }
 
+.databoard {
+  border: solid black 1px;
+  height: 378px;
+}
+
 
 
 #footer {
