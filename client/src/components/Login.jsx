@@ -209,7 +209,7 @@ class Login extends Component {
 
               <FormGroup>
                 <Col smOffset={2} sm={10}>
-                  <Button onClick={this.handleRegister}>Register</Button>
+                  <Button onClick={this.handleRegister} onClick={this.handleClose}>Register</Button>
                 </Col>
               </FormGroup>
 
