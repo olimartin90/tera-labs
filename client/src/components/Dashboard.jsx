@@ -50,18 +50,16 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
   getSensorsFromJSON(groups){
-    let sensorsArray = []
+    let object = {}
     groups.forEach(group => {
       axios
       .get(`http://localhost:3001/api/v1/users/1/group_sensors/${group.id}/single_sensors`)
       .then(response => {
-        sensorsArray.push(response.data)
+        object[group.id] = response.data
       })
       .catch(error => console.log(error));
     })
-    this.setState({
-      sensors: sensorsArray
-    })
+    this.state.sensors.push(object)
   }
   render() {
     return (
@@ -80,10 +78,8 @@ class Dashboard extends Component {
                   bsSize="large"
                   onClick={() => {
                     this.setState({
-                      show: true,
-                      sensor: this.state.sensors[0]
-                    }),
-                    console.log('Sensor: ', this.state.sensors[0])
+                      show: true
+                    })
                   }}
                 >
                   sensors
@@ -101,7 +97,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} />
+                    <SingleSensor sensor={this.state.sensors} />
+                  {console.log('SensorDahboard: ', this.state.sensors)}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
