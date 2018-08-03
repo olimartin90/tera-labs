@@ -63,6 +63,7 @@ class Dashboard extends Component {
       <div>
         <div>
           <Header updateCurrentUser={this.updateCurrentUser} />
+          <span >{this.currentUser}</span>
         </div>
         <Grid className="top-cont">
           <Row>
@@ -85,7 +86,7 @@ class Dashboard extends Component {
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
-                    aria-labelledby="contained-modal-title"
+                  aria-labelledby="contained-modal-title"
                   bsSize="large"
                 >
                   <Modal.Header closeButton>
