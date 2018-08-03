@@ -115,7 +115,7 @@ html {
 }
 
 .loginregisterform {
-  
+
   /* display: flex;
   justify-content: flex-start; */
   /* height: 50%; */
@@ -233,6 +233,12 @@ html {
   font-weight: 500;
   color: #e6e9ef;
 }
+
+.databoard {
+  border: solid black 1px;
+  height: 378px;
+}
+
 
 #footer {
   bottom: 0;
