@@ -28,10 +28,7 @@ class SensorMap extends Component {
     this.getDataPointsFromJSON = this.getDataPointsFromJSON.bind(this);
     this.getGroupFromJSON()
     this.getSensorsFromJSON()
-<<<<<<< HEAD
-=======
     this.getDataPointsFromJSON()
->>>>>>> 600b9d634fcd0bfbc44fb11fdcfe807f66de8d52
 
     this.state = {
       markers: [],
@@ -162,11 +159,7 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-<<<<<<< HEAD
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} />
-=======
           <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} />
->>>>>>> 600b9d634fcd0bfbc44fb11fdcfe807f66de8d52
         )
       })
 
@@ -174,58 +167,8 @@ class SensorMap extends Component {
 
 // ***************** final return ***************************
         return (
-<<<<<<< HEAD
-          <div>
-            <div className="embed-responsive map-wrapper">
-              <Row>
-                <Map className="embed-responsive-item"
-                  google={this.props.google}
-                  style={style}
-                  initialCenter={{
-                    lat: 45.212059,
-                    lng: -73.738771
-                  }}
-                  zoom={15}
-                  onClick={this.onMapClicked}
-              >
 
-                  <Marker onClick={this.onMarkerClick}
-                          name={'Current location'} />
 
-                  {listOfMarkers}
-                </Map>
-              </Row>
-            </div>
-          <Row className="top-cont" >
-            <Popup trigger={<button> Add new sensor</button>} position="right center" modal closeOnDocumentClick>
-            {close => (
-            <div>
-              <form onSubmit={this.handleNewMarker.bind(this)}>
-                <label>
-                  Name:
-                  <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                  </label>
-                  <label>
-                    Latitude:
-                  <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                  <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                </label>
-                <label>
-                  Longitude:
-                  <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                  </label>
-                  <input type="submit" value="Submit" />
-                  <input type="button" value="close" onClick={() => {
-                    console.log('modal closed ')
-                    close()
-                  }} />
-                </form>
-              </div>
-            )}
-          </Popup>
-        </Row>
-      </div>
-=======
           <Grid>
                     <Row>
                     <Col md={9}></Col>
@@ -294,7 +237,7 @@ class SensorMap extends Component {
 
 
       </Grid>
->>>>>>> 600b9d634fcd0bfbc44fb11fdcfe807f66de8d52
+
     )
   }
 }
