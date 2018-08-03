@@ -75,7 +75,6 @@ class SensorMap extends Component {
               let data_typeMax = data_type + "Max"
               groupSensor[data_typeMax] = sensorMax
 
-
             }
           }          
           console.log(groupSensor)
@@ -167,25 +166,25 @@ class SensorMap extends Component {
 // ***************** final return ***************************
         return (
           <Grid>
-                    <Row>
-                    <Col md={9}></Col>
-                    <Col md={2}>
-                      <Popup trigger={<button> Add sensor</button>} position="right center" modal closeOnDocumentClick>
-                      {close => (
+            <Row>
+              <Col md={9}></Col>
+                <Col md={2}>
+                  <Popup trigger={<button> Add sensor</button>} position="right center" modal closeOnDocumentClick>
+                    {close => (
                       <div>
                         <form onSubmit={this.handleNewMarker.bind(this)}>
                           <label>
-                            Name:
-                            <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                            </label>
-                            <label>
-                              Latitude:
-                            <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                            <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
+                              Name:
+                              <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
                           </label>
                           <label>
-                            Longitude:
-                            <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
+                            Latitude:
+                           <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
+                           <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
+                          </label>
+                          <label>
+                              Longitude:
+                              <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
                             </label>
                             <input type="submit" value="Submit" />
                             <input type="button" value="close" onClick={() => {
@@ -196,10 +195,9 @@ class SensorMap extends Component {
                         </div>
                       )}
                     </Popup>
-                    </Col>
-                    <Col md={1}></Col>
-                  </Row>
-
+                  </Col>
+                <Col md={1}></Col>
+            </Row>
             <Row>
               <Col md={1}></Col>
               <Col md={3}>
@@ -231,8 +229,6 @@ class SensorMap extends Component {
               </Col>
               <Col md={1}></Col>
             </Row>
-
-
       </Grid>
     )
   }
