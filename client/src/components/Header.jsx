@@ -16,7 +16,7 @@ class Header extends Component {
     return (
       <div>
         <Logout />
-        <span >{this.state.currentUser}</span>
+        <span >{this.props.currentUser.email}</span>
       </div>
     )
   };

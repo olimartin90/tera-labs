@@ -41,6 +41,7 @@ class Login extends Component {
         })
         this.props.updateCurrentUser(response.data.user.email, response.data.user.id);
         localStorage.setItem("auth_token", response.data.auth_token);
+
       })
       .catch(error => {
         console.log(error)
@@ -49,6 +50,8 @@ class Login extends Component {
 
   handleRegister(e) {
     e.preventDefault();
+    console.log("registerrr")
+    console.log(this.register_email, "emaialalal")
     const first_name = this.first_name.value
     const last_name = this.last_name.value
     const email = this.register_email.value
@@ -70,8 +73,9 @@ class Login extends Component {
       }
     })
       .then(response => {
-        // this.props.changePage("delete");
-        this.props.updateCurrentUser(response.data.user.email);
+        console.log(response.data, "resspsps")
+        this.props.updateCurrentUser(response.data.email, response.data.id);
+        this.handleClose();
       })
       .catch(error => {
         console.log(error)
@@ -209,7 +213,7 @@ class Login extends Component {
 
               <FormGroup>
                 <Col smOffset={2} sm={10}>
-                  <Button onClick={this.handleRegister} onClick={this.handleClose}>Register</Button>
+                  <Button onClick={this.handleRegister}>Register</Button>
                 </Col>
               </FormGroup>
 
