@@ -6,8 +6,8 @@ const axios = require('axios');
 
 
 
-const style = {
-  width: '100%',
+const style = { // Styling the map.
+  width: '50%',
   height: '100%',
   position: "absolute",
   zIndex: "3",
@@ -26,7 +26,7 @@ class SensorMap extends Component {
     this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
     this.getGroupFromJSON()
     this.getSensorsFromJSON()
-    
+
     this.state = {
       markers: [
         {
@@ -44,16 +44,6 @@ class SensorMap extends Component {
           ph: 0,
           potassium: 0
 
-        },
-        {
-          name: "sensor2",
-          latitude: 40.64885,
-          longitude: -89.191807
-        },
-        {
-          name: "sensor3",
-          latitude: 41.64885,
-          longitude: -89.191807
         }
       ],
       nameValue: "",
@@ -65,14 +55,13 @@ class SensorMap extends Component {
 
   getGroupFromJSON(){
     axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors")
+      .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
       .then(response => {
         // console.log(response)
-        for (var marker of response.data){
-          // console.log(marker)
-          const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude}
-          const addMarker = this.state.markers.concat(newMarker)
-          this.setState({markers: addMarker})
+        for (var marker of response.data){ // looping through the group sensor data.
+          const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude} // assigning each groupSensor object to the newMarker var
+          const addMarker = this.state.markers.concat(newMarker) // adding the newMarker to the state
+          this.setState({markers: addMarker}) // set the new state, adding the NewMarker object to the state.
         }
       })
       .catch(error => console.log(error));
@@ -80,27 +69,28 @@ class SensorMap extends Component {
 
   getSensorsFromJSON(){
     axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
+    //each groupSensor has 9 sensors. Each sensor represents an element(object)
+      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors") //getting all the sensors
       .then(response => {
 
-        for (var groupSensor of this.state.markers) {
-          for (var sensor of response.data){
-            if (groupSensor.id === sensor.group_sensor_id){
-              
+        for (var groupSensor of this.state.markers) { //looping through the groupSensors in our state
+          for (var sensor of response.data){ //looping through the sensor data
+            if (groupSensor.id === sensor.group_sensor_id){ //if sensor has groupsensor foreign key
+
               let data_type = sensor.data_type
-              groupSensor[data_type] = sensor.data_value
+              groupSensor[data_type] = sensor.data_value //passing data_type as a key and its value becomes data_value
 
-              let sensorMin = sensor.set_min
-              let data_typeMin = data_type + "Min"
-              groupSensor[data_typeMin] = sensorMin
+              let sensorMin = sensor.set_min // assigning min to a variable
+              let data_typeMin = data_type + "Min" // assigning a data_type + a string called min to a variable
+              groupSensor[data_typeMin] = sensorMin // passing data_typeMin as a key in the groupSensor object, setting its value to sensorMin
 
-              let sensorMax = sensor.set_max
+              let sensorMax = sensor.set_max // same concept as line 84 to 86
               let data_typeMax = data_type + "Max"
               groupSensor[data_typeMax] = sensorMax
 
 
             }
-          }          
+          }
           console.log(groupSensor)
         }
       })
@@ -110,6 +100,7 @@ class SensorMap extends Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({isHidden: !this.state.isHidden})
+      console.log(marker);
     if (this.state.isHidden) {
       console.log("is hidden")
     } else {
@@ -159,17 +150,18 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} /> 
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} position={{lat: item.latitude, lng: item.longitude}} />
         )
       })
 
-      
-      
+
+
 // ***************** final return ***************************
         return (
           <div>
             <div className="embed-responsive map-wrapper">
               <Row>
+              //Calling the map
                 <Map className="embed-responsive-item"
                   google={this.props.google}
                   style={style}
@@ -177,15 +169,16 @@ class SensorMap extends Component {
                     lat: 45.212059,
                     lng: -73.738771
                   }}
-                  zoom={15} 
+                  zoom={15}
                   onClick={this.onMapClicked}
-              >
-          
+               >
+
                   <Marker onClick={this.onMarkerClick}
                           name={'Current location'} />
 
                   {listOfMarkers}
                 </Map>
+
               </Row>
             </div>
           <Row className="top-cont" >
