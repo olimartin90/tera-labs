@@ -14,13 +14,10 @@ let yValue = 0
 class SingleSensor extends Component {
   constructor(props) {
     super(props);
-    this.updateProps(this.props.sensor);
     this.updateChart = this.updateChart.bind(this);
     this.state = {
       data_type: "",
       userId: null,
-      groupId: null,
-      sensor: {},
       datapoints: []
     }
     this.getDataFromJSON();
@@ -29,30 +26,10 @@ class SingleSensor extends Component {
     this.updateChart();
     setInterval(this.updateChart, updateInterval);
   }
-  updateProps(sensor) {
-    this.setState({
-      sensor: sensor,
-      // data_type: sensor.data_type
-
-      // groupId: this.sensor.group_sensor_id,
-      // userId: user
-    })
-  }
-  // getSensorFromJSON(){
-  //   axios
-  //     .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1`)
-  //     .then(response => {
-  //       this.setState({
-  //         data_type: response.data.data_type
-  //       })
-  //     })
-  //     .catch(error => console.log(error));
-  // }
+  // Gets datapoints from db
   getDataFromJSON(){
-    // const userID = this.state.userId
-    const sensorId = this.state.sensor.id
     axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${sensorId}/datapoints`)
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/${this.props.sensor.group_sensor_id}/single_sensors/${this.props.sensor.id}/datapoints`)
       .then(response => {
         this.loadDatapointsFromDB(response.data)
       })
@@ -108,16 +85,8 @@ class SingleSensor extends Component {
     xValue += 3600000
 
     this.addDataToState(xValue, yValue)
-    // this.addSensorsToState(this.state.aeration, xValue, yValue2)
-    // this.addSensorsToState(this.state.temp, xValue, yValue3)
-    // this.addSensorsToState(this.state.nitrate, xValue, yValue4)
-    // this.addSensorsToState(this.state.phosphorus, xValue, yValue5)
-    // this.addSensorsToState(this.state.salinity, xValue, yValue6)
-    // this.addSensorsToState(this.state.respiration, xValue, yValue7)
-    // this.addSensorsToState(this.state.ph, xValue, yValue8)
-    // this.addSensorsToState(this.state.potassium, xValue, yValue9)
 
-    this.chart.options.data[0].legendText = ` Sensor: ${yValue} awc`;
+    this.chart.options.data[0].legendText = ` ${this.props.sensor.data_type}: ${yValue} awc`;
     // this.chart.options.data[1].legendText = " Aeration: " + yValue2 + " %";
     // this.chart.options.data[2].legendText = " Soil Temp: " + yValue3 + " °F";
     // this.chart.options.data[3].legendText = " Nitrate: " + yValue4 + " ppm";
@@ -141,8 +110,8 @@ class SingleSensor extends Component {
         includeZero: false,
         stripLines: [
           {
-            startValue: 0.2,
-            endValue: 0.8,
+            startValue: this.props.sensor.set_min,
+            endValue: this.props.sensor.set_max,
             color: '#DCDDDD  '
           }
         ]
@@ -166,7 +135,7 @@ class SingleSensor extends Component {
           xValueFormatString: "DD MMM hh:mm tt",
           yValueFormatString: "0.# 'awc'",
           showInLegend: true,
-          name: "Soil Moisture",
+          name: this.props.sensor.data_type,
           dataPoints: this.state.datapoints
         }
       ]

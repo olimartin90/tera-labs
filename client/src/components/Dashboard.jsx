@@ -14,14 +14,14 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.getGroupsFromJSON()
-    this.getSensorsFromJSON()
     this.handleHide = this.handleHide.bind(this);
     // this.updateCurrentUser = this.updateCurrentUser.bind(this);
     this.state = {
-      currentUser: null,
+      currentUser: "",
       currentUserId: null,
       show: false,
       groups: [],
+      group: {},
       sensors: [],
       sensor: {}
     };
@@ -44,19 +44,24 @@ class Dashboard extends Component {
       .then(response => {
         this.setState({
           groups: response.data
-        })
+        }),
+        this.getSensorsFromJSON(response.data)
       })
       .catch(error => console.log(error));
   }
-  getSensorsFromJSON(){
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors`)
+  getSensorsFromJSON(groups){
+    let sensorsArray = []
+    groups.forEach(group => {
+      axios
+      .get(`http://localhost:3001/api/v1/users/1/group_sensors/${group.id}/single_sensors`)
       .then(response => {
-        this.setState({
-          sensors: response.data
-        })
+        sensorsArray.push(response.data)
       })
       .catch(error => console.log(error));
+    })
+    this.setState({
+      sensors: sensorsArray
+    })
   }
   render() {
     return (
@@ -75,13 +80,14 @@ class Dashboard extends Component {
                   bsSize="large"
                   onClick={() => {
                     this.setState({
-                      show: true
-                    })
+                      show: true,
+                      sensor: this.state.sensors[0]
+                    }),
+                    console.log('Sensor: ', this.state.sensors[0])
                   }}
                 >
                   sensors
                 </Button>
-
                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
@@ -95,7 +101,7 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensors[3]} />
+                    <SingleSensor sensor={this.state.sensor} />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
