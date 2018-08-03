@@ -22,6 +22,8 @@ class SensorMap extends Component {
     this.handleValueName = this.handleValueName.bind(this);
     this.handleValueLatitude = this.handleValueLatitude.bind(this);
     this.handleValueNLongitude = this.handleValueLongitude.bind(this);
+    this.handleNewMarker = this.handleNewMarker.bind(this);
+    
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.getGroupFromJSON = this.getGroupFromJSON.bind(this);
     this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
@@ -130,7 +132,7 @@ class SensorMap extends Component {
 
   handleNewMarker = e => {
     console.log(this.state.latitudeValue)
-    const newMarker = { name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
+    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
     const addMarker = this.state.markers.concat(newMarker)
     this.setState({ markers: addMarker })
     this.state.nameValue = "";
@@ -157,7 +159,7 @@ class SensorMap extends Component {
 
       const listOfMarkers = markers.map((item, index) => {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
+          <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
         )
       })
 
