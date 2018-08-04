@@ -51,7 +51,7 @@ class SensorMap extends Component {
           this.setState({markers: addMarker})
 
         }
-        console.log(this.state.markers)
+        // console.log(this.state.markers)
       })
       .catch(error => console.log(error));
   }
@@ -77,7 +77,7 @@ class SensorMap extends Component {
 
             }
           }          
-          console.log(groupSensor)
+          // console.log(groupSensor)
         }
       })
       .catch(error => console.log(error));
@@ -107,11 +107,11 @@ class SensorMap extends Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({isHidden: !this.state.isHidden})
-    console.log(props)
+    // console.log(props)
     if (this.state.isHidden) {
-      console.log("is hidden")
+      // console.log("is hidden")
     } else {
-      console.log("is shown")
+      // console.log("is shown")
     }
   }
 
