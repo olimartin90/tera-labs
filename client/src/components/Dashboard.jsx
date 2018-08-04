@@ -11,54 +11,63 @@ class Dashboard extends Component {
 
   constructor(props) {
     super(props);
+
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
-    this.getPropsTest = this.getPropsTest.bind(this);
+    this.getUserProps = this.getUserProps.bind(this);
 
     this.state = {
       show: false,
       groups: [],
-      group: [],
-      sensor: {}
+      sensor: []
     };
   }
+
   componentDidMount(){
-    this.getSensor(this.state.groups, 1, 1)
   }
+
   handleHide() {
     this.setState({ show: false });
   }
+
+  getUserProps(user) {
+    this.state.currentUser = user
+    this.getGroupsFromJSON(this.state.currentUser.userId)
+  }
+
   getGroupsFromJSON(user) {
     const thisUser = parseInt(user);
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        this.setState({
-          groups: response.data.group_sensors
-        })
+        this.state.groups = response.data.group_sensors
+        this.getSensor(this.state.groups, 1, 1)
+        console.log('GroupSensors: ', response.data.group_sensors)
       })
       .catch(error => console.log(error));
   }
 
-  getPropsTest(user) {
-    this.state.currentUser = user
-    this.getGroupsFromJSON(this.state.currentUser.userId)
-  }
-
   getSensor(groups, groupId, sensorId){
     groups.forEach(group => {
-      if(group.id === groupId){
-        group.single_sensors.forEach(sensor => {
-          if(sensor.id === sensorId){
-            this.setState({ sensor: sensor });
-            console.log('from getSensors: ', sensor)
-          }
-        })
-      }
+      console.log('Group: ', group)
+      // if(group.id === groupId){
+      //   group.single_sensors.forEach(sensor => {
+      //     console.log('Sensors: ', sensor)
+      //     if(sensor.id === sensorId){
+      //       this.state.sensor.push(sensor);
+      //       console.log('Sensor: ', sensor)
+      //     }
+      //   })
+      // }
     })
+    //     const group = groups.find(group => {
+    //   return group.Id = groupId
+    // })
+    // console.log('Group: ', group)
   }
+
   render() {
-    this.getPropsTest(this.props.currentUser);
+    this.getUserProps(this.props.currentUser);
 
     return (
       <div>
@@ -95,7 +104,7 @@ class Dashboard extends Component {
                   </Modal.Header>
                   <Modal.Body>
                     <SingleSensor sensor={this.state.sensor} />
-                  {console.log('SensorDahboard: ', this.state.sensor)}
+                  {console.log('Render Dahboard: ', this.state.sensor)}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
