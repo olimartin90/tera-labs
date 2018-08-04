@@ -1,35 +1,37 @@
 import React, { Component } from 'react';
-import { Grid, Row } from 'react-bootstrap';
+import { Grid, Row, Modal, Button } from 'react-bootstrap';
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 import GroupSensor from "./GroupSensor";
 
-const Modal = require("react-bootstrap/lib/Modal")
-const Button = require("react-bootstrap/lib/Button")
-
 const axios = require('axios');
 
 class Dashboard extends Component {
+
   constructor(props) {
     super(props);
     this.handleHide = this.handleHide.bind(this);
+    this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
+    this.getPropsTest = this.getPropsTest.bind(this);
+
     this.state = {
       show: false,
       groups: [],
+      group: [],
       sensor: {}
     };
   }
   componentDidMount(){
-    this.getGroupsFromJSON()
     this.getSensor(this.state.groups, 1, 1)
   }
   handleHide() {
     this.setState({ show: false });
   }
-  getGroupsFromJSON() {
+  getGroupsFromJSON(user) {
+    const thisUser = parseInt(user);
     axios
-      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+      .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
         this.setState({
           groups: response.data.group_sensors
@@ -37,6 +39,12 @@ class Dashboard extends Component {
       })
       .catch(error => console.log(error));
   }
+
+  getPropsTest(user) {
+    this.state.currentUser = user
+    this.getGroupsFromJSON(this.state.currentUser.userId)
+  }
+
   getSensor(groups, groupId, sensorId){
     groups.forEach(group => {
       if(group.id === groupId){
@@ -50,6 +58,8 @@ class Dashboard extends Component {
     })
   }
   render() {
+    this.getPropsTest(this.props.currentUser);
+
     return (
       <div>
         <div>
