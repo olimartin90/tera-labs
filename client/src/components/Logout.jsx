@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 class Logout extends Component {
 
@@ -24,7 +25,8 @@ class Logout extends Component {
       return <Redirect to='/' />
     }
     return (
-      <button onClick={this.handleLogout}>Sign Out</button>
+      // <Button className="logoutButton" onClick={this.handleLogout}>Sign Out</Button>
+      <span className="logoutButton" onClick={this.handleLogout}>Sign Out</span>
     )
   };
 };
