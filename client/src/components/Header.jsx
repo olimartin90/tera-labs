@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
-import Register from "./Register";
-import Login from "./Login";
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+// import Register from "./Register";
+// import Login from "./Login";
 import Logout from "./Logout";
 
 class Header extends Component {
@@ -14,10 +14,40 @@ class Header extends Component {
 
   render() {
     return (
-      <div>
-        <Logout />
-        <span >{this.props.currentUser.email}</span>
-      </div>
+
+      <Navbar inverse collapseOnSelect>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <img src={process.env.PUBLIC_URL + '/agriculture-tech.png'} />
+            <span>Tera Labs</span>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav>
+            <NavItem eventKey={1} href="#">
+              About Us
+            </NavItem>
+            <NavItem eventKey={2} href="#">
+              Contact
+            </NavItem>
+            <NavDropdown eventKey={3} title="Quick Links" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Home</MenuItem>
+              <MenuItem eventKey={3.2}>Whats New</MenuItem>
+              <MenuItem eventKey={3.3}>Support</MenuItem>
+              <MenuItem eventKey={3.4}>My Account</MenuItem>
+            </NavDropdown>
+          </Nav>
+          <Nav pullRight>
+            <NavItem eventKey={1} href="#">
+              {this.props.currentUser.email}
+            </NavItem>
+            <NavItem eventKey={2} href="#">
+              <Logout />
+            </NavItem>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     )
   };
 };

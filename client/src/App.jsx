@@ -4,18 +4,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Error from "./components/Error";
-// import Header from "./components/Header";
-// import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-
-// const axios = require('axios');
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: ""
+      currentUser: {}
     }
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
   }
@@ -25,7 +21,7 @@ class App extends Component {
       currentUser: {
         email: email,
         userId: userId
-      },
+      }
     })
   }
 
@@ -33,7 +29,6 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          {/* <Header updateCurrentUser={this.updateCurrentUser} /> */}
           <Switch>
             <Route path="/" render={() => <Home updateCurrentUser={this.updateCurrentUser} />} exact />
             <Route path="/dashboard" render={() => <Dashboard currentUser={this.state.currentUser} />} />
