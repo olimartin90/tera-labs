@@ -13,74 +13,47 @@ const axios = require('axios');
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.getGroupsFromJSON()
     this.handleHide = this.handleHide.bind(this);
-    // this.updateCurrentUser = this.updateCurrentUser.bind(this);
     this.state = {
-      currentUser: "",
-      currentUserId: null,
       show: false,
       groups: [],
-      group: {},
       sensor: {}
     };
   }
-  componentDidMount() {
-    this.updateCurrentUser(this.props.email, this.props.id)
+  componentDidMount(){
+    this.getGroupsFromJSON()
+    this.getSensor(this.state.groups, 1, 1)
   }
   handleHide() {
     this.setState({ show: false });
   }
-  updateCurrentUser(email, id) {
-    this.setState({
-      currentUser: email,
-      currentUserId: id
-    })
-  }
   getGroupsFromJSON() {
     axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
+      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
       .then(response => {
         this.setState({
-          groups: {
-            id: response.data.id,
-            name: response.data.name,
-            latitude: response.data.latitude,
-            longitude: response.data.longitude,
-            sensors: []
-          }
+          groups: response.data.group_sensors
         })
-        // this.setState({
-        //   groups: response.data
-        // }),
-        this.getSensorsFromJSON(response.data)
       })
       .catch(error => console.log(error));
   }
-  getSensorsFromJSON(groups){
-    let object = {}
+  getSensor(groups, groupId, sensorId){
     groups.forEach(group => {
-      axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/${group.id}/single_sensors`)
-      .then(response => {
-        group.sensors.push({
-          id: response.data.id,
-          data_type: response.data.data_type,
-          set_min: response.data.set_min,
-          set_max: response.data.set_max,
-          datapoints: []
+      if(group.id === groupId){
+        group.single_sensors.forEach(sensor => {
+          if(sensor.id === sensorId){
+            this.setState({ sensor: sensor });
+            console.log('from getSensors: ', sensor)
+          }
         })
-      })
-      .catch(error => console.log(error));
+      }
     })
-    this.state.sensors.push(object)
   }
   render() {
     return (
       <div>
         <div>
           <Header currentUser={this.props.currentUser} />
-          <span >{this.currentUser}</span>
         </div>
         <Grid className="top-cont">
           <Row>
@@ -111,8 +84,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor group={this.state.groups[0]}  />
-                  {console.log('SensorDahboard: ', this.state.groups[0])}
+                    <SingleSensor sensor={this.state.sensor} />
+                  {console.log('SensorDahboard: ', this.state.sensor)}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>

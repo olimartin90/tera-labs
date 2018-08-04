@@ -21,29 +21,12 @@ class SingleSensor extends Component {
       groupId: null,
       datapoints: []
     }
-    this.getDataFromJSON();
+    // this.loadDatapointsFromDB(this.props.sensor.data_points)
+    console.log('DataPoints: ', this.props.sensor)
   }
   componentDidMount(){
     this.updateChart();
     setInterval(this.updateChart, updateInterval);
-  }
-  // getSensorFromJSON(){
-  //   axios
-  //     .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1`)
-  //     .then(response => {
-  //       this.setState({
-  //         data_type: response.data.data_type
-  //       })
-  //     })
-  //     .catch(error => console.log(error));
-  // }
-  getDataFromJSON(){
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1/datapoints`)
-      .then(response => {
-        this.loadDatapointsFromDB(response.data)
-      })
-      .catch(error => console.log(error));
   }
   // sendSensorToJSON(sensorData){
   //   // TODO....

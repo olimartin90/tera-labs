@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: ""
+      currentUser: {}
     }
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
   }
@@ -25,7 +25,7 @@ class App extends Component {
       currentUser: {
         email: email,
         userId: userId
-      },
+      }
     })
   }
 
