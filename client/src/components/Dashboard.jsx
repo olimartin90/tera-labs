@@ -28,26 +28,9 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
-<<<<<<< HEAD
-  getPropsTest(user){
-      this.state.currentUser = user
-      this.getGroupsFromJSON( this.state.currentUser.userId)
-  }
-  
-    getGroupsFromJSON(user) {
-      const thisUser = parseInt(user) ;
-      axios
-        .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
-        .then(response => {
-        console.log(response)
-        console.log("holla")
-        })
-        .catch(error => console.log(error));
-    }
-=======
   getPropsTest(user) {
-    this.state.currentUser = user
-    this.getGroupsFromJSON(this.state.currentUser.userId)
+      this.state.currentUser = user
+      this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
   getGroupsFromJSON(user) {
@@ -55,12 +38,19 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        console.log(response)
-        console.log("holla")
+        const group_sensor = response.data.group_sensors
+        if(group_sensor !== this.state.groups){
+          console.log(group_sensor)
+          this.state.groups = group_sensor
+          console.log("this.state.groups", this.state.groups)
+        }
+
       })
       .catch(error => console.log(error));
   }
->>>>>>> master
+
+  
+
   render() {
     this.getPropsTest(this.props.currentUser);
 
@@ -98,13 +88,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-<<<<<<< HEAD
-                    <SingleSensor group={this.state.groups[0]}  />
-                  {/* {console.log('SensorDahboard: ', this.state.groups[0])} */}
-=======
                     <SingleSensor group={this.state.groups[0]} />
                     {/* {console.log('SensorDahboard: ', this.state.groups[0])} */}
->>>>>>> master
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
