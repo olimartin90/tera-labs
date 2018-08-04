@@ -13,21 +13,24 @@ class Dashboard extends Component {
     super(props);
 
     this.handleHide = this.handleHide.bind(this);
-    this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this);
-    this.getPropsTest = this.getPropsTest.bind(this);
+    this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
+    this.getUserProps = this.getUserProps.bind(this);
 
     this.state = {
       show: false,
       groups: [],
-      group: {},
-      sensor: {}
+      sensor: []
     };
   }
+
+  componentDidMount(){
+  }
+
   handleHide() {
     this.setState({ show: false });
   }
 
-  getPropsTest(user) {
+  getUserProps(user) {
     this.state.currentUser = user
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
@@ -37,13 +40,34 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        console.log(response)
-        console.log("holla")
+        this.state.groups = response.data.group_sensors
+        this.getSensor(this.state.groups, 1, 1)
+        console.log('GroupSensors: ', response.data.group_sensors)
       })
       .catch(error => console.log(error));
   }
+
+  getSensor(groups, groupId, sensorId){
+    groups.forEach(group => {
+      console.log('Group: ', group)
+      // if(group.id === groupId){
+      //   group.single_sensors.forEach(sensor => {
+      //     console.log('Sensors: ', sensor)
+      //     if(sensor.id === sensorId){
+      //       this.state.sensor.push(sensor);
+      //       console.log('Sensor: ', sensor)
+      //     }
+      //   })
+      // }
+    })
+    //     const group = groups.find(group => {
+    //   return group.Id = groupId
+    // })
+    // console.log('Group: ', group)
+  }
+
   render() {
-    this.getPropsTest(this.props.currentUser);
+    this.getUserProps(this.props.currentUser);
 
     return (
       <div>
@@ -79,8 +103,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor group={this.state.groups[0]} />
-                    {/* {console.log('SensorDahboard: ', this.state.groups[0])} */}
+                    <SingleSensor sensor={this.state.sensor} />
+                  {console.log('Render Dahboard: ', this.state.sensor)}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
