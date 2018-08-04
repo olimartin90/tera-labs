@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'group_sensors_data/show'
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # get '/login' => 'sessions#new'
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :home, only: [:index]
       resources :authentication, only: [:create]
+      resources :group_sensors_data, only: [:show] 
       resources :users, only: [:index, :new, :create, :show] do
         resources :group_sensors, only: [:index, :create, :show, :update, :destroy] do
           resources :single_sensors, only: [:index, :create, :show, :update, :destroy] do
