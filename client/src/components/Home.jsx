@@ -14,7 +14,7 @@ class Home extends Component {
             </div>
             <Col xs={12} sm={12} md={4}>
               <div className="section0">
-                <h1 className="teralabs"> Tera Labs </h1>
+                <h1 className="teralabs" > Tera Labs </h1>
                 <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
               </div>
             </Col>
@@ -45,10 +45,10 @@ class Home extends Component {
           </Row>
 
           <Row className="row3">
-            <Col className="collast2" xs={12} sm={12} md={6} lg={6}>
+            <Col className="collast2" xs={12} sm={12} md={8} lg={6}>
               <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map.JPG'} alt="" />
             </Col>
-            <Col xs={12} sm={12} md={6} lg={6}>
+            <Col xs={12} sm={12} md={8} lg={6}>
               <div className="section2">
                 <h4 className="h42"> LOCATE YOUR SENSORS </h4>
                 <p className="p2"> Our color-coded system makes it easy to get a sense of whats happening without needing to dig deep. </p>

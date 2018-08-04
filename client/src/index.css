@@ -38,35 +38,6 @@ html {
 
 }
 
-@media (max-width: 1199px) {
-  .row2 {
-    flex-direction: column;
-    align-content: center;
-    margin-left: 20px;
-  }
-  .collast {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    order: 99;
-    display: flex;
-    justify-content: center;
-  }
-
-  .row3 {
-    flex-direction: column;
-    align-content: center;
-
-  }
-  .collast2 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    order: 99;
-    display: flex;
-    justify-content: center;
-  }
-}
-
-
 .row3 {
   display: flex;
   align-items: center;
@@ -79,6 +50,11 @@ html {
   padding-bottom: 50px;
   z-index: 1;
 
+}
+.section0 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .section1 {
@@ -96,11 +72,10 @@ html {
 
 }
  .teralabs {
-
   font-family: 'Open Sans', sans-serif;
   font-weight: bolder;
   color: white;
-  font-size: 90px;
+  font-size: 6vw;
 }
 
 .teralabsdescription {
@@ -141,74 +116,9 @@ html {
   box-shadow: 10px 10px 20px black;
 }
 
-@media (max-width: 1199px) {
-  .graphimage {
-    width: 600px;
-    height: 450px;
-    margin-left: 0px;
-  }
-  .mapimage {
-    width: 600px;
-    height: 450px;
-    margin-left: 0px;
-  }
-}
-
-@media (max-width: 635px) {
-   .graphimage {
-     width: 500px;
-     height: 350px;
-     margin-left: 0px;
-   }
-   .mapimage {
-     width: 500px;
-     height: 350px;
-     margin-left: 0px;
-   }
-}
-
-@media (max-width: 535px) {
-  .graphimage {
-    width: 400px;
-    height: 250px;
-    margin-left: 0px;
-  }
-  .mapimage {
-    width: 400px;
-    height: 250px;
-    margin-left: 0px;
-  }
-}
-
-@media (max-width: 435px) {
-  .graphimage {
-    width: 350px;
-    height: 200px;
-    margin-left: 0px;
-  }
-  .mapimage {
-    width: 350px;
-    height: 200px;
-    margin-left: 0px;
-  }
-}
-
-@media (max-width: 387px) {
-  .graphimage {
-    width: 325px;
-    height: 175px;
-    margin-left: 0px;
-  }
-  .mapimage {
-    width: 325px;
-    height: 175px;
-    margin-left: 0px;
-  }
-}
-
 .h41 {
   font-family: 'Oswald', sans-serif;
-  font-size: 45px;
+  font-size: 3vw;
   font-weight: bolder;
   color: black;
   width: 75%;
@@ -216,7 +126,7 @@ html {
 
 .h42 {
   font-family: 'Oswald', sans-serif;
-  font-size: 45px;
+  font-size: 3vw;
   font-weight: bolder;
   color: white;
   width: 75%;
@@ -224,14 +134,14 @@ html {
 
 .p1 {
  width: 75%;
- font-size: 20px;
+ font-size: 1.5vw;
  font-weight: 300;
  color: black;
 }
 
 .p2 {
   width: 75%;
-  font-size: 20px;
+  font-size: 1.5vw;
   font-weight: 500;
   color: #e6e9ef;
 }
@@ -269,4 +179,98 @@ html {
   /* display: flex;
   justify-content: flex-end; */
   border: 1px solid red;
+}
+
+@media (max-width: 1199px) {
+  .graphimage {
+    width: 600px;
+    height: 450px;
+    margin-left: 0px;
+  }
+  .mapimage {
+    width: 600px;
+    height: 450px;
+    margin-left: 0px;
+  }
+  .row2 {
+    flex-direction: column;
+    align-content: center;
+    margin-left: 20px;
+  }
+  .collast {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    order: 99;
+    display: flex;
+    justify-content: center;
+  }
+
+  .row3 {
+    flex-direction: column;
+    align-content: center;
+
+  }
+  .collast2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    order: 99;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 635px) {
+   .graphimage {
+     width: 500px;
+     height: 350px;
+     margin-left: 0px;
+   }
+   .mapimage {
+     width: 500px;
+     height: 350px;
+     margin-left: 0px;
+   }
+}
+@media (max-width: 550px) {
+  .h42 {
+    font-size: 40px;
+  }
+}
+@media (max-width: 535px) {
+  .graphimage {
+    width: 400px;
+    height: 250px;
+    margin-left: 0px;
+  }
+  .mapimage {
+    width: 400px;
+    height: 250px;
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 435px) {
+  .graphimage {
+    width: 350px;
+    height: 200px;
+    margin-left: 0px;
+  }
+  .mapimage {
+    width: 350px;
+    height: 200px;
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 387px) {
+  .graphimage {
+    width: 325px;
+    height: 175px;
+    margin-left: 0px;
+  }
+  .mapimage {
+    width: 325px;
+    height: 175px;
+    margin-left: 0px;
+  }
 }

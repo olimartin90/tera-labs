@@ -13,57 +13,47 @@ const axios = require('axios');
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.getGroupsFromJSON()
-    this.getSensorsFromJSON()
     this.handleHide = this.handleHide.bind(this);
-    // this.updateCurrentUser = this.updateCurrentUser.bind(this);
+    // this.updateCurrentUser = this.updateCurrentUser.bind(this)
     this.state = {
-      currentUser: null,
-      currentUserId: null,
+      currentUser: {},
       show: false,
       groups: [],
-      sensors: [],
+      group: {},
       sensor: {}
     };
-  }
-  componentDidMount() {
-    this.updateCurrentUser(this.props.email, this.props.id)
+    this.getGroupsFromJSON()
   }
   handleHide() {
     this.setState({ show: false });
   }
-  updateCurrentUser(email, id) {
-    this.setState({
-      currentUser: email,
-      currentUserId: id
-    })
-  }
+  // updateCurrentUser(email, userId) {
+  //   this.setState({
+  //     currentUser: {
+  //       email: email,
+  //       userId: userId
+  //     }
+  //   })
+  // }
   getGroupsFromJSON() {
+    const userId = this.props.currentUser.email
+    console.log("The userID:", userId)
     axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors`)
+      .get(`http://localhost:3001/api/v1/group_sensors_data/${this.state.currentUser.userId}`)
       .then(response => {
         this.setState({
-          groups: response.data
+          groups: response.data.group_sensors
         })
-      })
-      .catch(error => console.log(error));
-  }
-  getSensorsFromJSON() {
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors`)
-      .then(response => {
-        this.setState({
-          sensors: response.data
-        })
+        console.log('Response Data: ', response.data.group_sensors)
       })
       .catch(error => console.log(error));
   }
   render() {
     return (
       <div>
+        {console.log('UserId: ', this.props.currentUser.email)}
         <div>
           <Header currentUser={this.props.currentUser} />
-          <span >{this.currentUser}</span>
         </div>
         <Grid className="top-cont">
           <Row>
@@ -81,7 +71,6 @@ class Dashboard extends Component {
                 >
                   sensors
                 </Button>
-
                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
@@ -95,7 +84,8 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensors[3]} />
+                    <SingleSensor group={this.state.groups[0]}  />
+                  {console.log('SensorDahboard: ', this.state.groups[0])}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
