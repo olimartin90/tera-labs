@@ -21,7 +21,7 @@ class App extends Component {
       currentUser: {
         email: email,
         userId: userId
-      },
+      }
     })
   }
 

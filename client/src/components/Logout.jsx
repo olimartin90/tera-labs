@@ -25,7 +25,8 @@ class Logout extends Component {
       return <Redirect to='/' />
     }
     return (
-      <Button className="logoutButton" onClick={this.handleLogout}>Sign Out</Button>
+      // <Button className="logoutButton" onClick={this.handleLogout}>Sign Out</Button>
+      <span className="logoutButton" onClick={this.handleLogout}>Sign Out</span>
     )
   };
 };

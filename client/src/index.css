@@ -114,27 +114,19 @@ html {
 
 .form-horizontal {
   background-color: white;
-  opacity: 0.85;
+  opacity: 0.8;
   padding: 5%;
   border: 2px solid #ccc;
   border-radius: 8px;
 }
 
-.header1 {
-  /* display: flex;
-  justify-content: flex-end; */
-  border: 1px solid red;
-  height: 100px;
+.navbar-brand {
+  display: flex;
+  align-items: center;
 }
-
-.logoutButton {
-  border: 1px solid red;
-  margin: 10px;
-  float: right;
-}
-
-.currentUser {
-  border: 1px solid red;
+.navbar-brand>img {
+  width: 65px;
+  padding: 7px 14px;
 }
 
 .graphimage {
