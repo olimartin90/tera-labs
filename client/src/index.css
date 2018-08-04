@@ -115,6 +115,7 @@ html {
 }
 
 .loginregisterform {
+
   /* display: flex;
   justify-content: flex-start; */
   /* height: 50%; */
@@ -238,7 +239,6 @@ html {
   border: solid black 1px;
   height: 378px;
 }
-
 
 
 #footer {
