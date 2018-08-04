@@ -7,7 +7,11 @@ import GoogleMapIconRed from '../map-marker-red.png'
 const axios = require('axios');
 
 
+<<<<<<< HEAD
 const style = {
+=======
+const style = { // Styling the map.
+>>>>>>> master
   width: '100%',
   height: '100%',
   position: "absolute",

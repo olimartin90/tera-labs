@@ -14,49 +14,19 @@ let yValue = 0
 class SingleSensor extends Component {
   constructor(props) {
     super(props);
-    this.updateProps(this.props.sensor);
     this.updateChart = this.updateChart.bind(this);
     this.state = {
       data_type: "",
       userId: null,
       groupId: null,
-      sensor: {},
       datapoints: []
     }
-    this.getDataFromJSON();
+    // this.loadDatapointsFromDB(this.props.sensor.data_points)
+    console.log('DataPoints: ', this.props.sensor)
   }
   componentDidMount(){
     this.updateChart();
     setInterval(this.updateChart, updateInterval);
-  }
-  updateProps(sensor) {
-    this.setState({
-      sensor: sensor,
-      // data_type: sensor.data_type
-
-      // groupId: this.sensor.group_sensor_id,
-      // userId: user
-    })
-  }
-  // getSensorFromJSON(){
-  //   axios
-  //     .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/1`)
-  //     .then(response => {
-  //       this.setState({
-  //         data_type: response.data.data_type
-  //       })
-  //     })
-  //     .catch(error => console.log(error));
-  // }
-  getDataFromJSON(){
-    // const userID = this.state.userId
-    const sensorId = this.state.sensor.id
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${sensorId}/datapoints`)
-      .then(response => {
-        this.loadDatapointsFromDB(response.data)
-      })
-      .catch(error => console.log(error));
   }
   // sendSensorToJSON(sensorData){
   //   // TODO....
