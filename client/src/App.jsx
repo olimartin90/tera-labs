@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
@@ -31,7 +31,14 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/" render={() => <Home updateCurrentUser={this.updateCurrentUser} />} exact />
-            <Route path="/dashboard" render={() => <Dashboard currentUser={this.state.currentUser} />} />
+            <Route path="/dashboard" render={() => {
+              if (this.state.currentUser.email) {
+                return (<Dashboard currentUser={this.state.currentUser} />)
+              }
+              else {
+                return <Home updateCurrentUser={this.updateCurrentUser} />
+              }
+            }} />
             <Route component={Error} />
           </Switch>
           <Footer />
