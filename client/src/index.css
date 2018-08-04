@@ -8,7 +8,6 @@ html {
  .container {
    margin: 0;
    width: 100%;
-
  }
 
  /* .row {
@@ -28,14 +27,12 @@ html {
     background-size: cover;
     min-height: 115vh;
     z-index: 1;
-
 }
 
 .row2 {
   display: flex;
   align-items: center;
   min-height: 115vh;
-
 }
 
 @media (max-width: 1199px) {
@@ -66,7 +63,6 @@ html {
   }
 }
 
-
 .row3 {
   display: flex;
   align-items: center;
@@ -78,23 +74,20 @@ html {
   min-height: 115vh;
   padding-bottom: 50px;
   z-index: 1;
-
 }
 
 .section1 {
   display: flex;
   align-items: center;
   flex-direction: column;
-
 }
 
 .section2 {
   display: flex;
   align-items: center;
   flex-direction: column;
-
-
 }
+
  .teralabs {
   font-family: 'Open Sans', sans-serif;
   font-weight: bolder;
@@ -115,13 +108,32 @@ html {
 }
 
 .loginregisterform {
+  margin-top: 8%;
+}
+
+.form-horizontal {
+  background-color: white;
+  opacity: 0.85;
+  padding: 5%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.header1 {
   /* display: flex;
-  justify-content: flex-start; */
-  /* height: 50%; */
-  margin-top: 10%;
-  /* width: 75%; */
-  /* border: 1px solid red; */
-  /* background-color: white; */
+  justify-content: flex-end; */
+  border: 1px solid red;
+  height: 100px;
+}
+
+.logoutButton {
+  border: 1px solid red;
+  margin: 10px;
+  float: right;
+}
+
+.currentUser {
+  border: 1px solid red;
 }
 
 .graphimage {
@@ -239,8 +251,6 @@ html {
   height: 378px;
 }
 
-
-
 #footer {
   bottom: 0;
   background-color: #F6BB42;
@@ -262,10 +272,4 @@ html {
 
 .top-cont {
   padding-bottom: 15%;
-}
-
-.col2 {
-  /* display: flex;
-  justify-content: flex-end; */
-  border: 1px solid red;
 }

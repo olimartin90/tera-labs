@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-// import { Component } from 'react-bootstrap';
 import { Modal, Col, Form, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
-// import { Modal } from 'react-bootstrap';
-// import Register from "./Register";
 
 const axios = require('axios');
 
@@ -96,7 +93,7 @@ class Login extends Component {
     }
     return (
 
-      <Form horizontal>
+      <Form horizontal className="form-horizontal">
         <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
             Email

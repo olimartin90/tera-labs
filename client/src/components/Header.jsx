@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Register from "./Register";
-import Login from "./Login";
+// import Register from "./Register";
+// import Login from "./Login";
 import Logout from "./Logout";
 
 class Header extends Component {
@@ -15,8 +15,10 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Logout />
-        <span >{this.props.currentUser.email}</span>
+        <nav className="header1" >
+          <Logout />
+          {this.props.currentUser.email}
+        </nav>
       </div>
     )
   };

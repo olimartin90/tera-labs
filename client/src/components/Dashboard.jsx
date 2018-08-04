@@ -16,7 +16,6 @@ class Dashboard extends Component {
     this.getGroupsFromJSON()
     this.getSensorsFromJSON()
     this.handleHide = this.handleHide.bind(this);
-    // this.updateCurrentUser = this.updateCurrentUser.bind(this);
     this.state = {
       currentUser: null,
       currentUserId: null,
@@ -61,10 +60,9 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <div>
-          <Header currentUser={this.props.currentUser} />
-          <span >{this.currentUser}</span>
-        </div>
+
+        <Header currentUser={this.props.currentUser} />
+
         <Grid className="top-cont">
           <Row>
             <div>
