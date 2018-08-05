@@ -77,7 +77,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap />
+              <SensorMap currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"

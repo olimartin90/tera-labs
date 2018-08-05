@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Login from "./Login";
 
+
+
 class Home extends Component {
 
   render() {
@@ -16,6 +18,7 @@ class Home extends Component {
               <div className="section0">
                 <h1 className="teralabs" > Tera Labs </h1>
                 <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
+                <a href="#row2"><span></span>Scroll</a>
               </div>
             </Col>
 
@@ -28,7 +31,7 @@ class Home extends Component {
             </Col>
           </Row>
 
-          <Row className="row2">
+          <Row id="row2">
             <Col className="collast" xs={12} sm={10} md={8} lg={6}>
 
               <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graphexample2.jpg'} alt="" />

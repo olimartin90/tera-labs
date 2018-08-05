@@ -35,7 +35,8 @@ class SensorMap extends Component {
       nameValue: "",
       latitudeValue: 0,
       longitudeValue: 0,
-      hideSensorInfo: true
+      hideSensorInfo: true,
+      dataBoard: []
     }
   }
 
@@ -108,11 +109,22 @@ class SensorMap extends Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({isHidden: !this.state.isHidden})
-      console.log("E:", e)
-      console.log("Props:", props)
-      console.log("Marker:", marker);
-      console.log("MarkerID:", marker.id);
-      console.log("This.state.markers:", this.state.markers)
+        let data = []
+
+        axios
+          .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+          .then(res => {
+            console.log("Response:", res.data.group_sensors)
+            res.data.group_sensors.filter(x=>x.id === marker.id)[0].single_sensors.map(sensor=>{
+                const mostRecentValue = sensor.data_points.sort((a,b)=>{return((new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
+                data.push({
+                  data_type: sensor.data_type,
+                  data_value: mostRecentValue
+                })
+            })
+            console.log(data)
+            this.setState({dataBoard: data})
+          })
 
 
 
@@ -212,9 +224,17 @@ class SensorMap extends Component {
               <Col md={1}></Col>
               <Col md={3}>
                 <div className="databoard">
-                  <p>
-                    Thierry databoard
-                  </p>
+                  {
+                    this.state.dataBoard.map((data,index)=>
+                      <div key={index}>
+                              <p>{data.data_type}</p>
+
+                              <p>{data.data_value}</p>
+
+
+                      </div>
+                    )
+                  }
                 </div>
               </Col>
               <Col md={7}>
