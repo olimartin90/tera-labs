@@ -10,8 +10,7 @@ const axios = require('axios');
 class Dashboard extends Component {
 
   constructor(props) {
-    super(props);
-
+    super(props)
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
     this.getUserProps = this.getUserProps.bind(this);
@@ -23,12 +22,11 @@ class Dashboard extends Component {
     };
   }
 
-  componentDidMount(){
-  }
 
   handleHide() {
     this.setState({ show: false });
   }
+
 
   getUserProps(user) {
     this.state.currentUser = user
@@ -64,6 +62,7 @@ class Dashboard extends Component {
     //   return group.Id = groupId
     // })
     // console.log('Group: ', group)
+
   }
 
   render() {
@@ -71,13 +70,14 @@ class Dashboard extends Component {
 
     return (
       <div>
+        {console.log('UserId: ', this.props.currentUser.email)}
         <div>
           <Header currentUser={this.props.currentUser} />
         </div>
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap />
+              <SensorMap currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
@@ -103,6 +103,9 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
+
+
+
                     <SingleSensor sensor={this.state.sensor} />
                   {console.log('Render Dahboard: ', this.state.sensor)}
                   </Modal.Body>

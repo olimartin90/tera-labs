@@ -8,6 +8,7 @@ html {
  .container {
    margin: 0;
    width: 100%;
+
  }
 
  /* .row {
@@ -27,15 +28,171 @@ html {
     background-size: cover;
     min-height: 115vh;
     z-index: 1;
+
 }
 
-.row2 {
+#row2 {
   display: flex;
   align-items: center;
   min-height: 115vh;
+
+}
+
+.row3 {
+  display: flex;
+  align-items: center;
+  background-image: url("/background2d.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 115vh;
+  padding-bottom: 50px;
+  z-index: 1;
+
+}
+.section0 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.section1 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.section2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+
+}
+ .teralabs {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bolder;
+  color: white;
+  font-size: 6vw;
+}
+
+.teralabsdescription {
+  text-align: center;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-top: 200px;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  width: 75%;
+}
+
+.loginregisterform {
+
+  /* display: flex;
+  justify-content: flex-start; */
+  /* height: 50%; */
+  margin-top: 10%;
+  /* width: 75%; */
+  /* border: 1px solid red; */
+  /* background-color: white; */
+}
+
+.graphimage {
+  width: 600px;
+  height: 450px;
+  margin-left: 50px;
+  box-shadow: 10px 10px 20px lightgray;
+}
+
+.mapimage {
+  width: 600px;
+  height: 450px;
+  margin-left: 50px;
+  margin-top: 20px;
+  box-shadow: 10px 10px 20px black;
+}
+
+.h41 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 3vw;
+  font-weight: bolder;
+  color: black;
+  width: 75%;
+}
+
+.h42 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 3vw;
+  font-weight: bolder;
+  color: white;
+  width: 75%;
+}
+
+.p1 {
+ width: 75%;
+ font-size: 1.5vw;
+ font-weight: 300;
+ color: black;
+}
+
+.p2 {
+  width: 75%;
+  font-size: 1.5vw;
+  font-weight: 500;
+  color: #e6e9ef;
+}
+
+.databoard {
+
+
+  height: 52vh;
+}
+
+
+#footer {
+  bottom: 0;
+  background-color: #F6BB42;
+}
+
+.footer-social-media-icone {
+  width: 35px;
+  height: 35px;
+}
+
+.number2 {
+  z-index: 1 !important;
+  position:static !important;
+  padding-bottom: 200px;
+}
+.map-wrapper {
+  padding-top: 50%;
+}
+
+.top-cont {
+  padding-bottom: 15%;
+}
+
+.col2 {
+  /* display: flex;
+  justify-content: flex-end; */
+  border: 1px solid red;
 }
 
 @media (max-width: 1199px) {
+  .graphimage {
+    width: 600px;
+    height: 450px;
+    margin-left: 0px;
+  }
+  .mapimage {
+    width: 600px;
+    height: 450px;
+    margin-left: 0px;
+  }
   .row2 {
     flex-direction: column;
     align-content: center;
@@ -63,100 +220,6 @@ html {
   }
 }
 
-.row3 {
-  display: flex;
-  align-items: center;
-  background-image: url("/background2d.png");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 115vh;
-  padding-bottom: 50px;
-  z-index: 1;
-}
-
-.section1 {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.section2 {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
- .teralabs {
-
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bolder;
-  color: white;
-  font-size: 90px;
-}
-
-.teralabsdescription {
-  text-align: center;
-  position: relative;
-  left: 0;
-  right: 0;
-  margin-top: 200px;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
-  width: 75%;
-}
-
-.loginregisterform {
-  margin-top: 8%;
-}
-
-.form-horizontal {
-  background-color: white;
-  opacity: 0.8;
-  padding: 5%;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-.navbar-brand>img {
-  width: 65px;
-  padding: 7px 14px;
-}
-
-.graphimage {
-  width: 600px;
-  height: 450px;
-  margin-left: 50px;
-  box-shadow: 10px 10px 20px lightgray;
-}
-
-.mapimage {
-  width: 600px;
-  height: 450px;
-  margin-left: 50px;
-  margin-top: 20px;
-  box-shadow: 10px 10px 20px black;
-}
-
-@media (max-width: 1199px) {
-  .graphimage {
-    width: 600px;
-    height: 450px;
-    margin-left: 0px;
-  }
-  .mapimage {
-    width: 600px;
-    height: 450px;
-    margin-left: 0px;
-  }
-}
-
 @media (max-width: 635px) {
    .graphimage {
      width: 500px;
@@ -169,7 +232,11 @@ html {
      margin-left: 0px;
    }
 }
-
+@media (max-width: 550px) {
+  .h42 {
+    font-size: 40px;
+  }
+}
 @media (max-width: 535px) {
   .graphimage {
     width: 400px;
@@ -207,62 +274,4 @@ html {
     height: 175px;
     margin-left: 0px;
   }
-}
-
-.h41 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 45px;
-  font-weight: bolder;
-  color: black;
-  width: 75%;
-}
-
-.h42 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 45px;
-  font-weight: bolder;
-  color: white;
-  width: 75%;
-}
-
-.p1 {
- width: 75%;
- font-size: 20px;
- font-weight: 300;
- color: black;
-}
-
-.p2 {
-  width: 75%;
-  font-size: 20px;
-  font-weight: 500;
-  color: #e6e9ef;
-}
-
-.databoard {
-  border: solid black 1px;
-  height: 378px;
-}
-
-#footer {
-  bottom: 0;
-  background-color: #F6BB42;
-}
-
-.footer-social-media-icone {
-  width: 35px;
-  height: 35px;
-}
-
-.number2 {
-  z-index: 1 !important;
-  position:static !important;
-  padding-bottom: 200px;
-}
-.map-wrapper {
-  padding-top: 50%;
-}
-
-.top-cont {
-  padding-bottom: 15%;
 }
