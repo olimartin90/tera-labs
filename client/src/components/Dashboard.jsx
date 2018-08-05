@@ -13,7 +13,6 @@ class Dashboard extends Component {
     super(props)
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
-    this.getUserProps = this.getUserProps.bind(this);
 
     this.state = {
       show: false,
@@ -23,10 +22,14 @@ class Dashboard extends Component {
   }
 
 
+  componentWillReceiveProps(nextProps) {
+    this.state.currentUser = nextProps.currentUser
+    this.getGroupsFromJSON(this.state.currentUser.userId)
+  }
+
   handleHide() {
     this.setState({ show: false });
   }
-
 
   getUserProps(user) {
     this.state.currentUser = user
@@ -45,7 +48,7 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
-  getSensor(groups, groupId, sensorId){
+  getSensor(groups, groupId, sensorId) {
     groups.forEach(group => {
       console.log('Group: ', group)
       // if(group.id === groupId){
@@ -66,7 +69,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    this.getUserProps(this.props.currentUser);
 
     return (
       <div>
@@ -107,7 +109,7 @@ class Dashboard extends Component {
 
 
                     <SingleSensor sensor={this.state.sensor} />
-                  {console.log('Render Dahboard: ', this.state.sensor)}
+                    {console.log('Render Dahboard: ', this.state.sensor)}
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
