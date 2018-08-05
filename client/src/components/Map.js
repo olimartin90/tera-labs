@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
@@ -40,7 +40,8 @@ class SensorMap extends Component {
       latitudeValue: 0,
       longitudeValue: 0,
       hideSensorInfo: true,
-      show: false  // show state for the Add Sensors Modal
+      show: false,  // show state for the Add Sensors Modal
+      dataBoard: []
     }
   }
 
@@ -56,7 +57,7 @@ class SensorMap extends Component {
           this.setState({ markers: addMarker })
 
         }
-        console.log(this.state.markers)
+        // console.log("This.state.markers:", this.state.markers)
       })
       .catch(error => console.log(error));
   }
@@ -111,12 +112,28 @@ class SensorMap extends Component {
   }
 
 
-  onMarkerClick(props, marker, e) {
-    this.setState({ isHidden: !this.state.isHidden })
+// *********** DATABOARD FEATURE *********************
 
-    console.log(marker);
-    console.log(marker.id);
-    // console.log(marker.name)
+  onMarkerClick(props, marker, e) {
+    this.setState({isHidden: !this.state.isHidden})
+        let data = []
+
+        axios
+          .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+          .then(res => {
+            console.log("Response:", res.data.group_sensors)
+            res.data.group_sensors.filter(x=>x.id === marker.id)[0].single_sensors.map(sensor=>{
+                const mostRecentValue = sensor.data_points.sort((a,b)=>{return((new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
+                data.push({
+                  data_type: sensor.data_type,
+                  data_value: mostRecentValue
+                })
+            })
+            console.log(data)
+            this.setState({dataBoard: data})
+          })
+
+
 
     if (this.state.isHidden) {
       console.log("is hidden")
@@ -124,6 +141,9 @@ class SensorMap extends Component {
       console.log("is shown")
     }
   }
+
+  // *********** DATABOARD FEATURE *********************
+
 
   handleValueName = e => {
     console.log(e.target.value)
@@ -195,7 +215,7 @@ class SensorMap extends Component {
                 onClick={() => this.setState({ show: true })}
               >
                 Add Sensors
-            </Button>
+              </Button>
 
               <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
@@ -359,19 +379,79 @@ class SensorMap extends Component {
                     <label>
                       Longitude:
                             <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                    <input type="button" value="close" onClick={() => {
-                      console.log('modal closed ')
-                      close()
-                    }} />
-                  </form>
-                </div>
-              )}
-            </Popup> */}
+                            </label>
+                            <input type="submit" value="Submit" />
+                            <input type="button" value="close" onClick={() => {
+                              console.log('modal closed ')
+                              close()
+                            }} />
+                          </form>
+                        </div>
+                      )}
+
+                    </Popup> */}
 
             </div>
             {/* ****************** End of Add Sensors Modal ****************** */}
+            
+                    </Col>
+                    <Col md={1}></Col>
+                  </Row>
+
+            <Row>
+              <Col md={1}></Col>
+              <Col md={3}>
+
+              
+
+{/* **************** DATABOARD ************** */}
+
+                <div className="databoard">
+                  {
+                    this.state.dataBoard.map((data,index)=>
+                      <div key={index}>
+                      <Grid>
+                        <Row className="show-grid">
+                          <Col xs={12} md={8}>
+                            <h4>
+                              <Label bsStyle="success">{data.data_type}</Label>
+                            </h4>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <h4>
+                              <p>{data.data_value}</p>
+                            </h4>
+                          </Col>
+                          </Row>
+                       </Grid>
+                      </div>
+                    )
+                  }
+                </div>
+{/* **************** DATABOARD ************** */}
+
+              </Col>
+              <Col md={7}>
+                <div className="embed-responsive map-wrapper container">
+                  <div className="col"></div>
+                  <Map className="embed-responsive-item"
+                    google={this.props.google}
+                    style={style}
+                    initialCenter={{
+                      lat: 45.212059,
+                      lng: -73.738771
+                    }}
+                    zoom={15}
+                    onClick={this.onMapClicked}
+                >
+                    <Marker onClick={this.onMarkerClick}
+                            name={'Current location'} />
+                    {listOfMarkers}
+                  </Map>
+                  <div className="col"></div>
+                </div>
+              )}
+            
 
           </Col>
           <Col md={1}></Col>

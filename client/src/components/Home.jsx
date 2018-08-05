@@ -1,8 +1,66 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Login from "./Login";
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 
 class Home extends Component {
+  constructor(props) {
+   super(props);
+   this.scrollToTop = this.scrollToTop.bind(this);
+ }
+
+ componentDidMount() {
+
+   Events.scrollEvent.register('begin', function () {
+     console.log("begin", arguments);
+   });
+
+   Events.scrollEvent.register('end', function () {
+     console.log("end", arguments);
+   });
+
+ }
+ scrollToTop() {
+   scroll.scrollToTop();
+ }
+ scrollTo() {
+   scroller.scrollTo('scroll-to-element', {
+     duration: 800,
+     delay: 0,
+     smooth: 'easeInOutQuart'
+   })
+ }
+ scrollToWithContainer() {
+
+   let goToContainer = new Promise((resolve, reject) => {
+
+     Events.scrollEvent.register('end', () => {
+       resolve();
+       Events.scrollEvent.remove('end');
+     });
+
+     scroller.scrollTo('scroll-container', {
+       duration: 800,
+       delay: 0,
+       smooth: 'easeInOutQuart'
+     });
+
+   });
+
+   goToContainer.then(() =>
+     scroller.scrollTo('scroll-container-second-element', {
+       duration: 800,
+       delay: 0,
+       smooth: 'easeInOutQuart',
+       containerId: 'scroll-container'
+     }));
+ }
+ componentWillUnmount() {
+   Events.scrollEvent.remove('begin');
+   Events.scrollEvent.remove('end');
+ }
 
   render() {
     return (
@@ -14,8 +72,11 @@ class Home extends Component {
             </div>
             <Col xs={12} sm={12} md={4}>
               <div className="section0">
-                <h1 className="teralabs"> Tera Labs </h1>
+                <h1 className="teralabs" > Tera Labs </h1>
                 <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
+                <Link activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                  Scroll Down
+                </Link>
               </div>
             </Col>
 
@@ -28,7 +89,7 @@ class Home extends Component {
             </Col>
           </Row>
 
-          <Row className="row2">
+          <Row id="row2">
             <Col className="collast" xs={12} sm={10} md={8} lg={6}>
 
               <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graphexample2.jpg'} alt="" />
@@ -45,10 +106,10 @@ class Home extends Component {
           </Row>
 
           <Row className="row3">
-            <Col className="collast2" xs={12} sm={12} md={6} lg={6}>
+            <Col className="collast2" xs={12} sm={12} md={8} lg={6}>
               <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map.JPG'} alt="" />
             </Col>
-            <Col xs={12} sm={12} md={6} lg={6}>
+            <Col xs={12} sm={12} md={8} lg={6}>
               <div className="section2">
                 <h4 className="h42"> LOCATE YOUR SENSORS </h4>
                 <p className="p2"> Our color-coded system makes it easy to get a sense of whats happening without needing to dig deep. </p>
