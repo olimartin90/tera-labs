@@ -30,6 +30,7 @@ class SensorMap extends Component {
     this.getSensorsFromJSON()
     this.getDataPointsFromJSON()
 
+    // Functions for the Add Sensors Modal
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
@@ -39,7 +40,7 @@ class SensorMap extends Component {
       latitudeValue: 0,
       longitudeValue: 0,
       hideSensorInfo: true,
-      show: false
+      show: false  // show state for the Add Sensors Modal
     }
   }
 
@@ -148,6 +149,7 @@ class SensorMap extends Component {
     e.preventDefault();
   }
 
+  // Functions for showing and closing the Add Sensors Modal
   handleClose() {
     this.setState({ show: false });
   }
@@ -184,9 +186,11 @@ class SensorMap extends Component {
         <Row>
           <Col md={9}></Col>
           <Col md={2}>
+
+            {/* ****************** Add Sensors Modal ****************** */}
             <div className="modal-container" style={{ height: 200 }}>
               <Button
-                bsStyle="success"
+                bsStyle="primary"
                 bsSize="large"
                 onClick={() => this.setState({ show: true })}
               >
@@ -333,7 +337,7 @@ class SensorMap extends Component {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
-                    bsStyle="success"
+                    bsStyle="primary"
                     bsSize="large"
                     onClick={this.handleSubmit}>Submit</Button>
                 </Modal.Footer>
@@ -367,6 +371,8 @@ class SensorMap extends Component {
             </Popup> */}
 
             </div>
+            {/* ****************** End of Add Sensors Modal ****************** */}
+
           </Col>
           <Col md={1}></Col>
         </Row>
