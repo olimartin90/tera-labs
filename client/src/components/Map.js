@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Label } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
@@ -107,6 +107,8 @@ class SensorMap extends Component {
 }
 
 
+// *********** DATABOARD FEATURE *********************
+
   onMarkerClick(props, marker, e) {
     this.setState({isHidden: !this.state.isHidden})
         let data = []
@@ -134,6 +136,9 @@ class SensorMap extends Component {
       console.log("is shown")
     }
   }
+
+  // *********** DATABOARD FEATURE *********************
+
 
   handleValueName = e => {
     console.log(e.target.value)
@@ -223,19 +228,33 @@ class SensorMap extends Component {
             <Row>
               <Col md={1}></Col>
               <Col md={3}>
+
+{/* **************** DATABOARD ************** */}
+
                 <div className="databoard">
                   {
                     this.state.dataBoard.map((data,index)=>
                       <div key={index}>
-                              <p>{data.data_type}</p>
-
+                      <Grid>
+                        <Row className="show-grid">
+                          <Col xs={12} md={8}>
+                            <h4>
+                              <Label bsStyle="success">{data.data_type}</Label>
+                            </h4>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <h4>
                               <p>{data.data_value}</p>
-
-
+                            </h4>
+                          </Col>
+                          </Row>
+                       </Grid>
                       </div>
                     )
                   }
                 </div>
+{/* **************** DATABOARD ************** */}
+
               </Col>
               <Col md={7}>
                 <div className="embed-responsive map-wrapper container">

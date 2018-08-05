@@ -1,10 +1,66 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Login from "./Login";
-
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 class Home extends Component {
+  constructor(props) {
+   super(props);
+   this.scrollToTop = this.scrollToTop.bind(this);
+ }
+
+ componentDidMount() {
+
+   Events.scrollEvent.register('begin', function () {
+     console.log("begin", arguments);
+   });
+
+   Events.scrollEvent.register('end', function () {
+     console.log("end", arguments);
+   });
+
+ }
+ scrollToTop() {
+   scroll.scrollToTop();
+ }
+ scrollTo() {
+   scroller.scrollTo('scroll-to-element', {
+     duration: 800,
+     delay: 0,
+     smooth: 'easeInOutQuart'
+   })
+ }
+ scrollToWithContainer() {
+
+   let goToContainer = new Promise((resolve, reject) => {
+
+     Events.scrollEvent.register('end', () => {
+       resolve();
+       Events.scrollEvent.remove('end');
+     });
+
+     scroller.scrollTo('scroll-container', {
+       duration: 800,
+       delay: 0,
+       smooth: 'easeInOutQuart'
+     });
+
+   });
+
+   goToContainer.then(() =>
+     scroller.scrollTo('scroll-container-second-element', {
+       duration: 800,
+       delay: 0,
+       smooth: 'easeInOutQuart',
+       containerId: 'scroll-container'
+     }));
+ }
+ componentWillUnmount() {
+   Events.scrollEvent.remove('begin');
+   Events.scrollEvent.remove('end');
+ }
 
   render() {
     return (
@@ -18,7 +74,9 @@ class Home extends Component {
               <div className="section0">
                 <h1 className="teralabs" > Tera Labs </h1>
                 <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
-                <a href="#row2"><span></span>Scroll</a>
+                <Link activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                  Scroll Down
+                </Link>
               </div>
             </Col>
 
