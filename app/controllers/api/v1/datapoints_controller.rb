@@ -30,6 +30,7 @@ module Api::V1
     def data_params
       params.require(:datapoint).permit(
         :data_value,
+        :date_epoch,
         :single_sensor_id
       )
     end
