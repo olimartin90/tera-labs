@@ -23,12 +23,7 @@ class SensorMap extends Component {
     this.handleValueLatitude = this.handleValueLatitude.bind(this);
     this.handleValueNLongitude = this.handleValueLongitude.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
-    this.getGroupFromJSON = this.getGroupFromJSON.bind(this);
-    this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
-    this.getDataPointsFromJSON = this.getDataPointsFromJSON.bind(this);
-    this.getGroupFromJSON()
-    this.getSensorsFromJSON()
-    this.getDataPointsFromJSON()
+
 
     this.state = {
       markers: [],
@@ -39,73 +34,11 @@ class SensorMap extends Component {
     }
   }
 
-  getGroupFromJSON(){
-    axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors")
-      .then(response => {
-        // console.log(response)
-        for (var marker of response.data){
-          // console.log(marker)
-          const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude}
-          const addMarker = this.state.markers.concat(newMarker)
-          this.setState({markers: addMarker})
-
-        }
-        // console.log(this.state.markers)
-      })
-      .catch(error => console.log(error));
-  }
-
-  getSensorsFromJSON(){
-    axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors")
-      .then(response => {
-
-        for (var groupSensor of this.state.markers) {
-          for (var sensor of response.data){
-            if (groupSensor.id === sensor.group_sensor_id){
-              
-              let data_type = sensor.data_type
-
-              let sensorMin = sensor.set_min
-              let data_typeMin = data_type + "Min"
-              groupSensor[data_typeMin] = sensorMin
-
-              let sensorMax = sensor.set_max
-              let data_typeMax = data_type + "Max"
-              groupSensor[data_typeMax] = sensorMax
-
-            }
-          }          
-          // console.log(groupSensor)
-        }
-      })
-      .catch(error => console.log(error));
-  }
-
-  getDataPointsFromJSON(){
-    for (var i = 0; i < 10; i++){
-    axios
-      .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${i}/datapoints`)
-      .then(response => {
-
-        for (var dataPoints of response.data ) {
-          const marker = this.state.markers
-          // groupSensor[data_type] = dataPoints.data_value
-          
-        }
-        // console.log(this.state.markers)
-
-        // let data_type = sensor.data_type
-        // groupSensor[data_type] = sensor.data_value
-
-      })
-      .catch(error => console.log(error));
-  }
-}
 
 
   onMarkerClick(props, marker, e) {
+
+    console.log(this.state)
     this.setState({isHidden: !this.state.isHidden})
     // console.log(props)
     if (this.state.isHidden) {
@@ -128,9 +61,42 @@ class SensorMap extends Component {
     this.setState({ longitudeValue: e.target.value });
   }
 
+componentWillReceiveProps(nextProps) {
+  const groups = nextProps.groups
+  for (var marker of groups) {
+    
+    const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
+
+    for (var sensor of marker.single_sensors){
+      let data_type = sensor.data_type
+      let sensorMin = sensor.set_min
+      let data_typeMin = data_type + "Min"
+      
+      let sensorMax = sensor.set_max
+      let data_typeMax = data_type + "Max"
+      
+      const newData = 0;
+      
+      for (var data of sensor.data_points) {
+        
+        newData = data.data_value;
+        
+      }
+      
+      const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
+      newMarker[data_type] = newSensorSetting
+      
+    }
+    
+    const addMarker = this.state.markers.concat(newMarker)
+            console.log(this.state.markers)
+    this.state.markers = addMarker
+    
+  }
+}
   handleNewMarker = e => {
     console.log(this.state.latitudeValue)
-    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
+    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue, alert: 0 }
     const addMarker = this.state.markers.concat(newMarker)
     this.setState({ markers: addMarker })
     this.state.nameValue = "";
@@ -141,24 +107,39 @@ class SensorMap extends Component {
 
 
     render() {
-
-
-      // let iconMarker = new window.google.maps.MarkerImage(
-      //   url,
-      //   null, /* size is determined at runtime */
-      //   null, /* origin is 0,0 */
-      //   null, /* anchor is bottom center of the scaled image */
-      //   new window.google.maps.Size(32, 32)
-      // );
-
-
 // *************** return the markers from the state and send it to the final return ****************
-      let markers = this.state.markers
+      let markers = this.state.markers;
+      let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
+      let alert = 0;
 
       const listOfMarkers = markers.map((item, index) => {
-        return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
-        )
+          for (var dataType of types_of_data) {
+            if(item[dataType]){
+              const dataObj = item[dataType]
+              console.log("dataa:", item)
+              if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
+                item.alert += 1;
+                console.log("you're in deep shit. Alert: ", alert)
+
+              } else {
+                console.log("everythings alright")
+              }
+            } else {
+              console.log("undefineddddddddddddddd")
+            }
+        }
+
+        console.log("Item:::::", item.Aeration)
+
+        if (item.alert === 0) {
+          return (
+            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconGreen} position={{lat: item.latitude, lng: item.longitude}} /> 
+          )
+        } else {
+          return (
+            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
+          )
+        }
       })
 
       
@@ -220,8 +201,8 @@ class SensorMap extends Component {
                     zoom={15} 
                     onClick={this.onMapClicked}
                 >
-                    <Marker onClick={this.onMarkerClick}
-                            name={'Current location'} />
+                    {/* <Marker onClick={this.onMarkerClick}
+                            name={'Current location'} /> */}
                     {listOfMarkers}
                   </Map>
                   <div className="col"></div>

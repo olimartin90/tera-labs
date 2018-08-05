@@ -15,7 +15,6 @@ class Dashboard extends Component {
 
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
-    this.getUserProps = this.getUserProps.bind(this);
 
     this.state = {
       show: false,
@@ -29,18 +28,18 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
-  getUserProps(user) {
-    this.state.currentUser = user
-    this.getGroupsFromJSON(this.state.currentUser.userId)
-  }
+componentWillReceiveProps(nextProps){
+  this.state.currentUser = nextProps.currentUser
+  this.getGroupsFromJSON(this.state.currentUser.userId)
+}
 
-  getGroupsFromJSON(user) {
-    const thisUser = parseInt(user);
+  getGroupsFromJSON(userId) {
+    const thisUser = parseInt(userId);
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        this.state.groups = response.data.group_sensors
-        this.getSensor(this.state.groups, 1, 1)
+        this.setState({groups: response.data.group_sensors}) 
+        // this.getSensor(this.state.groups, 1, 1)
         console.log('GroupSensors: ', response.data.group_sensors)
       })
       .catch(error => console.log(error));
@@ -66,7 +65,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    this.getUserProps(this.props.currentUser);
 
     return (
       <div>
@@ -76,7 +74,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
