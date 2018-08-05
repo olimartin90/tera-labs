@@ -112,26 +112,26 @@ class SensorMap extends Component {
   }
 
 
-// *********** DATABOARD FEATURE *********************
+  // *********** DATABOARD FEATURE *********************
 
   onMarkerClick(props, marker, e) {
-    this.setState({isHidden: !this.state.isHidden})
-        let data = []
+    this.setState({ isHidden: !this.state.isHidden })
+    let data = []
 
-        axios
-          .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
-          .then(res => {
-            console.log("Response:", res.data.group_sensors)
-            res.data.group_sensors.filter(x=>x.id === marker.id)[0].single_sensors.map(sensor=>{
-                const mostRecentValue = sensor.data_points.sort((a,b)=>{return((new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
-                data.push({
-                  data_type: sensor.data_type,
-                  data_value: mostRecentValue
-                })
-            })
-            console.log(data)
-            this.setState({dataBoard: data})
+    axios
+      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+      .then(res => {
+        console.log("Response:", res.data.group_sensors)
+        res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
+          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
+          data.push({
+            data_type: sensor.data_type,
+            data_value: mostRecentValue
           })
+        })
+        console.log(data)
+        this.setState({ dataBoard: data })
+      })
 
 
 
@@ -393,65 +393,6 @@ class SensorMap extends Component {
 
             </div>
             {/* ****************** End of Add Sensors Modal ****************** */}
-            
-                    </Col>
-                    <Col md={1}></Col>
-                  </Row>
-
-            <Row>
-              <Col md={1}></Col>
-              <Col md={3}>
-
-              
-
-{/* **************** DATABOARD ************** */}
-
-                <div className="databoard">
-                  {
-                    this.state.dataBoard.map((data,index)=>
-                      <div key={index}>
-                      <Grid>
-                        <Row className="show-grid">
-                          <Col xs={12} md={8}>
-                            <h4>
-                              <Label bsStyle="success">{data.data_type}</Label>
-                            </h4>
-                          </Col>
-                          <Col xs={6} md={4}>
-                            <h4>
-                              <p>{data.data_value}</p>
-                            </h4>
-                          </Col>
-                          </Row>
-                       </Grid>
-                      </div>
-                    )
-                  }
-                </div>
-{/* **************** DATABOARD ************** */}
-
-              </Col>
-              <Col md={7}>
-                <div className="embed-responsive map-wrapper container">
-                  <div className="col"></div>
-                  <Map className="embed-responsive-item"
-                    google={this.props.google}
-                    style={style}
-                    initialCenter={{
-                      lat: 45.212059,
-                      lng: -73.738771
-                    }}
-                    zoom={15}
-                    onClick={this.onMapClicked}
-                >
-                    <Marker onClick={this.onMarkerClick}
-                            name={'Current location'} />
-                    {listOfMarkers}
-                  </Map>
-                  <div className="col"></div>
-                </div>
-              )}
-            
 
           </Col>
           <Col md={1}></Col>
@@ -460,12 +401,36 @@ class SensorMap extends Component {
         <Row>
           <Col md={1}></Col>
           <Col md={3}>
+
+            {/* **************** DATABOARD ************** */}
+
             <div className="databoard">
-              <p>
-                Thierry's databoard
-                  </p>
+              {
+                this.state.dataBoard.map((data, index) =>
+                  <div key={index}>
+                    <Grid>
+                      <Row className="show-grid">
+                        <Col xs={12} md={8}>
+                          <h4>
+                            <Label bsStyle="success">{data.data_type}</Label>
+                          </h4>
+                        </Col>
+                        <Col xs={6} md={4}>
+                          <h4>
+                            <p>{data.data_value}</p>
+                          </h4>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </div>
+                )
+              }
             </div>
+            {/* **************** DATABOARD ************** */}
+
           </Col>
+
+          {/* **************** MAP ************** */}
           <Col md={7}>
             <div className="embed-responsive map-wrapper container">
               <div className="col"></div>
@@ -485,13 +450,14 @@ class SensorMap extends Component {
               </Map>
               <div className="col"></div>
             </div>
+
           </Col>
           <Col md={1}></Col>
+          {/* **************** MAP ************** */}
+
         </Row>
 
-
       </Grid>
-
     )
   }
 }

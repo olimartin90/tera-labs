@@ -27,6 +27,9 @@ class Dashboard extends Component {
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
+  handleHide() {
+    this.setState({ show: false });
+  }
 
   getUserProps(user) {
     this.state.currentUser = user
