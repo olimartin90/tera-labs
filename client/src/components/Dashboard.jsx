@@ -8,64 +8,48 @@ import GroupSensor from "./GroupSensor";
 const axios = require('axios');
 
 class Dashboard extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
-
     this.state = {
       show: false,
       groups: [],
-      sensor: []
+      group: {},
+      sensor: {}
     };
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    this.state.currentUser = nextProps.currentUser
-    this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
   handleHide() {
     this.setState({ show: false });
   }
 
-  getUserProps(user) {
-    this.state.currentUser = user
+  componentWillReceiveProps(nextProps){
+    this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
-  getGroupsFromJSON(user) {
-    const thisUser = parseInt(user);
+  getGroupsFromJSON(userId) {
+    const thisUser = parseInt(userId);
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
         this.state.groups = response.data.group_sensors
-        this.getSensor(this.state.groups, 1, 1)
-        console.log('GroupSensors: ', response.data.group_sensors)
       })
       .catch(error => console.log(error));
   }
 
-  getSensor(groups, groupId, sensorId) {
+  getSensor(groups, groupId, sensorIndex){
     groups.forEach(group => {
-      console.log('Group: ', group)
-      // if(group.id === groupId){
-      //   group.single_sensors.forEach(sensor => {
-      //     console.log('Sensors: ', sensor)
-      //     if(sensor.id === sensorId){
-      //       this.state.sensor.push(sensor);
-      //       console.log('Sensor: ', sensor)
-      //     }
-      //   })
-      // }
+      if(group.id === groupId){
+        this.setState({ group: group, show: true });
+        group.single_sensors.forEach(sensor => {
+          if(group.single_sensors.indexOf(sensor) === sensorIndex){
+            this.setState({ sensor: sensor, show: true });
+          }
+        })
+      }
     })
-    //     const group = groups.find(group => {
-    //   return group.Id = groupId
-    // })
-    // console.log('Group: ', group)
-
   }
 
   render() {
@@ -84,15 +68,67 @@ class Dashboard extends Component {
                 <Button
                   bsStyle="primary"
                   bsSize="large"
-                  onClick={() => {
-                    this.setState({
-                      show: true
-                    })
-                  }}
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 0) }}
                 >
-                  sensors
+                  Moisture
                 </Button>
-                <Modal
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 1) }}
+                >
+                  Aeration
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 2) }}
+                >
+                  Temp
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 3) }}
+                >
+                  Nitrate
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 4) }}
+                >
+                  Phosphorus
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 5) }}
+                >
+                  Salinity
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 6) }}
+                >
+                  Respiration
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 7) }}
+                >
+                  pH
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 8) }}
+                >
+                  Potassium
+                </Button>
+                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
@@ -105,11 +141,7 @@ class Dashboard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-
-
-
-                    <SingleSensor sensor={this.state.sensor} />
-                    {console.log('Render Dahboard: ', this.state.sensor)}
+                    <SingleSensor sensor={this.state.sensor} group={ this.state.group } />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
