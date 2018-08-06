@@ -7,6 +7,7 @@ import GroupSensor from "./GroupSensor";
 
 const axios = require('axios');
 
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +80,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap currentUser={this.props.currentUser} />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
