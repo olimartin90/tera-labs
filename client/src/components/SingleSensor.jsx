@@ -6,6 +6,7 @@ const CanvasJSReact = require('../lib/canvasjs.react');
 const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+//  Sets the interval for updating the chart
 const updateInterval = 5000;
 
 class SingleSensor extends Component {
@@ -19,7 +20,7 @@ class SingleSensor extends Component {
       unit: '',
       format: ''
     }
-    this.loadDatapointsFromDB(this.props.sensor.data_points)
+    this.loadDatapointsFromProps()
   }
 
   componentDidMount(){
@@ -29,32 +30,31 @@ class SingleSensor extends Component {
 
   componentWillUnmount(){
     clearInterval(this.interval);
+    this.chart.destroy();
   }
 
   // Loads all datapoints from db and adds them to the datapoints array
-  loadDatapointsFromDB(inputArray){
-    debugger
-    inputArray.forEach(data => {
+  loadDatapointsFromProps(){
+    const fiftySensors = this.props.sensor.data_points
+    const sliced = fiftySensors.slice(fiftySensors.length-50)
+    sliced.forEach(data => {
       // Adds each datapoints but converts date into unix timestamp
       this.addDataPointToChart(data.date_epoch, data.data_value)
-      // this.setState({ datapoint: data })
     })
   }
 
   // Adds datapoints to datapoints array
   addDataPointToChart(xValue, yValue) {
     this.state.datapoints.push({
-      x: xValue, //Date(xValue).getTime(), //
+      x: xValue,
       y: yValue,
       markerColor: 'green'
     });
-    if (this.state.datapoints.length > 50 ) {
-      this.state.datapoints.shift();
-    }
   }
 
+  // Adds datapoints into db as they are created
   AddDataPointsToDB(){
-    this.setSensor()
+    this.setSensorProperties()
     if(this.props.group.id){
       // Gets last datapoint in array
       const last = this.state.datapoints.slice(this.state.datapoints.length-1)[0]
@@ -65,14 +65,14 @@ class SingleSensor extends Component {
           single_sensor_id: this.props.sensor.id
         })
         .then(response => {
-          debugger
           this.addDataPointToChart(last.x + 3600000, this.state.yValue)
         })
         .catch(error => console.log(error));
     }
   }
 
-  setSensor(){
+  // Sets the properties of a sensor before displaying in chart
+  setSensorProperties(){
     switch(this.props.sensor.data_type){
       case 'Soil Moisture':
         // Soil moisture in awc
@@ -86,7 +86,7 @@ class SingleSensor extends Component {
         // Aeration in %
         this.setState({
           unit: ' %',
-          format: '0.# awc',
+          format: '0.# "%"',
           yValue: Math.round(((Math.random()*10.5)+15.5)*10)/10
         });
         break
@@ -94,7 +94,7 @@ class SingleSensor extends Component {
         // Soil temp in °F
         this.setState({
           unit: ' °F',
-          format: '0.# awc',
+          format: '# °F',
           yValue: Math.floor(Math.random()*(350-340+1)+50)
         });
         break
@@ -102,7 +102,7 @@ class SingleSensor extends Component {
         // Nitrate in ppm
         this.setState({
           unit: ' ppm',
-          format: '0.# awc',
+          format: '# ppm',
           yValue: Math.floor(Math.random()*(350-340+1)+80)
         });
         break
@@ -110,7 +110,7 @@ class SingleSensor extends Component {
         // Phosphorus in ppm
         this.setState({
           unit: ' ppm',
-          format: '0.# awc',
+          format: '# ppm',
           yValue: Math.floor(Math.random()*(350-340+1)+80)
         });
         break
@@ -118,7 +118,7 @@ class SingleSensor extends Component {
         // Salinity in dS/m
         this.setState({
           unit: ' dS/m',
-          format: '0.# awc',
+          format: '0.# dS/m',
           yValue: Math.round(((Math.random()*0.5)+0.2)*10)/10
         });
         break
@@ -126,7 +126,7 @@ class SingleSensor extends Component {
         // Respiration in %
         this.setState({
           unit: ' %',
-          format: '0.# awc',
+          format: '0.## "%"',
           yValue: Math.round(((Math.random()*0.05)+0.02)*100)/100
         });
         break
@@ -134,7 +134,7 @@ class SingleSensor extends Component {
         // pH
         this.setState({
           unit: '',
-          format: '0.# awc',
+          format: '#.#',
           yValue: Math.round(((Math.random()*3.2)+5.2)*10)/10
         });
         break
@@ -142,7 +142,7 @@ class SingleSensor extends Component {
         // Potassium in ppm
         this.setState({
           unit: ' ppm',
-          format: '0.# awc',
+          format: '# ppm',
           yValue: Math.floor(Math.random()*(350-340+1)+80)
         });
         break
@@ -151,11 +151,16 @@ class SingleSensor extends Component {
     }
   }
 
+  // Updates the chart based on a specific interval
   updateChart() {
 
     this.AddDataPointsToDB(this.state.yValue)
 
     this.chart.options.data[0].legendText = ` ${this.props.sensor.data_type}: ${this.state.yValue} ${this.state.unit}`;
+
+    if (this.state.datapoints.length > 50 ) {
+      this.state.datapoints.shift();
+    }
 
     this.chart.render();
   }
