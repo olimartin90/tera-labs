@@ -31,14 +31,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/" render={() => <Home updateCurrentUser={this.updateCurrentUser} />} exact />
-            <Route path="/dashboard" render={() => {
-              if (this.state.currentUser.email) {
-                return (<Dashboard currentUser={this.state.currentUser} />)
-              }
-              else {
-                return <Home updateCurrentUser={this.updateCurrentUser} />
-              }
-            }} />
+            <Route path="/dashboard" render={() => <Dashboard currentUser={this.state.currentUser} />} />
             <Route component={Error} />
           </Switch>
           <Footer />

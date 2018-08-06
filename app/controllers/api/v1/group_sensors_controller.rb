@@ -32,7 +32,8 @@ module Api::V1
         :name,
         :latitude,
         :longitude,
-        :user_id
+        :user_id,
+        :single_sensors
       )
     end
   end

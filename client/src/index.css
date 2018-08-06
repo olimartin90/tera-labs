@@ -72,6 +72,7 @@ html {
 
 }
  .teralabs {
+   margin-top: 60px;
   font-family: 'Open Sans', sans-serif;
   font-weight: bolder;
   color: white;
@@ -83,7 +84,7 @@ html {
   position: relative;
   left: 0;
   right: 0;
-  margin-top: 200px;
+  margin-top: 150px;
   color: white;
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
@@ -91,14 +92,15 @@ html {
 }
 
 .loginregisterform {
+  margin-top: 200px;
+}
 
-  /* display: flex;
-  justify-content: flex-start; */
-  /* height: 50%; */
-  margin-top: 10%;
-  /* width: 75%; */
-  /* border: 1px solid red; */
-  /* background-color: white; */
+.form-horizontal {
+  background-color: white;
+  opacity: 0.87;
+  padding: 5%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
 }
 
 .graphimage {
@@ -146,12 +148,19 @@ html {
   color: #e6e9ef;
 }
 
-.databoard {
-
-
-  height: 52vh;
+.navbar-brand {
+  display: flex;
+  align-items: center;
 }
 
+.navbar-brand>img {
+  width: 65px;
+  padding: 7px 14px;
+}
+
+.databoard {
+  height: 52vh;
+}
 
 #footer {
   bottom: 0;
