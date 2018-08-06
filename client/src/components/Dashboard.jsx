@@ -9,20 +9,17 @@ const axios = require('axios');
 
 
 class Dashboard extends Component {
-
   constructor(props) {
     super(props);
-
     this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
-
     this.state = {
       show: false,
       groups: [],
-      sensor: []
+      group: {},
+      sensor: {}
     };
   }
-
 
   handleHide() {
     this.setState({ show: false });
@@ -45,29 +42,24 @@ componentWillReceiveProps(nextProps){
       .catch(error => console.log(error));
   }
 
-  getSensor(groups, groupId, sensorId){
+  getSensor(groups, groupId, sensorIndex){
     groups.forEach(group => {
-      console.log('Group: ', group)
-      // if(group.id === groupId){
-      //   group.single_sensors.forEach(sensor => {
-      //     console.log('Sensors: ', sensor)
-      //     if(sensor.id === sensorId){
-      //       this.state.sensor.push(sensor);
-      //       console.log('Sensor: ', sensor)
-      //     }
-      //   })
-      // }
+      if(group.id === groupId){
+        this.setState({ group: group, show: true });
+        group.single_sensors.forEach(sensor => {
+          if(group.single_sensors.indexOf(sensor) === sensorIndex){
+            this.setState({ sensor: sensor, show: true });
+          }
+        })
+      }
     })
-    //     const group = groups.find(group => {
-    //   return group.Id = groupId
-    // })
-    // console.log('Group: ', group)
   }
 
   render() {
 
     return (
       <div>
+        {console.log('UserId: ', this.props.currentUser.email)}
         <div>
           <Header currentUser={this.props.currentUser} />
         </div>
@@ -79,15 +71,67 @@ componentWillReceiveProps(nextProps){
                 <Button
                   bsStyle="primary"
                   bsSize="large"
-                  onClick={() => {
-                    this.setState({
-                      show: true
-                    })
-                  }}
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 0) }}
                 >
-                  sensors
+                  Moisture
                 </Button>
-                <Modal
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 1) }}
+                >
+                  Aeration
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 2) }}
+                >
+                  Temp
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 3) }}
+                >
+                  Nitrate
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 4) }}
+                >
+                  Phosphorus
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 5) }}
+                >
+                  Salinity
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 6) }}
+                >
+                  Respiration
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 7) }}
+                >
+                  pH
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 8) }}
+                >
+                  Potassium
+                </Button>
+                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
@@ -100,8 +144,7 @@ componentWillReceiveProps(nextProps){
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} />
-                  {console.log('Render Dahboard: ', this.state.sensor)}
+                    <SingleSensor sensor={this.state.sensor} group={ this.state.group } />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>

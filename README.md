@@ -21,4 +21,5 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+To run Rails: rails s -p 3001 -b 0.0.0.0
+to run React: npm start

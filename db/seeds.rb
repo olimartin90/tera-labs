@@ -36,7 +36,7 @@ group2 = user1.group_sensors.create!({
   longitude: -73.738771
 })
 
-group2 = user1.group_sensors.create!({
+group3 = user1.group_sensors.create!({
   name: '0514',
   latitude: 45.209618,
   longitude: -73.741979
@@ -101,44 +101,45 @@ potassium = group1.single_sensors.create!({
 
 Datapoint.destroy_all
 
-date = Time.now.to_i - 180000
+dateSc = Time.now.to_i - 180000
+dateMs = dateSc * 1000
 
 50.times do
-  date += 3600
+  dateMs += 3_600_000
   moisture.datapoints.create!({
     data_value: rand(0.1..0.2).round(1),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   aeration.datapoints.create!({
     data_value: rand(16.2..22.6).round(1),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   temp.datapoints.create!({
     data_value: rand(45..56),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   nitrate.datapoints.create!({
     data_value: rand(75..92),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   phosphorus.datapoints.create!({
     data_value: rand(74..88),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   salinity.datapoints.create!({
     data_value: rand(0.4..0.9).round(1),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   respiration.datapoints.create!({
     data_value: rand(0.02..0.07).round(2),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   ph.datapoints.create!({
     data_value: rand(6.1..6.8).round(1),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
   potassium.datapoints.create!({
     data_value: rand(81..88),
-    created_at: DateTime.strptime(date.to_s,'%s')
+    date_epoch: dateMs
   })
 end

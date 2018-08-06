@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
@@ -21,9 +21,11 @@ class SensorMap extends Component {
   constructor(props) {
     super(props);
 
-    this.handleValueName = this.handleValueName.bind(this);
-    this.handleValueLatitude = this.handleValueLatitude.bind(this);
-    this.handleValueNLongitude = this.handleValueLongitude.bind(this);
+    // Functions for the Add Sensors Modal
+    this.handleAddSensors = this.handleAddSensors.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
 
@@ -32,127 +34,398 @@ class SensorMap extends Component {
       nameValue: "",
       latitudeValue: 0,
       longitudeValue: 0,
-      hideSensorInfo: true
+      hideSensorInfo: true,
+      show: false,  // show state for the Add Sensors Modal
+      dataBoard: []
+    }
+  }
+
+  getGroupFromJSON() {
+    axios
+      .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
+      .then(response => {
+        // console.log(response)
+        for (var marker of response.data) {
+          // console.log(marker)
+          const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
+          const addMarker = this.state.markers.concat(newMarker)
+          this.setState({ markers: addMarker })
+
+        }
+        // console.log("This.state.markers:", this.state.markers)
+      })
+      .catch(error => console.log(error));
+  }
+
+  getSensorsFromJSON() {
+    axios
+      //each groupSensor has 9 sensors. Each sensor represents an element(object)
+      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors") //getting all the sensors
+      .then(response => {
+
+        for (var groupSensor of this.state.markers) {
+          for (var sensor of response.data) {
+            if (groupSensor.id === sensor.group_sensor_id) {
+
+              let data_type = sensor.data_type
+              let sensorMin = sensor.set_min // assigning min to a variable
+              let data_typeMin = data_type + "Min" // assigning a data_type + a string called min to a variable
+              groupSensor[data_typeMin] = sensorMin // passing data_typeMin as a key in the groupSensor object, setting its value to sensorMin
+
+              let sensorMax = sensor.set_max // same concept as line 84 to 86
+              let data_typeMax = data_type + "Max"
+              groupSensor[data_typeMax] = sensorMax
+
+
+            }
+          }
+          console.log(groupSensor)
+        }
+      })
+      .catch(error => console.log(error));
+  }
+
+  getDataPointsFromJSON() {
+    for (var i = 0; i < 10; i++) {
+      axios
+        .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${i}/datapoints`)
+        .then(response => {
+
+          for (var dataPoints of response.data) {
+            const marker = this.state.markers
+            // groupSensor[data_type] = dataPoints.data_value
+
+          }
+          // console.log(this.state.markers)
+
+          // let data_type = sensor.data_type
+          // groupSensor[data_type] = sensor.data_value
+
+        })
+        .catch(error => console.log(error));
     }
   }
 
 
+  // *********** ADD SENSORS FEATURE BELOW *********************
+
+  handleAddSensors(e) {
+    e.preventDefault();
+    const name = this.name.value
+    const latitude = this.latitude.value
+    const longitude = this.longitude.value
+    const set_min_sm = this.set_min_sm.value
+    const set_max_sm = this.set_max_sm.value
+    const set_min_ae = this.set_min_ae.value
+    const set_max_ae = this.set_max_ae.value
+    const set_min_st = this.set_min_st.value
+    const set_max_st = this.set_max_st.value
+    const set_min_ni = this.set_min_ni.value
+    const set_max_ni = this.set_max_ni.value
+    const set_min_phos = this.set_min_phos.value
+    const set_max_phos = this.set_max_phos.value
+    const set_min_sa = this.set_min_sa.value
+    const set_max_sa = this.set_max_sa.value
+    const set_min_re = this.set_min_re.value
+    const set_max_re = this.set_max_re.value
+    const set_min_pH = this.set_min_pH.value
+    const set_max_pH = this.set_max_pH.value
+    const set_min_pota = this.set_min_pota.value
+    const set_max_pota = this.set_max_pota.value
+
+    // The userId is hard coded and need to be linked to the current user logged in
+    axios
+      .post("http://localhost:3001/api/v1/users/1/group_sensors", {
+        user_id: this.props.currentUser.userId,
+        name: name,
+        latitude: latitude,
+        longitude: longitude
+      })
+      .then(response => {
+        this.handleClose();
+
+        axios
+          .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
+          .then(response => {
+            for (var marker of response.data) {
+              const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
+              const addMarker = this.state.markers.concat(newMarker)
+              this.setState({ markers: addMarker })
+            }
+            const getGrId = response.data.slice(response.data.length - 1)[0].id
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Soil Moisture",
+                  set_min: set_min_sm,
+                  set_max: set_max_sm
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Aeration",
+                  set_min: set_min_ae,
+                  set_max: set_max_ae
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Soil Temp",
+                  set_min: set_min_st,
+                  set_max: set_max_st
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Nitrate",
+                  set_min: set_min_ni,
+                  set_max: set_max_ni
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Phosphorus",
+                  set_min: set_min_phos,
+                  set_max: set_max_phos
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Salinity",
+                  set_min: set_min_sa,
+                  set_max: set_max_sa
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Respiration",
+                  set_min: set_min_re,
+                  set_max: set_max_re
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "pH",
+                  set_min: set_min_pH,
+                  set_max: set_max_pH
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Potassium",
+                  set_min: set_min_pota,
+                  set_max: set_max_pota
+                })
+              .catch(error => console.log(error));
+          })
+          .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
+  }
+
+  // Functions for showing and closing the Add Sensors Modal
+  handleClose() {
+    this.setState({ show: false });
+  }
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  // *********** ADD SENSORS FEATURE ABOVE *********************
+
+
+  // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
+    this.setState({ isHidden: !this.state.isHidden })
+    let data = []
 
-    console.log(this.state)
-    this.setState({isHidden: !this.state.isHidden})
-    // console.log(props)
+    axios
+      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+      .then(res => {
+        console.log("Response:", res.data.group_sensors)
+        res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
+          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
+          data.push({
+            data_type: sensor.data_type,
+            data_value: mostRecentValue
+          })
+        })
+        console.log(data)
+        this.setState({ dataBoard: data })
+      })
+
+
+
     if (this.state.isHidden) {
-      // console.log("is hidden")
+      console.log("is hidden")
     } else {
-      // console.log("is shown")
+      console.log("is shown")
     }
+    console.log(data)
+    this.setState({dataBoard: data})
   }
 
-  handleValueName = e => {
-    console.log(e.target.value)
-    this.setState({ nameValue: e.target.value });
-  }
-  handleValueLatitude = e => {
-    console.log(e.target.value)
-    this.setState({ latitudeValue: e.target.value });
-  }
-  handleValueLongitude = e => {
-    console.log(e.target.value)
-    this.setState({ longitudeValue: e.target.value });
-  }
+  // axios
+  //
+  //   .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+  //   .then(res => {
+  //     console.log("Response:", res)
+  //     console.log("GroupSensors:", res.data.group_sensors) // These are the 3 group_sensors.
+  //     console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
+  //     console.log("SingleSensorsMin", res.data.group_sensors[0].single_sensors[0].set_min)
+  //     console.log("SingleSensorsDataValue", res.data.group_sensors[0].single_sensors[0].data_points)
+  //
+  //
+  //     res.data.group_sensors.filter(groupsensor=>groupsensor.id === marker.id)[0].single_sensors.map(sensor=>{
+  //         const mostRecentValue = sensor.data_points.sort((a,b)=>{
+  //           return (
+  //             (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
+  //         data.push({
+  //           data_type: sensor.data_type,
+  //           data_value: mostRecentValue
+  //         })
+  //         console.log("MostRecentValue:", mostRecentValue);
 
-componentWillReceiveProps(nextProps) {
-  const groups = nextProps.groups
-  for (var marker of groups) {
-    
-    const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
 
-    for (var sensor of marker.single_sensors){
-      let data_type = sensor.data_type
-      let sensorMin = sensor.set_min
-      let data_typeMin = data_type + "Min"
+
+          // const mostRecentMinValue = single_sensors.sort((a,b)=> {
+          //   return (
+          //     (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].set_min
+          //     console.log("Set_Min:", sensor.single_sensors_set_min)
+
+
+          // console.log("Min:", res.data.group_sensors[0].single_sensors[0].set_min)
+          // console.log("Max:", res.data.group_sensors[0].single_sensors[0].set_max )
+      // })
+
+
+      // *********** TEST FUNCTION ****************** //
+      // getValidationState() {
+      //   const style = <Label bsStyle="success">{data.data_type}</Label>
+      //   const warning style = <Label bsStyle="warning">{data.data_type}</Label>
+      //   console.log("This is the mostRecentValue: "mostRecentValue);
+      //   if ({data.data_value} > {data.group_sensors[0].single_sensors[0].set_min} || {data.data_value} > {data.group_sensors[0].single_sensors[0].set_max)
+      //     return <Label bsStyle="success">{data.data_type}</Label>;
+      //   else
+      //   return style;
+      // }
+      // handleChange(e) {
+      //   this.setState({ value: e.target.value });
+      // }
+      // render() {
+      //   return (
+      //     <form>
+      //       <FormGroup
+      //         controlId="formBasicText"
+      //         validationState={this.getValidationState()}
+      //       >
+      //         <ControlLabel>Working example with validation</ControlLabel>
+      //         <FormControl
+      //           type="text"
+      //           value={this.state.value}
+      //           placeholder="Enter text"
+      //           onChange={this.handleChange}
+      //         />
+      //         <FormControl.Feedback />
+      //         <HelpBlock>Validation is based on string length.</HelpBlock>
+      //       </FormGroup>
+      //     </form>
+      //   );
+      // }
+      //
+
+  // *********** DATABOARD FEATURE *********************
+
+// *************** marker generator Below *********************
+  componentWillReceiveProps(nextProps) {
+    const groups = nextProps.groups
+    for (var marker of groups) {
       
-      let sensorMax = sensor.set_max
-      let data_typeMax = data_type + "Max"
-      
-      const newData = 0;
-      
-      for (var data of sensor.data_points) {
+      const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
+  
+      for (var sensor of marker.single_sensors){
+        let data_type = sensor.data_type
+        let sensorMin = sensor.set_min
+        let data_typeMin = data_type + "Min"
         
-        newData = data.data_value;
+        let sensorMax = sensor.set_max
+        let data_typeMax = data_type + "Max"
+        
+        const newData = 0;
+        
+        for (var data of sensor.data_points) {
+          
+          newData = data.data_value;
+          
+        }
+        
+        const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
+        newMarker[data_type] = newSensorSetting
         
       }
       
-      const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
-      newMarker[data_type] = newSensorSetting
+      const addMarker = this.state.markers.concat(newMarker)
+              console.log(this.state.markers)
+      this.state.markers = addMarker
       
     }
-    
-    const addMarker = this.state.markers.concat(newMarker)
-            console.log(this.state.markers)
-    this.state.markers = addMarker
-    
   }
-}
-  handleNewMarker = e => {
-    console.log(this.state.latitudeValue)
-    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue, alert: 0 }
-    const addMarker = this.state.markers.concat(newMarker)
-    this.setState({ markers: addMarker })
-    this.state.nameValue = "";
-    this.state.latitudeValue = 0;
-    this.state.longitudeValue = 0;
-    e.preventDefault();
-  }
-
-
-    render() {
-// *************** return the markers from the state and send it to the final return ****************
-      let markers = this.state.markers;
-      let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
-
-      const listOfMarkers = markers.map((item, index) => {
-          for (var dataType of types_of_data) {
-            if(item[dataType]){
-              const dataObj = item[dataType]
-              console.log("dataa:", item)
-              if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
-                item.alert += 1;
-                console.log("you're in deep shit. Alert: ", item.alert)
-
+   
+  
+  
+      render() {
+  // *************** return the markers from the state and send it to the final return ****************
+        let markers = this.state.markers;
+        let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
+  
+        const listOfMarkers = markers.map((item, index) => {
+            for (var dataType of types_of_data) {
+              if(item[dataType]){
+                const dataObj = item[dataType]
+                console.log("dataa:", item)
+                if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
+                  item.alert += 1;
+                  console.log("you're in deep shit. Alert: ", item.alert)
+  
+                } else {
+                  console.log("everythings alright")
+                }
               } else {
-                console.log("everythings alright")
+                console.log("undefineddddddddddddddd")
               }
-            } else {
-              console.log("undefineddddddddddddddd")
-            }
-        }
+          }
+  
+          console.log("Item:::::", item.Aeration)
+  // *************** icon change if alert ********************
+          if (item.alert === 0) {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconGreen} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          } else if( item.alert === 1) {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          } else {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          }
+        })
 
-        console.log("Item:::::", item.Aeration)
-
-        if (item.alert === 0) {
-          return (
-            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconGreen} position={{lat: item.latitude, lng: item.longitude}} /> 
-          )
-        } else if( item.alert === 1) {
-          return (
-            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} /> 
-          )
-        } else {
-          return (
-            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
-          )
-        }
-      })
-
-      
-      
-// ***************** final return ***************************
-        return (
-          <Grid>
-            <Row>
+    // ***************** Marker generator ***************************
+    return (
+      <Grid>
+        <Row>
               <div>
                 <Col md={1}></Col>
                 <Col md={3}><p>Overview \n
@@ -180,70 +453,233 @@ componentWillReceiveProps(nextProps) {
                 </Col>
               </div>
             </Row>
-            <Row>
-              <Col md={9}></Col>
-                <Col md={2}>
-                  <Popup trigger={<button> Add sensor</button>} position="right center" modal closeOnDocumentClick>
-                    {close => (
-                      <div>
-                        <form onSubmit={this.handleNewMarker.bind(this)}>
-                          <label>
-                              Name:
-                              <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                          </label>
-                          <label>
-                            Latitude:
-                           <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                           <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                          </label>
-                          <label>
-                              Longitude:
-                              <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                            </label>
-                            <input type="submit" value="Submit" />
-                            <input type="button" value="close" onClick={() => {
-                              console.log('modal closed ')
-                              close()
-                            }} />
-                          </form>
-                        </div>
-                      )}
-                    </Popup>
-                  </Col>
-                <Col md={1}></Col>
-            </Row>
-            <Row>
-              <Col md={1}></Col>
-              <Col md={3}>
-                <div className="databoard">
-                  <p>
-                    Thierry's databoard
-                  </p>
-                </div>
-              </Col>
-              <Col md={7}>
-                <div className="embed-responsive map-wrapper container">
-                  <div className="col"></div>
-                  <Map className="embed-responsive-item"
-                    google={this.props.google}
-                    style={style}
-                    initialCenter={{
-                      lat: 45.212059,
-                      lng: -73.738771
-                    }}
-                    zoom={15} 
-                    onClick={this.onMapClicked}
-                >
-                    {/* <Marker onClick={this.onMarkerClick}
-                            name={'Current location'} /> */}
-                    {listOfMarkers}
-                  </Map>
-                  <div className="col"></div>
-                </div>
-              </Col>
-              <Col md={1}></Col>
-            </Row>
-      </Grid>
+        <Row>
+          <Col md={9}></Col>
+          <Col md={2}>
+
+            {/* ****************** Add Sensors Modal ****************** */}
+            <div className="modal-container" style={{ height: 200 }}>
+              <Button
+                bsStyle="primary"
+                bsSize="large"
+                onClick={() => this.setState({ show: true })}
+              >
+                Add Sensors
+              </Button>
+
+              <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Add Sensors</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                  <Form horizontal>
+                    <FormGroup controlId="formHorizontalName">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Name
+                            </Col>
+                      <Col sm={10}>
+                        <FormControl inputRef={(ref) => { this.name = ref }} name="name" type="text" placeholder="Name" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalLocation">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Location
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.latitude = ref }} name="latitude" type="text" placeholder="Latitude" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.longitude = ref }} name="longitude" type="text" placeholder="Longitude" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalMoisture">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Moisture
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_sm = ref }} name="min" type="text" placeholder="Min : 0.2 awc" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_sm = ref }} name="max" type="text" placeholder="Max : 0.8 awc" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalAeration">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Aeration
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_ae = ref }} name="min" type="text" placeholder="Min : 15 %" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_ae = ref }} name="max" type="text" placeholder="Max : 23 %" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalSoilTemp">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Temperature
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_st = ref }} name="min" type="text" placeholder="Min : 44 °F" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_st = ref }} name="max" type="text" placeholder="Max : 58 °F" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalNitrate">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Nitrate
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_ni = ref }} name="min" type="text" placeholder="Min : 74 ppm" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_ni = ref }} name="max" type="text" placeholder="Max : 89 ppm" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalPhosphorus">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Phosphorus
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_phos = ref }} name="min" type="text" placeholder="Min : 74 ppm" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_phos = ref }} name="max" type="text" placeholder="Max : 89 ppm" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalSalinity">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Salinity
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_sa = ref }} name="min" type="text" placeholder="Min : 0.4 dS/m" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_sa = ref }} name="max" type="text" placeholder="Max : 1 dS/m" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalRespiration">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Respiration
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_re = ref }} name="min" type="text" placeholder="Min : 0.02 %" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_re = ref }} name="max" type="text" placeholder="Max : 0.08 %" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalpH">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        pH
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_pH = ref }} name="min" type="text" placeholder="Min : 6" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_pH = ref }} name="max" type="text" placeholder="Max : 7" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalPotassium">
+                      <Col componentClass={ControlLabel} sm={2}>
+                        Potassium
+                            </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_min_pota = ref }} name="min" type="text" placeholder="Min : 80 ppm" />
+                      </Col>
+                      <Col sm={5}>
+                        <FormControl inputRef={(ref) => { this.set_max_pota = ref }} name="max" type="text" placeholder="Max : 90 ppm" />
+                      </Col>
+                    </FormGroup>
+                  </Form>
+
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    bsStyle="primary"
+                    bsSize="large"
+                    onClick={this.handleAddSensors}>Submit</Button>
+                </Modal.Footer>
+              </Modal>
+
+            </div>
+            {/* ****************** End of Add Sensors Modal ****************** */}
+
+          </Col>
+          <Col md={1}></Col>
+        </Row>
+
+        <Row>
+          <Col md={1}></Col>
+          <Col md={3}>
+
+            {/* **************** DATABOARD ************** */}
+
+            <div className="databoard">
+              {
+                this.state.dataBoard.map((data, index) =>
+                  <div key={index}>
+                    <Grid>
+                      <Row className="show-grid">
+                        <Col xs={12} md={8}>
+                          <h4>
+                            <Label bsStyle="success">{data.data_type}</Label>
+                          </h4>
+                        </Col>
+                        <Col xs={6} md={4}>
+                          <h4>
+                            <p>{data.data_value}</p>
+                          </h4>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </div>
+                )
+              }
+            </div>
+            {/* **************** DATABOARD ************** */}
+
+          </Col>
+
+          {/* **************** MAP ************** */}
+          <Col md={7}>
+            <div className="embed-responsive map-wrapper container">
+              <div className="col"></div>
+              <Map className="embed-responsive-item"
+                google={this.props.google}
+                style={style}
+                initialCenter={{
+                  lat: 45.212059,
+                  lng: -73.738771
+                }}
+                zoom={15}
+                onClick={this.onMapClicked}
+              >
+                <Marker onClick={this.onMarkerClick}
+                  name={'Current location'} />
+                {listOfMarkers}
+              </Map>
+              <div className="col"></div>
+            </div>
+
+          </Col>
+          <Col md={1}></Col>
+          {/* **************** MAP ************** */}
+
+        </Row>
+
+      </Grid >
     )
   }
 }

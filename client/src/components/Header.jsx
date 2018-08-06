@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-// import Register from "./Register";
-// import Login from "./Login";
 import Logout from "./Logout";
 
 class Header extends Component {
@@ -51,5 +49,6 @@ class Header extends Component {
     )
   };
 };
+
 
 export default Header;
