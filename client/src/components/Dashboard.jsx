@@ -69,16 +69,65 @@ class Dashboard extends Component {
                   bsSize="large"
                   onClick={()=>{ this.getSensor(this.state.groups, 1, 0) }}
                 >
-                  sensors
+                  Moisture
                 </Button>
                 <Button
                   bsStyle="primary"
                   bsSize="large"
                   onClick={()=>{ this.getSensor(this.state.groups, 1, 1) }}
                 >
-                  sensors
+                  Aeration
                 </Button>
-                <Modal
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 2) }}
+                >
+                  Temp
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 3) }}
+                >
+                  Nitrate
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 4) }}
+                >
+                  Phosphorus
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 5) }}
+                >
+                  Salinity
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 6) }}
+                >
+                  Respiration
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 7) }}
+                >
+                  pH
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={()=>{ this.getSensor(this.state.groups, 1, 8) }}
+                >
+                  Potassium
+                </Button>
+                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
