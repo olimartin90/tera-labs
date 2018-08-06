@@ -19,7 +19,7 @@ user2 = User.create!({
   first_name: 'Phil',
   last_name: 'Bolduc',
   email: 'phil@example.com',
-  password: 'e3w2q1'
+  password: '1q2w3e'
 })
 
 GroupSensor.destroy_all

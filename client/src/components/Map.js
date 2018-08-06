@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
+import GoogleMapIconYellow from '../map-marker-yellow.png'
 const axios = require('axios');
 
 
-const style = { // Styling the map.
+const style = {
   width: '100%',
   height: '100%',
   position: "absolute",
@@ -26,12 +28,6 @@ class SensorMap extends Component {
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
-    this.getGroupFromJSON = this.getGroupFromJSON.bind(this);
-    this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
-    this.getDataPointsFromJSON = this.getDataPointsFromJSON.bind(this);
-    this.getGroupFromJSON()
-    this.getSensorsFromJSON()
-    this.getDataPointsFromJSON()
 
     this.state = {
       markers: [],
@@ -44,72 +40,9 @@ class SensorMap extends Component {
     }
   }
 
-  getGroupFromJSON() {
-    axios
-      .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
-      .then(response => {
-        // console.log(response)
-        for (var marker of response.data) {
-          // console.log(marker)
-          const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
-          const addMarker = this.state.markers.concat(newMarker)
-          this.setState({ markers: addMarker })
-
-        }
-        // console.log("This.state.markers:", this.state.markers)
-      })
-      .catch(error => console.log(error));
-  }
-
-  getSensorsFromJSON() {
-    axios
-      //each groupSensor has 9 sensors. Each sensor represents an element(object)
-      .get("http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors") //getting all the sensors
-      .then(response => {
-
-        for (var groupSensor of this.state.markers) {
-          for (var sensor of response.data) {
-            if (groupSensor.id === sensor.group_sensor_id) {
-
-              let data_type = sensor.data_type
-              let sensorMin = sensor.set_min // assigning min to a variable
-              let data_typeMin = data_type + "Min" // assigning a data_type + a string called min to a variable
-              groupSensor[data_typeMin] = sensorMin // passing data_typeMin as a key in the groupSensor object, setting its value to sensorMin
-
-              let sensorMax = sensor.set_max // same concept as line 84 to 86
-              let data_typeMax = data_type + "Max"
-              groupSensor[data_typeMax] = sensorMax
 
 
-            }
-          }
-          console.log(groupSensor)
-        }
-      })
-      .catch(error => console.log(error));
-  }
-
-  getDataPointsFromJSON() {
-    for (var i = 0; i < 10; i++) {
-      axios
-        .get(`http://localhost:3001/api/v1/users/1/group_sensors/1/single_sensors/${i}/datapoints`)
-        .then(response => {
-
-          for (var dataPoints of response.data) {
-            const marker = this.state.markers
-            // groupSensor[data_type] = dataPoints.data_value
-
-          }
-          // console.log(this.state.markers)
-
-          // let data_type = sensor.data_type
-          // groupSensor[data_type] = sensor.data_value
-
-        })
-        .catch(error => console.log(error));
-    }
-  }
-
+ 
 
   // *********** ADD SENSORS FEATURE BELOW *********************
 
@@ -246,136 +179,219 @@ class SensorMap extends Component {
 
   // *********** ADD SENSORS FEATURE ABOVE *********************
 
-
-  // *********** DATABOARD FEATURE BELOW *********************
-
-  onMarkerClick(props, marker, e) {
-    this.setState({ isHidden: !this.state.isHidden })
-    let data = []
-
-    axios
-      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
-      .then(res => {
-        console.log("Response:", res.data.group_sensors)
-        res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
-          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
-          data.push({
-            data_type: sensor.data_type,
-            data_value: mostRecentValue
-          })
-        })
-        console.log(data)
-        this.setState({ dataBoard: data })
-      })
-
-
-
-    if (this.state.isHidden) {
-      console.log("is hidden")
-    } else {
-      console.log("is shown")
+// *************** marker generator Below *********************
+  componentWillReceiveProps(nextProps) {
+    const groups = nextProps.groups
+    for (var marker of groups) {
+      
+      const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
+  
+      for (var sensor of marker.single_sensors){
+        let data_type = sensor.data_type
+        let sensorMin = sensor.set_min
+        let data_typeMin = data_type + "Min"
+        
+        let sensorMax = sensor.set_max
+        let data_typeMax = data_type + "Max"
+        
+        const newData = 0;
+        
+        for (var data of sensor.data_points) {
+          
+          newData = data.data_value;
+          
+        }
+        
+        const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
+        newMarker[data_type] = newSensorSetting
+        
+      }
+      
+      const addMarker = this.state.markers.concat(newMarker)
+              console.log(this.state.markers)
+      this.state.markers = addMarker
+      
     }
-    console.log(data)
-    this.setState({dataBoard: data})
   }
 
-  // axios
-  //
-  //   .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
-  //   .then(res => {
-  //     console.log("Response:", res)
-  //     console.log("GroupSensors:", res.data.group_sensors) // These are the 3 group_sensors.
-  //     console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
-  //     console.log("SingleSensorsMin", res.data.group_sensors[0].single_sensors[0].set_min)
-  //     console.log("SingleSensorsDataValue", res.data.group_sensors[0].single_sensors[0].data_points)
-  //
-  //
-  //     res.data.group_sensors.filter(groupsensor=>groupsensor.id === marker.id)[0].single_sensors.map(sensor=>{
-  //         const mostRecentValue = sensor.data_points.sort((a,b)=>{
-  //           return (
-  //             (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
-  //         data.push({
-  //           data_type: sensor.data_type,
-  //           data_value: mostRecentValue
-  //         })
-  //         console.log("MostRecentValue:", mostRecentValue);
 
+  
+    // axios
+    //
+    //   .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+    //   .then(res => {
+    //     console.log("Response:", res)
+    //     console.log("GroupSensors:", res.data.group_sensors) // These are the 3 group_sensors.
+    //     console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
+    //     console.log("SingleSensorsMin", res.data.group_sensors[0].single_sensors[0].set_min)
+    //     console.log("SingleSensorsDataValue", res.data.group_sensors[0].single_sensors[0].data_points)
+    //
+    //
+    //     res.data.group_sensors.filter(groupsensor=>groupsensor.id === marker.id)[0].single_sensors.map(sensor=>{
+    //         const mostRecentValue = sensor.data_points.sort((a,b)=>{
+    //           return (
+    //             (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
+    //         data.push({
+    //           data_type: sensor.data_type,
+    //           data_value: mostRecentValue
+    //         })
+    //         console.log("MostRecentValue:", mostRecentValue);
+  
+  
+  
+            // const mostRecentMinValue = single_sensors.sort((a,b)=> {
+            //   return (
+            //     (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].set_min
+            //     console.log("Set_Min:", sensor.single_sensors_set_min)
+  
+  
+            // console.log("Min:", res.data.group_sensors[0].single_sensors[0].set_min)
+            // console.log("Max:", res.data.group_sensors[0].single_sensors[0].set_max )
+        // })
+  
+  
+        // *********** TEST FUNCTION ****************** //
+        // getValidationState() {
+        //   const style = <Label bsStyle="success">{data.data_type}</Label>
+        //   const warning style = <Label bsStyle="warning">{data.data_type}</Label>
+        //   console.log("This is the mostRecentValue: "mostRecentValue);
+        //   if ({data.data_value} > {data.group_sensors[0].single_sensors[0].set_min} || {data.data_value} > {data.group_sensors[0].single_sensors[0].set_max)
+        //     return <Label bsStyle="success">{data.data_type}</Label>;
+        //   else
+        //   return style;
+        // }
+        // handleChange(e) {
+        //   this.setState({ value: e.target.value });
+        // }
+        // render() {
+        //   return (
+        //     <form>
+        //       <FormGroup
+        //         controlId="formBasicText"
+        //         validationState={this.getValidationState()}
+        //       >
+        //         <ControlLabel>Working example with validation</ControlLabel>
+        //         <FormControl
+        //           type="text"
+        //           value={this.state.value}
+        //           placeholder="Enter text"
+        //           onChange={this.handleChange}
+        //         />
+        //         <FormControl.Feedback />
+        //         <HelpBlock>Validation is based on string length.</HelpBlock>
+        //       </FormGroup>
+        //     </form>
+        //   );
+        // }
+        //
+  
+    // *********** DATABOARD FEATURE *********************
+   
+      // *********** DATABOARD FEATURE BELOW *********************
 
+      onMarkerClick(props, marker, e) {
+        this.setState({ isHidden: !this.state.isHidden })
+        let data = []
+    
+        axios
+          .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+          .then(res => {
+            console.log("Response:", res.data.group_sensors[0])
+            res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
+              console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
+              const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
+              data.push({
+                data_type: sensor.data_type,
+                data_value: mostRecentValue
+              })
+            })
+            console.log(data)
+            this.setState({ dataBoard: data })
+          })
+    
+    
+    
+        if (this.state.isHidden) {
+          console.log("is hidden")
+        } else {
+          console.log("is shown")
+        }
+        console.log(data)
+        this.setState({dataBoard: data})
+      }
+  
+      render() {
+  // *************** return the markers from the state and send it to the final return ****************
+        let markers = this.state.markers;
+        let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
+  
+        const listOfMarkers = markers.map((item, index) => {
+            for (var dataType of types_of_data) {
+              if(item[dataType]){
+                const dataObj = item[dataType]
+                console.log("dataa:", item)
+                if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
+                  item.alert += 1;
+                  console.log("you're in deep shit. Alert: ", item.alert)
+  
+                } else {
+                  console.log("everythings alright")
+                }
+              } else {
+                console.log("undefineddddddddddddddd")
+              }
+          }
+  
+          console.log("Item:::::", item.Aeration)
+  // *************** icon change if alert ********************
+          if (item.alert === 0) {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconGreen} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          } else if( item.alert === 1) {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          } else {
+            return (
+              <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
+            )
+          }
+        })
 
-          // const mostRecentMinValue = single_sensors.sort((a,b)=> {
-          //   return (
-          //     (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].set_min
-          //     console.log("Set_Min:", sensor.single_sensors_set_min)
+    // ***************** Marker generator ***************************
 
-
-          // console.log("Min:", res.data.group_sensors[0].single_sensors[0].set_min)
-          // console.log("Max:", res.data.group_sensors[0].single_sensors[0].set_max )
-      // })
-
-
-      // *********** TEST FUNCTION ****************** //
-      // getValidationState() {
-      //   const style = <Label bsStyle="success">{data.data_type}</Label>
-      //   const warning style = <Label bsStyle="warning">{data.data_type}</Label>
-      //   console.log("This is the mostRecentValue: "mostRecentValue);
-      //   if ({data.data_value} > {data.group_sensors[0].single_sensors[0].set_min} || {data.data_value} > {data.group_sensors[0].single_sensors[0].set_max)
-      //     return <Label bsStyle="success">{data.data_type}</Label>;
-      //   else
-      //   return style;
-      // }
-      // handleChange(e) {
-      //   this.setState({ value: e.target.value });
-      // }
-      // render() {
-      //   return (
-      //     <form>
-      //       <FormGroup
-      //         controlId="formBasicText"
-      //         validationState={this.getValidationState()}
-      //       >
-      //         <ControlLabel>Working example with validation</ControlLabel>
-      //         <FormControl
-      //           type="text"
-      //           value={this.state.value}
-      //           placeholder="Enter text"
-      //           onChange={this.handleChange}
-      //         />
-      //         <FormControl.Feedback />
-      //         <HelpBlock>Validation is based on string length.</HelpBlock>
-      //       </FormGroup>
-      //     </form>
-      //   );
-      // }
-      //
-
-  // *********** DATABOARD FEATURE *********************
-
-
-  render() {
-
-    // let iconMarker = new window.google.maps.MarkerImage(
-    //   url,
-    //   null, /* size is determined at runtime */
-    //   null, /* origin is 0,0 */
-    //   null, /* anchor is bottom center of the scaled image */
-    //   new window.google.maps.Size(32, 32)
-    // );
-
-
-    // *************** return the markers from the state and send it to the final return ****************
-    let markers = this.state.markers
-
-    const listOfMarkers = markers.map((item, index) => {
-      return (
-        <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
-
-      )
-    })
-
-
-    // ***************** final return ***************************
+    
     return (
       <Grid>
+        <Row>
+              <div>
+                <Col md={1}></Col>
+                <Col md={3}><p>Overview \n
+                 farm lighthouse Labs</p> </Col>
+                <Col md={3}>
+                  <div>
+                    <ReactWeather
+                      forecast="today"  
+                      apikey="ba2b14c881784efb99f150704180608"
+                      type="geo"
+                      lat="45.21205"
+                      lon="-73.738771"
+                    />
+                  </div>
+                </Col>
+                <Col md={3}>
+                  <div>
+                    <p>holla</p>
+                  </div>
+                </Col>
+                <Col md={2}>
+                  <div>
+                    <p>holla</p>
+                  </div>
+                </Col>
+              </div>
+            </Row>
         <Row>
           <Col md={9}></Col>
           <Col md={2}>
@@ -589,8 +605,6 @@ class SensorMap extends Component {
                 zoom={15}
                 onClick={this.onMapClicked}
               >
-                <Marker onClick={this.onMarkerClick}
-                  name={'Current location'} />
                 {listOfMarkers}
               </Map>
               <div className="col"></div>
