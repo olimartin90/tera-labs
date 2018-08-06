@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Modal, Button } from 'react-bootstrap';
+import { Grid, Row, Modal, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
@@ -45,7 +45,6 @@ class Dashboard extends Component {
   // Gets a specific sensor in groups props by groupId and button that was pressed
   getSensor(groups, groupId, sensorIndex){
     this.getGroupsFromJSON(this.state.currentUser.userId)
-
     groups.forEach(group => {
       if(group.id === groupId){
         this.setState({ group: group, show: true });
@@ -56,6 +55,18 @@ class Dashboard extends Component {
         })
       }
     })
+  }
+
+  getLastDayDataPoints(){
+    console.log('Last day datapoints... coming soon')
+  }
+
+  getLastWeekDataPoints(){
+    console.log('Last week datapoints... coming soon')
+  }
+
+  getLastMonthDataPoints(){
+    console.log('Last month datapoints... coming soon')
   }
 
   render() {
@@ -142,7 +153,25 @@ class Dashboard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      Teralabs
+                      <ButtonGroup bStyle="primary" bSize="xsmall">
+                        <ButtonToolbar>
+                          <Button
+                            onClick={()=>{ this.getLastDayDataPoints() }}
+                          >
+                            Last day
+                          </Button>
+                          <Button
+                            onClick={()=>{ this.getLastWeekDataPoints() }}
+                          >
+                            Last week
+                          </Button>
+                          <Button
+                            onClick={()=>{ this.getLastMonthDataPoints() }}
+                          >
+                            Last month
+                          </Button>
+                        </ButtonToolbar>
+                      </ButtonGroup>
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
