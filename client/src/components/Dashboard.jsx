@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Row, Modal, Button } from 'react-bootstrap';
+import { Grid, Row, Modal, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 import GroupSensor from "./GroupSensor";
 
 const axios = require('axios');
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,26 +21,31 @@ class Dashboard extends Component {
     };
   }
 
+  // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
 
+  // Gets groups based on user props from App.jsx
   componentWillReceiveProps(nextProps){
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
+  // Gets the whole groups object based on the user
   getGroupsFromJSON(userId) {
     const thisUser = parseInt(userId);
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        this.state.groups = response.data.group_sensors
+        this.setState({ groups: response.data.group_sensors })
       })
       .catch(error => console.log(error));
   }
 
+  // Gets a specific sensor in groups props by groupId and button that was pressed
   getSensor(groups, groupId, sensorIndex){
+    this.getGroupsFromJSON(this.state.currentUser.userId)
     groups.forEach(group => {
       if(group.id === groupId){
         this.setState({ group: group, show: true });
@@ -52,8 +58,19 @@ class Dashboard extends Component {
     })
   }
 
-  render() {
+  getLastDayDataPoints(){
+    console.log('Last day datapoints... coming soon')
+  }
 
+  getLastWeekDataPoints(){
+    console.log('Last week datapoints... coming soon')
+  }
+
+  getLastMonthDataPoints(){
+    console.log('Last month datapoints... coming soon')
+  }
+
+  render() {
     return (
       <div>
         {console.log('UserId: ', this.props.currentUser.email)}
@@ -63,7 +80,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap currentUser={this.state.currentUser} />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
@@ -137,7 +154,25 @@ class Dashboard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      Teralabs
+                      <ButtonGroup bStyle="primary" bSize="xsmall">
+                        <ButtonToolbar>
+                          <Button
+                            onClick={()=>{ this.getLastDayDataPoints() }}
+                          >
+                            Last day
+                          </Button>
+                          <Button
+                            onClick={()=>{ this.getLastWeekDataPoints() }}
+                          >
+                            Last week
+                          </Button>
+                          <Button
+                            onClick={()=>{ this.getLastMonthDataPoints() }}
+                          >
+                            Last month
+                          </Button>
+                        </ButtonToolbar>
+                      </ButtonGroup>
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>

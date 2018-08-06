@@ -30,7 +30,6 @@ module Api::V1
     def sensor_params
       params.require(:single_sensor).permit(
         :data_type,
-        :data_value,
         :set_min,
         :set_max,
         :group_sensor_id
