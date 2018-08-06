@@ -34,7 +34,7 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        this.state.groups = response.data.group_sensors
+        this.setState({ groups: response.data.group_sensors })
       })
       .catch(error => console.log(error));
   }
