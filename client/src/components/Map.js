@@ -275,7 +275,78 @@ class SensorMap extends Component {
     } else {
       console.log("is shown")
     }
+    console.log(data)
+    this.setState({dataBoard: data})
   }
+
+  // axios
+  //
+  //   .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+  //   .then(res => {
+  //     console.log("Response:", res)
+  //     console.log("GroupSensors:", res.data.group_sensors) // These are the 3 group_sensors.
+  //     console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
+  //     console.log("SingleSensorsMin", res.data.group_sensors[0].single_sensors[0].set_min)
+  //     console.log("SingleSensorsDataValue", res.data.group_sensors[0].single_sensors[0].data_points)
+  //
+  //
+  //     res.data.group_sensors.filter(groupsensor=>groupsensor.id === marker.id)[0].single_sensors.map(sensor=>{
+  //         const mostRecentValue = sensor.data_points.sort((a,b)=>{
+  //           return (
+  //             (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
+  //         data.push({
+  //           data_type: sensor.data_type,
+  //           data_value: mostRecentValue
+  //         })
+  //         console.log("MostRecentValue:", mostRecentValue);
+
+
+
+          // const mostRecentMinValue = single_sensors.sort((a,b)=> {
+          //   return (
+          //     (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].set_min
+          //     console.log("Set_Min:", sensor.single_sensors_set_min)
+
+
+          // console.log("Min:", res.data.group_sensors[0].single_sensors[0].set_min)
+          // console.log("Max:", res.data.group_sensors[0].single_sensors[0].set_max )
+      // })
+
+
+      // *********** TEST FUNCTION ****************** //
+      // getValidationState() {
+      //   const style = <Label bsStyle="success">{data.data_type}</Label>
+      //   const warning style = <Label bsStyle="warning">{data.data_type}</Label>
+      //   console.log("This is the mostRecentValue: "mostRecentValue);
+      //   if ({data.data_value} > {data.group_sensors[0].single_sensors[0].set_min} || {data.data_value} > {data.group_sensors[0].single_sensors[0].set_max)
+      //     return <Label bsStyle="success">{data.data_type}</Label>;
+      //   else
+      //   return style;
+      // }
+      // handleChange(e) {
+      //   this.setState({ value: e.target.value });
+      // }
+      // render() {
+      //   return (
+      //     <form>
+      //       <FormGroup
+      //         controlId="formBasicText"
+      //         validationState={this.getValidationState()}
+      //       >
+      //         <ControlLabel>Working example with validation</ControlLabel>
+      //         <FormControl
+      //           type="text"
+      //           value={this.state.value}
+      //           placeholder="Enter text"
+      //           onChange={this.handleChange}
+      //         />
+      //         <FormControl.Feedback />
+      //         <HelpBlock>Validation is based on string length.</HelpBlock>
+      //       </FormGroup>
+      //     </form>
+      //   );
+      // }
+      //
 
   // *********** DATABOARD FEATURE *********************
 
