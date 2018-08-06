@@ -245,7 +245,39 @@ class SensorMap extends Component {
   }
 
   // *********** ADD SENSORS FEATURE ABOVE *********************
+  componentWillReceiveProps(nextProps) {
+      const groups = nextProps.groups
+      for (var marker of groups) {
 
+        const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
+
+        for (var sensor of marker.single_sensors){
+          let data_type = sensor.data_type
+          let sensorMin = sensor.set_min
+          let data_typeMin = data_type + "Min"
+
+          let sensorMax = sensor.set_max
+          let data_typeMax = data_type + "Max"
+
+          const newData = 0;
+
+          for (var data of sensor.data_points) {
+
+            newData = data.data_value;
+
+          }
+
+          const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
+          newMarker[data_type] = newSensorSetting
+
+        }
+
+        const addMarker = this.state.markers.concat(newMarker)
+                console.log(this.state.markers)
+        this.state.markers = addMarker
+
+      }
+    }
 
   // *********** DATABOARD FEATURE BELOW *********************
 
@@ -363,14 +395,43 @@ class SensorMap extends Component {
 
 
     // *************** return the markers from the state and send it to the final return ****************
-    let markers = this.state.markers
+    let markers = this.state.markers;
+      let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
 
-    const listOfMarkers = markers.map((item, index) => {
-      return (
-        <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+      const listOfMarkers = markers.map((item, index) => {
+          for (var dataType of types_of_data) {
+            if(item[dataType]){
+              const dataObj = item[dataType]
+              console.log("dataa:", item)
+              if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
+                item.alert += 1;
+                console.log("you're in deep shit. Alert: ", item.alert)
 
-      )
+              } else {
+                console.log("everythings alright")
+              }
+            } else {
+              console.log("undefineddddddddddddddd")
+            }
+        }
+
+        console.log("Item:::::", item.Aeration)
+
+        if (item.alert === 0) {
+                return (
+                  <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+                )
+              // } else if( item.alert === 1) {
+              //   return (
+              //     <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} />
+              //   )
+              } else {
+                return (
+                  <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+                )
+              }
     })
+
 
 
     // ***************** final return ***************************
