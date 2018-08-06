@@ -6,6 +6,7 @@ const CanvasJSReact = require('../lib/canvasjs.react');
 const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+//  Sets the interval for updating the chart
 const updateInterval = 5000;
 
 class SingleSensor extends Component {
@@ -19,7 +20,7 @@ class SingleSensor extends Component {
       unit: '',
       format: ''
     }
-    this.loadDatapointsFromDB()
+    this.loadDatapointsFromProps()
   }
 
   componentDidMount(){
@@ -33,7 +34,7 @@ class SingleSensor extends Component {
   }
 
   // Loads all datapoints from db and adds them to the datapoints array
-  loadDatapointsFromDB(){
+  loadDatapointsFromProps(){
     const fiftySensors = this.props.sensor.data_points
     const sliced = fiftySensors.slice(fiftySensors.length-50)
     sliced.forEach(data => {
@@ -45,14 +46,15 @@ class SingleSensor extends Component {
   // Adds datapoints to datapoints array
   addDataPointToChart(xValue, yValue) {
     this.state.datapoints.push({
-      x: xValue, //Date(xValue).getTime(), //
+      x: xValue,
       y: yValue,
       markerColor: 'green'
     });
   }
 
+  // Adds datapoints into db as they are created
   AddDataPointsToDB(){
-    this.setSensor()
+    this.setSensorProperties()
     if(this.props.group.id){
       // Gets last datapoint in array
       const last = this.state.datapoints.slice(this.state.datapoints.length-1)[0]
@@ -63,14 +65,14 @@ class SingleSensor extends Component {
           single_sensor_id: this.props.sensor.id
         })
         .then(response => {
-          debugger
           this.addDataPointToChart(last.x + 3600000, this.state.yValue)
         })
         .catch(error => console.log(error));
     }
   }
 
-  setSensor(){
+  // Sets the properties of a sensor before displaying in chart
+  setSensorProperties(){
     switch(this.props.sensor.data_type){
       case 'Soil Moisture':
         // Soil moisture in awc
@@ -149,6 +151,7 @@ class SingleSensor extends Component {
     }
   }
 
+  // Updates the chart based on a specific interval
   updateChart() {
 
     this.AddDataPointsToDB(this.state.yValue)

@@ -20,15 +20,18 @@ class Dashboard extends Component {
     };
   }
 
+  // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
 
+  // Gets groups based on user props from App.jsx
   componentWillReceiveProps(nextProps){
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
+  // Gets the whole groups object based on the user
   getGroupsFromJSON(userId) {
     const thisUser = parseInt(userId);
     axios
@@ -39,7 +42,10 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
+  // Gets a specific sensor in groups props by groupId and button that was pressed
   getSensor(groups, groupId, sensorIndex){
+    this.getGroupsFromJSON(this.state.currentUser.userId)
+
     groups.forEach(group => {
       if(group.id === groupId){
         this.setState({ group: group, show: true });
@@ -53,7 +59,6 @@ class Dashboard extends Component {
   }
 
   render() {
-
     return (
       <div>
         {console.log('UserId: ', this.props.currentUser.email)}
