@@ -192,17 +192,11 @@ class Login extends Component {
                     <FormControl inputRef={(ref) => { this.phone = ref }} name="phone" type="phone" placeholder="Phone" />
                   </Col>
                 </FormGroup>
-
-                <FormGroup>
-                  <Col smOffset={2} sm={10}>
-                    <Button onClick={this.handleRegister}>Register</Button>
-                  </Col>
-                </FormGroup>
-
               </Form>
+
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={this.handleClose}>Close</Button>
+              <Button onClick={this.handleRegister}>Register</Button>
             </Modal.Footer>
           </Modal>
 

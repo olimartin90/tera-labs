@@ -56,13 +56,14 @@ class Dashboard extends Component {
 
     return (
       <div>
+        {console.log('UserId: ', this.props.currentUser.email)}
         <div>
           <Header currentUser={this.props.currentUser} />
         </div>
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap />
+              <SensorMap currentUser={this.props.currentUser} />
               <div className="modal-container" style={{ height: 200 }}>
                 <Button
                   bsStyle="primary"
