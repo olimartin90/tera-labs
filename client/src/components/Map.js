@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
+import GoogleMapIconYellow from '../map-marker-yellow.png'
 const axios = require('axios');
 
 
@@ -110,7 +112,6 @@ componentWillReceiveProps(nextProps) {
 // *************** return the markers from the state and send it to the final return ****************
       let markers = this.state.markers;
       let types_of_data =["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
-      let alert = 0;
 
       const listOfMarkers = markers.map((item, index) => {
           for (var dataType of types_of_data) {
@@ -119,7 +120,7 @@ componentWillReceiveProps(nextProps) {
               console.log("dataa:", item)
               if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
                 item.alert += 1;
-                console.log("you're in deep shit. Alert: ", alert)
+                console.log("you're in deep shit. Alert: ", item.alert)
 
               } else {
                 console.log("everythings alright")
@@ -135,6 +136,10 @@ componentWillReceiveProps(nextProps) {
           return (
             <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconGreen} position={{lat: item.latitude, lng: item.longitude}} /> 
           )
+        } else if( item.alert === 1) {
+          return (
+            <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} /> 
+          )
         } else {
           return (
             <Marker onClick={this.onMarkerClick} key={index} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
@@ -147,6 +152,34 @@ componentWillReceiveProps(nextProps) {
 // ***************** final return ***************************
         return (
           <Grid>
+            <Row>
+              <div>
+                <Col md={1}></Col>
+                <Col md={3}><p>Overview \n
+                 farm lighthouse Labs</p> </Col>
+                <Col md={3}>
+                  <div>
+                    <ReactWeather
+                      forecast="today"  
+                      apikey="ba2b14c881784efb99f150704180608"
+                      type="geo"
+                      lat="45.21205"
+                      lon="-73.738771"
+                    />
+                  </div>
+                </Col>
+                <Col md={3}>
+                  <div>
+                    <p>holla</p>
+                  </div>
+                </Col>
+                <Col md={2}>
+                  <div>
+                    <p>holla</p>
+                  </div>
+                </Col>
+              </div>
+            </Row>
             <Row>
               <Col md={9}></Col>
                 <Col md={2}>
