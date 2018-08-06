@@ -19,20 +19,19 @@ class SensorMap extends Component {
   constructor(props) {
     super(props);
 
-    this.handleValueName = this.handleValueName.bind(this);
-    this.handleValueLatitude = this.handleValueLatitude.bind(this);
-    this.handleValueNLongitude = this.handleValueLongitude.bind(this);
+    // Functions for the Add Sensors Modal
+    this.handleAddSensors = this.handleAddSensors.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
     this.onMarkerClick = this.onMarkerClick.bind(this);
+
     this.getGroupFromJSON = this.getGroupFromJSON.bind(this);
     this.getSensorsFromJSON = this.getSensorsFromJSON.bind(this);
     this.getDataPointsFromJSON = this.getDataPointsFromJSON.bind(this);
     this.getGroupFromJSON()
     this.getSensorsFromJSON()
     this.getDataPointsFromJSON()
-
-    // Functions for the Add Sensors Modal
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
 
     this.state = {
       markers: [],
@@ -112,7 +111,143 @@ class SensorMap extends Component {
   }
 
 
-  // *********** DATABOARD FEATURE *********************
+  // *********** ADD SENSORS FEATURE BELOW *********************
+
+  handleAddSensors(e) {
+    e.preventDefault();
+    const name = this.name.value
+    const latitude = this.latitude.value
+    const longitude = this.longitude.value
+    const set_min_sm = this.set_min_sm.value
+    const set_max_sm = this.set_max_sm.value
+    const set_min_ae = this.set_min_ae.value
+    const set_max_ae = this.set_max_ae.value
+    const set_min_st = this.set_min_st.value
+    const set_max_st = this.set_max_st.value
+    const set_min_ni = this.set_min_ni.value
+    const set_max_ni = this.set_max_ni.value
+    const set_min_phos = this.set_min_phos.value
+    const set_max_phos = this.set_max_phos.value
+    const set_min_sa = this.set_min_sa.value
+    const set_max_sa = this.set_max_sa.value
+    const set_min_re = this.set_min_re.value
+    const set_max_re = this.set_max_re.value
+    const set_min_pH = this.set_min_pH.value
+    const set_max_pH = this.set_max_pH.value
+    const set_min_pota = this.set_min_pota.value
+    const set_max_pota = this.set_max_pota.value
+
+    // The userId is hard coded and need to be linked to the current user logged in
+    axios
+      .post("http://localhost:3001/api/v1/users/1/group_sensors", {
+        user_id: this.props.currentUser.userId,
+        name: name,
+        latitude: latitude,
+        longitude: longitude
+      })
+      .then(response => {
+        this.handleClose();
+
+        axios
+          .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
+          .then(response => {
+            for (var marker of response.data) {
+              const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
+              const addMarker = this.state.markers.concat(newMarker)
+              this.setState({ markers: addMarker })
+            }
+            const getGrId = response.data.slice(response.data.length - 1)[0].id
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Soil Moisture",
+                  set_min: set_min_sm,
+                  set_max: set_max_sm
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Aeration",
+                  set_min: set_min_ae,
+                  set_max: set_max_ae
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Soil Temp",
+                  set_min: set_min_st,
+                  set_max: set_max_st
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Nitrate",
+                  set_min: set_min_ni,
+                  set_max: set_max_ni
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Phosphorus",
+                  set_min: set_min_phos,
+                  set_max: set_max_phos
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Salinity",
+                  set_min: set_min_sa,
+                  set_max: set_max_sa
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Respiration",
+                  set_min: set_min_re,
+                  set_max: set_max_re
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "pH",
+                  set_min: set_min_pH,
+                  set_max: set_max_pH
+                })
+            axios
+              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+                {
+                  group_sensor_id: getGrId,
+                  data_type: "Potassium",
+                  set_min: set_min_pota,
+                  set_max: set_max_pota
+                })
+              .catch(error => console.log(error));
+          })
+          .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
+  }
+
+  // Functions for showing and closing the Add Sensors Modal
+  handleClose() {
+    this.setState({ show: false });
+  }
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  // *********** ADD SENSORS FEATURE ABOVE *********************
+
+
+  // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
     this.setState({ isHidden: !this.state.isHidden })
@@ -143,39 +278,6 @@ class SensorMap extends Component {
   }
 
   // *********** DATABOARD FEATURE *********************
-
-
-  handleValueName = e => {
-    console.log(e.target.value)
-    this.setState({ nameValue: e.target.value });
-  }
-  handleValueLatitude = e => {
-    console.log(e.target.value)
-    this.setState({ latitudeValue: e.target.value });
-  }
-  handleValueLongitude = e => {
-    console.log(e.target.value)
-    this.setState({ longitudeValue: e.target.value });
-  }
-
-  handleNewMarker = e => {
-    console.log(this.state.latitudeValue)
-    const newMarker = { id: this.state.id, name: this.state.nameValue, latitude: this.state.latitudeValue, longitude: this.state.longitudeValue }
-    const addMarker = this.state.markers.concat(newMarker)
-    this.setState({ markers: addMarker })
-    this.state.nameValue = "";
-    this.state.latitudeValue = 0;
-    this.state.longitudeValue = 0;
-    e.preventDefault();
-  }
-
-  // Functions for showing and closing the Add Sensors Modal
-  handleClose() {
-    this.setState({ show: false });
-  }
-  handleShow() {
-    this.setState({ show: true });
-  }
 
 
   render() {
@@ -229,7 +331,7 @@ class SensorMap extends Component {
                         Name
                             </Col>
                       <Col sm={10}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="name" type="text" placeholder="Name" />
+                        <FormControl inputRef={(ref) => { this.name = ref }} name="name" type="text" placeholder="Name" />
                       </Col>
                     </FormGroup>
 
@@ -238,10 +340,10 @@ class SensorMap extends Component {
                         Location
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="latitude" type="text" placeholder="Latitude" />
+                        <FormControl inputRef={(ref) => { this.latitude = ref }} name="latitude" type="text" placeholder="Latitude" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="longitude" type="text" placeholder="Longitude" />
+                        <FormControl inputRef={(ref) => { this.longitude = ref }} name="longitude" type="text" placeholder="Longitude" />
                       </Col>
                     </FormGroup>
 
@@ -250,10 +352,10 @@ class SensorMap extends Component {
                         Moisture
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_sm = ref }} name="min" type="text" placeholder="Min : 0.2 awc" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_sm = ref }} name="max" type="text" placeholder="Max : 0.8 awc" />
                       </Col>
                     </FormGroup>
 
@@ -262,10 +364,10 @@ class SensorMap extends Component {
                         Aeration
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_ae = ref }} name="min" type="text" placeholder="Min : 15 %" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_ae = ref }} name="max" type="text" placeholder="Max : 23 %" />
                       </Col>
                     </FormGroup>
 
@@ -274,10 +376,10 @@ class SensorMap extends Component {
                         Temperature
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_st = ref }} name="min" type="text" placeholder="Min : 44 °F" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_st = ref }} name="max" type="text" placeholder="Max : 58 °F" />
                       </Col>
                     </FormGroup>
 
@@ -286,10 +388,10 @@ class SensorMap extends Component {
                         Nitrate
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_ni = ref }} name="min" type="text" placeholder="Min : 74 ppm" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_ni = ref }} name="max" type="text" placeholder="Max : 89 ppm" />
                       </Col>
                     </FormGroup>
 
@@ -298,10 +400,10 @@ class SensorMap extends Component {
                         Phosphorus
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_phos = ref }} name="min" type="text" placeholder="Min : 74 ppm" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_phos = ref }} name="max" type="text" placeholder="Max : 89 ppm" />
                       </Col>
                     </FormGroup>
 
@@ -310,10 +412,10 @@ class SensorMap extends Component {
                         Salinity
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_sa = ref }} name="min" type="text" placeholder="Min : 0.4 dS/m" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_sa = ref }} name="max" type="text" placeholder="Max : 1 dS/m" />
                       </Col>
                     </FormGroup>
 
@@ -322,10 +424,10 @@ class SensorMap extends Component {
                         Respiration
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_re = ref }} name="min" type="text" placeholder="Min : 0.02 %" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_re = ref }} name="max" type="text" placeholder="Max : 0.08 %" />
                       </Col>
                     </FormGroup>
 
@@ -334,10 +436,10 @@ class SensorMap extends Component {
                         pH
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_pH = ref }} name="min" type="text" placeholder="Min : 6" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_pH = ref }} name="max" type="text" placeholder="Max : 7" />
                       </Col>
                     </FormGroup>
 
@@ -346,10 +448,10 @@ class SensorMap extends Component {
                         Potassium
                             </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="min" type="text" placeholder="Min" />
+                        <FormControl inputRef={(ref) => { this.set_min_pota = ref }} name="min" type="text" placeholder="Min : 80 ppm" />
                       </Col>
                       <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.first_name = ref }} name="max" type="text" placeholder="Max" />
+                        <FormControl inputRef={(ref) => { this.set_max_pota = ref }} name="max" type="text" placeholder="Max : 90 ppm" />
                       </Col>
                     </FormGroup>
                   </Form>
@@ -359,37 +461,9 @@ class SensorMap extends Component {
                   <Button
                     bsStyle="primary"
                     bsSize="large"
-                    onClick={this.handleSubmit}>Submit</Button>
+                    onClick={this.handleAddSensors}>Submit</Button>
                 </Modal.Footer>
               </Modal>
-
-              {/* <Popup trigger={<button> Add sensor</button>} position="right center" modal closeOnDocumentClick>
-              {close => (
-                <div>
-                  <form onSubmit={this.handleNewMarker.bind(this)}>
-                    <label>
-                      Name:
-                            <input type="text" value={this.state.nameValue} onChange={this.handleValueName} />
-                    </label>
-                    <label>
-                      Latitude:
-                            <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                      <input type="number" value={this.state.latitudeValue} onChange={this.handleValueLatitude} />
-                    </label>
-                    <label>
-                      Longitude:
-                            <input type="number" value={this.state.longitudeValue} onChange={this.handleValueLongitude} />
-                            </label>
-                            <input type="submit" value="Submit" />
-                            <input type="button" value="close" onClick={() => {
-                              console.log('modal closed ')
-                              close()
-                            }} />
-                          </form>
-                        </div>
-                      )}
-
-                    </Popup> */}
 
             </div>
             {/* ****************** End of Add Sensors Modal ****************** */}
@@ -457,7 +531,7 @@ class SensorMap extends Component {
 
         </Row>
 
-      </Grid>
+      </Grid >
     )
   }
 }
