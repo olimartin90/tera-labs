@@ -48,6 +48,7 @@ class SensorMap extends Component {
 
   handleAddSensors(e) {
     e.preventDefault();
+    const user_id = this.props.currentUser.userId
     const name = this.name.value
     const latitude = this.latitude.value
     const longitude = this.longitude.value
@@ -72,23 +73,56 @@ class SensorMap extends Component {
 
     // The userId is hard coded and need to be linked to the current user logged in
     axios
-      .post("http://localhost:3001/api/v1/users/1/group_sensors", {
-        user_id: this.props.currentUser.userId,
+      .post(`http://localhost:3001/api/v1/users/${user_id}/group_sensors`, {
+        user_id: user_id,
         name: name,
         latitude: latitude,
         longitude: longitude,
         single_sensors: [
           {
-            // group_sensor_id: getGrId,
             data_type: "Soil Moisture",
             set_min: set_min_sm,
             set_max: set_max_sm
           },
           {
-            // group_sensor_id: getGrId,
             data_type: "Aeration",
             set_min: set_min_ae,
             set_max: set_max_ae
+          },
+          {
+            data_type: "Soil Temp",
+            set_min: set_min_st,
+            set_max: set_max_st
+          },
+          {
+            data_type: "Nitrate",
+            set_min: set_min_ni,
+            set_max: set_max_ni
+          },
+          {
+            data_type: "Phosphorus",
+            set_min: set_min_phos,
+            set_max: set_max_phos
+          },
+          {
+            data_type: "Salinity",
+            set_min: set_min_sa,
+            set_max: set_max_sa
+          },
+          {
+            data_type: "Respiration",
+            set_min: set_min_re,
+            set_max: set_max_re
+          },
+          {
+            data_type: "pH",
+            set_min: set_min_pH,
+            set_max: set_max_pH
+          },
+          {
+            data_type: "Potassium",
+            set_min: set_min_pota,
+            set_max: set_max_pota
           }
         ]
       })
