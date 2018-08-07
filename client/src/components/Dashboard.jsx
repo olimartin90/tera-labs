@@ -6,7 +6,6 @@ import SingleSensor from "./SingleSensor";
 
 const axios = require('axios');
 
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +19,7 @@ class Dashboard extends Component {
   }
 
   // Gets groups based on user props from App.jsx
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }

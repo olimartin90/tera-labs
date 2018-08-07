@@ -5,9 +5,6 @@ import Logout from "./Logout";
 class Header extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   currentUser: props.email
-    // }
   }
 
   render() {
