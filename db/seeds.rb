@@ -104,7 +104,7 @@ Datapoint.destroy_all
 dateSc = Time.now.to_i - 180000
 dateMs = dateSc * 1000
 
-50.times do
+750.times do
   dateMs += 3_600_000
   moisture.datapoints.create!({
     data_value: rand(0.1..0.2).round(1),
