@@ -86,6 +86,7 @@ class DataBoard extends Component {
                           <Row className="show-grid">
                             <Col xs={12} md={8}>
                               <Button
+                                block
                                 bsStyle="success"
                                 onClick={()=>{ this.getSensor(this.state.groups, 1, index) }}
                               >

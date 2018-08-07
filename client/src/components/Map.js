@@ -100,7 +100,12 @@ handleAddSensors(e) {
           .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
           .then(response => {
             for (var marker of response.data) {
-              const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
+              const newMarker = {
+                id: marker.id,
+                name: marker.name,
+                latitude: marker.latitude,
+                longitude: marker.longitude
+              }
               const addMarker = this.state.markers.concat(newMarker)
               this.setState({ markers: addMarker })
             }
@@ -199,7 +204,14 @@ handleAddSensors(e) {
     const groups = nextProps.groups
     for (var marker of groups) {
 
-      const newMarker = {id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0}
+      const newMarker = {
+        id: marker.id,
+        name: marker.name,
+        latitude: marker.latitude,
+        longitude: marker.longitude,
+        data: marker.single_sensors,
+        alert: 0
+      }
 
       for (var sensor of marker.single_sensors){
         let data_type = sensor.data_type
@@ -217,7 +229,11 @@ handleAddSensors(e) {
 
         }
 
-        const newSensorSetting = {data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData}
+        const newSensorSetting = {
+          data_typeMin: sensorMin,
+          data_typeMax: sensorMax,
+          data_value: newData
+        }
         newMarker[data_type] = newSensorSetting
 
       }
@@ -242,8 +258,11 @@ handleAddSensors(e) {
           .then(res => {
             console.log("Response:", res.data.group_sensors[0])
             res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
-              console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
-              const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
+              // console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
+              let mostRecentValue = 0
+              if(sensor.data_points.length > 0){
+                mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
+              }
               data.push({
                 data_type: sensor.data_type,
                 data_value: mostRecentValue
@@ -252,8 +271,6 @@ handleAddSensors(e) {
             console.log(data)
             this.setState({ dataBoard: data })
           })
-
-
 
         if (this.state.isHidden) {
           console.log("is hidden")
