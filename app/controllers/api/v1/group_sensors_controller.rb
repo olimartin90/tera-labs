@@ -22,7 +22,7 @@ module Api::V1
         puts "rails sensor: #{sensor[:data_type]}"
         group.single_sensors.last.datapoints.create(
           data_value: 0,
-          date_epoch: Time.now.to_i
+          date_epoch: Time.now.to_i * 1000
         )
       end
       render json: group

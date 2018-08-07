@@ -17,16 +17,12 @@ class DataBoard extends Component {
       sensor: {},
       dataBoard: []
     }
+    this.getGroupsFromJSON(localStorage.getItem("user_id"))
   }
 
   // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.state.currentUser = nextProps.currentUser
-    this.getGroupsFromJSON(this.state.currentUser.userId)
   }
 
   // Gets the whole groups object based on the user
@@ -86,7 +82,7 @@ class DataBoard extends Component {
                                 className="databoardbutton"
                                 bsStyle="success"
                                 block
-                                onClick={() => { this.getSensor(this.state.groups, 1, index) }}
+                                onClick={() => { this.getSensor(this.state.groups, 5, index) }}
                               >
                                 <h4>
                                   {data.data_type}
