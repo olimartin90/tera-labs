@@ -15,6 +15,8 @@ class Logout extends Component {
   handleLogout(e) {
     e.preventDefault();
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("user_id");
     this.setState({
       toHome: true
     })

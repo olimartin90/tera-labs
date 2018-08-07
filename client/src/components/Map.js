@@ -518,8 +518,18 @@ handleAddSensors(e) {
                   <div key={index}>
                     <Grid>
                       <Row className="show-grid">
-                        <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID}  dataBoard={this.state.dataBoard} />
-                        <p>{data.data_value}</p>
+
+                        <Col xs={12} md={8}>
+                          <h4>
+                            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID}  dataBoard={this.state.dataBoard} />
+                          </h4>
+                        </Col>
+                        <Col xs={6} md={4}>
+                          <h4>
+                            <p>{data.data_value}</p>
+                          </h4>
+                        </Col>
+>>>>>>> master
                       </Row>
                     </Grid>
                   </div>
