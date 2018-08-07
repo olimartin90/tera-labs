@@ -289,13 +289,11 @@ html {
   }
 }
 
-<<<<<<< HEAD
 .weather-box {
   border: solid black 1px;
   padding-bottom: 15px;
   padding-left: 15px;
 }
-=======
 /* .add-sensors-row {
   border: 1px solid red;
 }
@@ -307,4 +305,3 @@ html {
 .add-sensors-row2 {
   border: 1px solid red;
 } */
->>>>>>> ed5e7de0ee768406f82adefd58c1dad11718d9f3

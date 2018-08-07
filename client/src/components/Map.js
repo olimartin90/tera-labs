@@ -4,7 +4,6 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
-import GoogleMapIconYellow from '../map-marker-yellow.png'
 import DataBoard from './Databoard'
 
 const axios = require('axios');
@@ -214,26 +213,30 @@ class SensorMap extends Component {
     let types_of_data = ["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
 
     const listOfMarkers = markers.map((item, index) => {
+      item.alert = 0;
       for (var dataType of types_of_data) {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
-            item.alert += 1;
-
+            dataObj.alert = 1;
+           item.alert = 1;
           } else {
+            dataObj.alert = 0;
           }
+
+
+          console.log("hollllaaaaaaaaaaaa",dataObj)
+          
         } else {
         }
+
+
       }
 
       // *************** icon change if alert ********************
       if (item.alert === 0) {
         return (
           <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconGreen} position={{ lat: item.latitude, lng: item.longitude }} />
-        )
-      } else if (item.alert === 1) {
-        return (
-          <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconYellow} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       } else {
         return (
@@ -276,7 +279,7 @@ class SensorMap extends Component {
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
-          <div class="fixed-bottom">
+          <div className="fixed-bottom">
             <Col md={9}></Col>
             {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col" md={2}>
