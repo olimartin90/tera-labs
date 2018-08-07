@@ -16,6 +16,17 @@ class App extends Component {
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
   }
 
+  componentDidMount() {
+    if (localStorage.getItem("auth_token")) {
+      this.setState({
+        currentUser: {
+          email: localStorage.getItem("email"),
+          userId: localStorage.getItem("user_id"),
+        }
+      })
+    }
+  }
+
   updateCurrentUser(email, userId) {
     this.setState({
       currentUser: {
