@@ -292,9 +292,10 @@ class SensorMap extends Component {
       onMarkerClick(props, marker, e) {
         this.setState({ isHidden: !this.state.isHidden })
         let data = []
+        console.log("prooooppppsssss",marker)
     
         axios
-          .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+          .get(`http://localhost:3001/api/v1/group_sensors_data/${marker.id}`)
           .then(res => {
             console.log("Response:", res.data.group_sensors[0])
             res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
@@ -327,22 +328,26 @@ class SensorMap extends Component {
   
         const listOfMarkers = markers.map((item, index) => {
             for (var dataType of types_of_data) {
+              const dataObj = item[dataType]
               if(item[dataType]){
-                const dataObj = item[dataType]
-                console.log("dataa:", item)
+                // console.log("dataa:", item)
                 if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax ){
-                  item.alert += 1;
+                  item.alert = 1;
+                  dataObj.alert = 1;
                   console.log("you're in deep shit. Alert: ", item.alert)
   
                 } else {
+                  dataObj.alert = 0;
                   console.log("everythings alright")
                 }
               } else {
                 console.log("undefineddddddddddddddd")
               }
+
+              console.log("*********************",dataObj)
           }
   
-          console.log("Item:::::", item.Aeration)
+          console.log("Item:::::", this.state)
   // *************** icon change if alert ********************
           if (item.alert === 0) {
             return (
@@ -350,7 +355,7 @@ class SensorMap extends Component {
             )
           } else if( item.alert === 1) {
             return (
-              <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconYellow} position={{lat: item.latitude, lng: item.longitude}} /> 
+              <Marker onClick={this.onMarkerClick} key={index} id={item.id} name={item.name} icon={GoogleMapIconRed} position={{lat: item.latitude, lng: item.longitude}} /> 
             )
           } else {
             return (
@@ -367,10 +372,16 @@ class SensorMap extends Component {
         <Row>
               <div>
                 <Col md={1}></Col>
-                <Col md={3}><p>Overview \n
-                 farm lighthouse Labs</p> </Col>
+                <Col md={3}><p>Overview of your farm </p> </Col>
                 <Col md={3}>
+                </Col>
+                <Col md={2}>
                   <div>
+                    <p>holla</p>
+                  </div>
+                </Col>
+                <Col md={2}>
+                <div className="weather-box">
                     <ReactWeather
                       forecast="today"  
                       apikey="ba2b14c881784efb99f150704180608"
@@ -380,15 +391,7 @@ class SensorMap extends Component {
                     />
                   </div>
                 </Col>
-                <Col md={3}>
-                  <div>
-                    <p>holla</p>
-                  </div>
-                </Col>
-                <Col md={2}>
-                  <div>
-                    <p>holla</p>
-                  </div>
+                <Col md={1}>
                 </Col>
               </div>
             </Row>

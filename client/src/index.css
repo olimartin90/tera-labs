@@ -284,3 +284,9 @@ html {
     margin-left: 0px;
   }
 }
+
+.weather-box {
+  border: solid black 1px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+}
