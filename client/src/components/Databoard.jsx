@@ -17,14 +17,15 @@ class DataBoard extends Component {
       sensor: {},
       dataBoard: []
     }
-}
+  }
 
+<<<<<<< HEAD
 
  // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
- 
+
  componentWillReceiveProps(nextProps){
    this.state.currentUser = nextProps.currentUser
    this.getGroupsFromJSON(this.state.currentUser.userId)
@@ -58,23 +59,21 @@ class DataBoard extends Component {
    })
  }
 
- getLastDayDataPoints(){
-   console.log('Last day datapoints... coming soon')
- }
+  getLastDayDataPoints() {
+    console.log('Last day datapoints... coming soon')
+  }
 
- getLastWeekDataPoints(){
-   console.log('Last week datapoints... coming soon')
- }
+  getLastWeekDataPoints() {
+    console.log('Last week datapoints... coming soon')
+  }
 
- getLastMonthDataPoints(){
-   console.log('Last month datapoints... coming soon')
- }
-
-
+  getLastMonthDataPoints() {
+    console.log('Last month datapoints... coming soon')
+  }
 
 
- render() {
-   return (
+  render() {
+    return (
       <div>
         <Grid className="top-cont">
           <Row>
@@ -89,14 +88,14 @@ class DataBoard extends Component {
 
                             <Col className="databoardcol"xs={12} md={8}>
                               <Button
-                                bsStyle="success"
                                 className="databoardbutton"
                                 block
-                                onClick={()=>{ this.getSensor(this.state.groups, 1, index) }}
+                                onClick={() => { this.getSensor(this.state.groups, 1, index) }}
+
                               >
-                              <h4>
-                                {data.data_type}
-                              </h4>
+                                <h4>
+                                  {data.data_type}
+                                </h4>
                               </Button>
                             </Col>
                             <Col xs={6} md={4}>
@@ -111,7 +110,7 @@ class DataBoard extends Component {
                     )
                   }
                 </div>
-                 <Modal
+                <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
                   container={this}
@@ -123,17 +122,17 @@ class DataBoard extends Component {
                       <ButtonGroup bStyle="primary" bSize="xsmall">
                         <ButtonToolbar>
                           <Button
-                            onClick={()=>{ this.getLastDayDataPoints() }}
+                            onClick={() => { this.getLastDayDataPoints() }}
                           >
                             Last day
                           </Button>
                           <Button
-                            onClick={()=>{ this.getLastWeekDataPoints() }}
+                            onClick={() => { this.getLastWeekDataPoints() }}
                           >
                             Last week
                           </Button>
                           <Button
-                            onClick={()=>{ this.getLastMonthDataPoints() }}
+                            onClick={() => { this.getLastMonthDataPoints() }}
                           >
                             Last month
                           </Button>
@@ -142,7 +141,7 @@ class DataBoard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} group={ this.state.group } />
+                    <SingleSensor sensor={this.state.sensor} group={this.state.group} />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
@@ -153,8 +152,8 @@ class DataBoard extends Component {
           </Row>
         </Grid>
       </div>
-     )
- }
+    )
+  }
 }
 
 export default DataBoard;
