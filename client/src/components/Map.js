@@ -167,23 +167,28 @@ class SensorMap extends Component {
         ]
       })
       .then(response => {
-        this.handleClose();
 
-        axios
-          .get(`http://localhost:3001/api/v1/users/${user_id}/group_sensors`)
-          .then(response => {
-            for (var marker of response.data) {
-              const newMarker = {
-                id: marker.id,
-                name: marker.name,
-                latitude: marker.latitude,
-                longitude: marker.longitude
-              }
-              const addMarker = this.state.markers.concat(newMarker)
-              this.setState({ markers: addMarker })
-            }
-          })
-          .catch(error => console.log(error));
+        // this.props.getGroups(user_id)
+        // this.componentWillReceiveProps(this.props.currentUser.userId)
+        this.handleClose();
+        window.location.reload();
+        // let getElement = this.state.markers.length 
+
+        // axios
+        //   .get(`http://localhost:3001/api/v1/users/${user_id}/group_sensors/${getElement}`)
+        //   .then(response => {
+        //     console.log("ressssppppoooonnnnsssseeeee",response.data)
+        //       const newMarker = {
+        //         id: response.data[0].id,
+        //         name: response.data[0].name,
+        //         latitude: response.data[0].latitude,
+        //         longitude: response.data[0].longitude
+        //         // data: response.data[0].
+        //       }
+        //       this.state.markers.push(newMarker)
+        //       // this.setState({ markers: addMarker })
+        //   })
+        //   .catch(error => console.log(error));
       })
       .catch(error => console.log(error));
   }
@@ -201,45 +206,47 @@ class SensorMap extends Component {
   // *************** marker generator Below *********************
   componentWillReceiveProps(nextProps) {
     const groups = nextProps.groups
-    for (var marker of groups) {
-
-      const newMarker = {
-        id: marker.id,
-        name: marker.name,
-        latitude: marker.latitude,
-        longitude: marker.longitude,
-        data: marker.single_sensors,
-        alert: 0
-      }
-
-      for (var sensor of marker.single_sensors) {
-        let data_type = sensor.data_type
-        let sensorMin = sensor.set_min
-        let data_typeMin = data_type + "Min"
-
-        let sensorMax = sensor.set_max
-        let data_typeMax = data_type + "Max"
-
-        const newData = 0;
-
-        for (var data of sensor.data_points) {
-
-          newData = data.data_value;
-
+    if( !this.state.markers[0] || groups[0].id !== this.state.markers[0].id){
+      for (var marker of groups) {
+  
+        const newMarker = {
+          id: marker.id,
+          name: marker.name,
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+          data: marker.single_sensors,
+          alert: 0
         }
-
-        const newSensorSetting = {
-          data_typeMin: sensorMin,
-          data_typeMax: sensorMax,
-          data_value: newData
+  
+        for (var sensor of marker.single_sensors) {
+          let data_type = sensor.data_type
+          let sensorMin = sensor.set_min
+          let data_typeMin = data_type + "Min"
+  
+          let sensorMax = sensor.set_max
+          let data_typeMax = data_type + "Max"
+  
+          const newData = 0;
+  
+          for (var data of sensor.data_points) {
+  
+            newData = data.data_value;
+  
+          }
+  
+          const newSensorSetting = {
+            data_typeMin: sensorMin,
+            data_typeMax: sensorMax,
+            data_value: newData
+          }
+          newMarker[data_type] = newSensorSetting
+  
         }
-        newMarker[data_type] = newSensorSetting
-
+        let newCenterPoint = {lat: marker.latitude , lng: marker.longitude}
+        const addMarker = this.state.markers.concat(newMarker)
+        this.state.markers = addMarker
+        this.setState({initialCenterPoint: newCenterPoint})
       }
-      let newCenterPoint = {lat: marker.latitude , lng: marker.longitude}
-      const addMarker = this.state.markers.concat(newMarker)
-      this.state.markers = addMarker
-      this.setState({initialCenterPoint: newCenterPoint})
     }
   }
 
@@ -357,7 +364,7 @@ class SensorMap extends Component {
             {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col" md={2}>
 
-              <div className="modal-container" style={{ height: 200 }}>
+              <div className="modal-container" >
                 <Button
                   bsStyle="primary"
                   bsSize="large"
@@ -603,7 +610,7 @@ class SensorMap extends Component {
                     <Button
                       bsStyle="primary"
                       bsSize="large"
-                      onClick={this.handleAddSensors}>Submit</Button>
+                      onClick={this.handleAddSensors }>Submit</Button>
                   </Modal.Footer>
                 </Modal>
               </div>

@@ -44,7 +44,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser}  />
             </div>
           </Row>
         </Grid>

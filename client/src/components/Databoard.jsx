@@ -82,7 +82,7 @@ class DataBoard extends Component {
                                 className="databoardbutton"
                                 bsStyle="success"
                                 block
-                                onClick={() => { this.getSensor(this.state.groups, 5, index) }}
+                                onClick={() => { this.getSensor(this.state.groups, 1, index) }}
                               >
                                 <h4>
                                   {data.data_type}
