@@ -37,7 +37,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="dashboard_page">
         <div>
           <Header currentUser={this.props.currentUser} />
         </div>

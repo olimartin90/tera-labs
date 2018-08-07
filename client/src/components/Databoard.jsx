@@ -16,8 +16,6 @@ class DataBoard extends Component {
       group: {},
       sensor: {},
       dataBoard: [],
-      markers: []
-
     }
   }
 
@@ -73,9 +71,40 @@ class DataBoard extends Component {
     console.log('Last month datapoints... coming soon')
   }
 
-
-
   render() {
+    const showDataboard =  (!this.props.dbButtonShow) ?  <div>  </div>
+    : this.props.dataBoard.map((data, index) =>
+
+      <div key={index}>
+        <Grid>
+          <Row className="show-grid">
+
+            <Col xs={3} md={8}>
+              {
+                data.data_value < data.data_min || data.data_value > data.data_max
+
+                  ? (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
+                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                      <div className="data_type_value">
+                        <h4>  {data.data_type} </h4>
+                        <p> {data.data_value} </p>
+                      </div>
+                    </Button>)
+
+                  : (<Button bsClass='custom-class' bsSize="xsmall" className="databoardsucessbutton" block active
+                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                       <div className="data_type_value">
+                         <h4>  {data.data_type} </h4>
+                         <p> {data.data_value} </p>
+                       </div>
+                     </Button>)
+              }
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    )
+
     return (
       <div>
         <Grid className="top-cont">
@@ -84,41 +113,7 @@ class DataBoard extends Component {
               <div className="modal-container" style={{ height: 200 }}>
                 <div className="databoard">
                   {
-                    this.props.dataBoard.map((data, index) =>
-
-                      <div key={index}>
-                        <Grid>
-                          <Row className="show-grid">
-
-                            <Col xs={8} md={8}>
-                              {
-                                data.data_value < data.data_min || data.data_value > data.data_max
-
-                                  ? (<Button bsStyle="success" bsSize="xsmall" className="databoardbutton" block active
-                                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                                    <h4>
-                                      {data.data_type}
-                                    </h4>
-                                    </Button>)
-
-                                  : (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
-                                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                                      <h4>
-                                        {data.data_type}
-                                      </h4>
-                                      </Button>)
-                              }
-                            </Col>
-                            <Col xs={6} md={4}>
-                              <h4 className= "datavalueh4">
-                                <p>{data.data_value}</p>
-                              </h4>
-                            </Col>
-
-                          </Row>
-                        </Grid>
-                      </div>
-                    )
+                    showDataboard
                   }
                 </div>
                 <Modal

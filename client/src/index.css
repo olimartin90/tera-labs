@@ -11,13 +11,6 @@ html {
 
  }
 
- /* .row {
-   margin-top: ;
-   padding-left: -15px;
-   padding-right: -15px;
-
- }
-
 /* First background image */
 
 .row1 {
@@ -148,6 +141,16 @@ html {
   color: #e6e9ef;
 }
 
+
+/* ******** /DataBoard *************/
+.dashboard_page {
+  background-color: #d3d3d330
+}
+.weather_div {
+  background-color: white;
+  padding: 10px;
+  box-shadow: 10px 10px 10px  #e0e0e0
+}
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -160,14 +163,37 @@ html {
 
 .databoard {
  z-index: 9999;
-  border: 1px solid red;
+
 }
-.databoardbutton {
-  margin-bottom: 5px;
-  border: 1px solid red;
+.data_type_value {
+
+  display: flex;
+  justify-content: space-between;
+
+}
+.data_type_value>h4 {
+
 }
 
-.databoardcol {
+.data_type_value>p {
+  margin-left: 10px;
+  font-size: 20px;
+  display: flex;
+  align-self: baseline;
+}
+.databoardbutton {
+  height: 25%;
+  width: 100%;
+  margin-bottom: 5px;
+
+}
+.custom-class {
+  background-color: #ccffdd;
+}
+.databoardsucessbutton {
+  height: 25%;
+  width: 100%;
+  margin-bottom: 5px;
 
 }
 
@@ -175,15 +201,15 @@ html {
   display: flex;
   align-items: center;
 }
-.datavalueh4 {
-  border: 1px solid red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .databoardbutton {
   margin-bottom: 5px;
+  min-width: 165px;
+}
+
+.databoardsucessbutton {
+  margin-bottom: 5px;
+  min-width: 165px;
+  color: green;
 }
 
 #footer {
@@ -253,7 +279,9 @@ html {
   }
 }
 
+@media (max-width: 1220px) {
 
+}
 
 @media (max-width: 635px) {
    .graphimage {
