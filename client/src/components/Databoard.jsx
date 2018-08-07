@@ -78,69 +78,33 @@ class DataBoard extends Component {
           <Row>
             <div>
               <div className="modal-container" style={{ height: 200 }}>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 0) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 1) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 2) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 3) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 4) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 5) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 6) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 7) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 8) }}
-                >
-                <Label bsStyle="success">{this.props.dataBoard.data_type}</Label>
-                </Button>
+                <div className="databoard">
+                  {
+                    this.props.dataBoard.map((data, index) =>
+                      <div key={index}>
+                        <Grid>
+                          <Row className="show-grid">
+                            <Col xs={12} md={8}>
+                              <Button
+                                bsStyle="success"
+                                onClick={()=>{ this.getSensor(this.state.groups, 1, index) }}
+                              >
+                              <h4>
+                                {data.data_type}
+                              </h4>
+                              </Button>
+                            </Col>
+                            <Col xs={6} md={4}>
+                              <h4>
+                                <p>{data.data_value}</p>
+                              </h4>
+                            </Col>
+                          </Row>
+                        </Grid>
+                      </div>
+                    )
+                  }
+                </div>
                  <Modal
                   show={this.state.show}
                   onHide={this.handleHide}

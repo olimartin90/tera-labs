@@ -243,7 +243,7 @@ handleAddSensors(e) {
             console.log("Response:", res.data.group_sensors[0])
             res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
               console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
-              const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
+              const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
               data.push({
                 data_type: sensor.data_type,
                 data_value: mostRecentValue
@@ -512,28 +512,8 @@ handleAddSensors(e) {
 
             {/* **************** Databoard ****************** */}
 
-            <div className="databoard">
-              {
-                this.state.dataBoard.map((data, index) =>
-                  <div key={index}>
-                    <Grid>
-                      <Row className="show-grid">
-                        <Col xs={12} md={8}>
-                          <h4>
-                            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID}  dataBoard={this.state.dataBoard} />
-                          </h4>
-                        </Col>
-                        <Col xs={6} md={4}>
-                          <h4>
-                            <p>{data.data_value}</p>
-                          </h4>
-                        </Col>
-                      </Row>
-                    </Grid>
-                  </div>
-                )
-              }
-            </div>
+                <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID}  dataBoard={this.state.dataBoard} />
+
 
             {/* **************** Databoard ****************** */}
 
