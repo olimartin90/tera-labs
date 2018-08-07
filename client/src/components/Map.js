@@ -77,47 +77,92 @@ class SensorMap extends Component {
           {
             data_type: "Soil Moisture",
             set_min: set_min_sm,
-            set_max: set_max_sm
+            set_max: set_max_sm,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Aeration",
             set_min: set_min_ae,
-            set_max: set_max_ae
+            set_max: set_max_ae,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Soil Temp",
             set_min: set_min_st,
-            set_max: set_max_st
+            set_max: set_max_st,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Nitrate",
             set_min: set_min_ni,
-            set_max: set_max_ni
+            set_max: set_max_ni,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Phosphorus",
             set_min: set_min_phos,
-            set_max: set_max_phos
+            set_max: set_max_phos,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Salinity",
             set_min: set_min_sa,
-            set_max: set_max_sa
+            set_max: set_max_sa,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Respiration",
             set_min: set_min_re,
-            set_max: set_max_re
+            set_max: set_max_re,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "pH",
             set_min: set_min_pH,
-            set_max: set_max_pH
+            set_max: set_max_pH,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           },
           {
             data_type: "Potassium",
             set_min: set_min_pota,
-            set_max: set_max_pota
+            set_max: set_max_pota,
+            data_points: [
+              {
+                data_value: 0
+              }
+            ]
           }
         ]
       })
@@ -125,10 +170,15 @@ class SensorMap extends Component {
         this.handleClose();
 
         axios
-          .get("http://localhost:3001/api/v1/users/1/group_sensors") // getting the group sensor data
+          .get(`http://localhost:3001/api/v1/users/${user_id}/group_sensors`)
           .then(response => {
             for (var marker of response.data) {
-              const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude }
+              const newMarker = {
+                id: marker.id,
+                name: marker.name,
+                latitude: marker.latitude,
+                longitude: marker.longitude
+              }
               const addMarker = this.state.markers.concat(newMarker)
               this.setState({ markers: addMarker })
             }
@@ -153,7 +203,14 @@ class SensorMap extends Component {
     const groups = nextProps.groups
     for (var marker of groups) {
 
-      const newMarker = { id: marker.id, name: marker.name, latitude: marker.latitude, longitude: marker.longitude, data: marker.single_sensors, alert: 0 }
+      const newMarker = {
+        id: marker.id,
+        name: marker.name,
+        latitude: marker.latitude,
+        longitude: marker.longitude,
+        data: marker.single_sensors,
+        alert: 0
+      }
 
       for (var sensor of marker.single_sensors) {
         let data_type = sensor.data_type
@@ -171,7 +228,11 @@ class SensorMap extends Component {
 
         }
 
-        const newSensorSetting = { data_typeMin: sensorMin, data_typeMax: sensorMax, data_value: newData }
+        const newSensorSetting = {
+          data_typeMin: sensorMin,
+          data_typeMax: sensorMax,
+          data_value: newData
+        }
         newMarker[data_type] = newSensorSetting
 
       }
@@ -190,11 +251,15 @@ class SensorMap extends Component {
     let data = []
 
     axios
-      .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
+      .get(`http://localhost:3001/api/v1/group_sensors_data/${this.props.currentUser.userId}`)
       .then(res => {
         res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
-          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
-          data.push({
+          let mostRecentValue = 0
+            if(sensor.data_points.length > 0){
+              mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
+            }
+            console.log('Sensor empty?', sensor.data_points)
+            data.push({
             data_type: sensor.data_type,
             data_value: mostRecentValue
           })
@@ -205,7 +270,7 @@ class SensorMap extends Component {
     if (this.state.isHidden) {
     } else {
     }
-    this.setState({ dataBoard: data })
+    // this.setState({ dataBoard: data })
   }
 
   render() {
@@ -276,7 +341,7 @@ class SensorMap extends Component {
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
-          <div class="fixed-bottom">
+          <div className="fixed-bottom">
             <Col md={9}></Col>
             {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col" md={2}>
