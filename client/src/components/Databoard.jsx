@@ -19,14 +19,16 @@ class DataBoard extends Component {
     }
 }
 
+
  // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
-
+ 
  componentWillReceiveProps(nextProps){
    this.state.currentUser = nextProps.currentUser
    this.getGroupsFromJSON(this.state.currentUser.userId)
+   console.log("This is what I receive:", this.props.groups)
    console.log('dashboard state: ', this.state)
  }
 
@@ -84,9 +86,12 @@ class DataBoard extends Component {
                       <div key={index}>
                         <Grid>
                           <Row className="show-grid">
-                            <Col xs={12} md={8}>
+
+                            <Col className="databoardcol"xs={12} md={8}>
                               <Button
                                 bsStyle="success"
+                                className="databoardbutton"
+                                block
                                 onClick={()=>{ this.getSensor(this.state.groups, 1, index) }}
                               >
                               <h4>
@@ -95,10 +100,11 @@ class DataBoard extends Component {
                               </Button>
                             </Col>
                             <Col xs={6} md={4}>
-                              <h4>
+                              <h4 className= "datavalueh4">
                                 <p>{data.data_value}</p>
                               </h4>
                             </Col>
+
                           </Row>
                         </Grid>
                       </div>

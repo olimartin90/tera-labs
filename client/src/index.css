@@ -159,7 +159,27 @@ html {
 }
 
 .databoard {
-  height: 52vh;
+
+  border: 1px solid red;
+}
+.databoardbutton {
+  margin-bottom: 5px;
+  border: 1px solid red;
+}
+
+.databoardcol {
+
+}
+
+.show-grid {
+  display: flex;
+  align-items: center;
+}
+.datavalueh4 {
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #footer {
@@ -228,6 +248,8 @@ html {
     justify-content: center;
   }
 }
+
+
 
 @media (max-width: 635px) {
    .graphimage {
