@@ -3,15 +3,12 @@ import { Grid, Row, Modal, Button, ButtonGroup, ButtonToolbar } from 'react-boot
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
-import GroupSensor from "./GroupSensor";
 
 const axios = require('axios');
-
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.handleHide = this.handleHide.bind(this);
     this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
     this.state = {
       show: false,
@@ -21,13 +18,8 @@ class Dashboard extends Component {
     };
   }
 
-  // Handles the display of line chart modal
-  handleHide() {
-    this.setState({ show: false });
-  }
-
   // Gets groups based on user props from App.jsx
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
   }
@@ -43,37 +35,9 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
-  // Gets a specific sensor in groups props by groupId and button that was pressed
-  getSensor(groups, groupId, sensorIndex){
-    this.getGroupsFromJSON(this.state.currentUser.userId)
-    groups.forEach(group => {
-      if(group.id === groupId){
-        this.setState({ group: group, show: true });
-        group.single_sensors.forEach(sensor => {
-          if(group.single_sensors.indexOf(sensor) === sensorIndex){
-            this.setState({ sensor: sensor, show: true });
-          }
-        })
-      }
-    })
-  }
-
-  getLastDayDataPoints(){
-    console.log('Last day datapoints... coming soon')
-  }
-
-  getLastWeekDataPoints(){
-    console.log('Last week datapoints... coming soon')
-  }
-
-  getLastMonthDataPoints(){
-    console.log('Last month datapoints... coming soon')
-  }
-
   render() {
     return (
       <div>
-        {console.log('UserId: ', this.props.currentUser.email)}
         <div>
           <Header currentUser={this.props.currentUser} />
         </div>
@@ -81,108 +45,6 @@ class Dashboard extends Component {
           <Row>
             <div>
               <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
-              <div className="modal-container" style={{ height: 200 }}>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 0) }}
-                >
-                  Moisture
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 1) }}
-                >
-                  Aeration
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 2) }}
-                >
-                  Temp
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 3) }}
-                >
-                  Nitrate
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 4) }}
-                >
-                  Phosphorus
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 5) }}
-                >
-                  Salinity
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 6) }}
-                >
-                  Respiration
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 7) }}
-                >
-                  pH
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  bsSize="large"
-                  onClick={()=>{ this.getSensor(this.state.groups, 1, 8) }}
-                >
-                  Potassium
-                </Button>
-                 <Modal
-                  show={this.state.show}
-                  onHide={this.handleHide}
-                  container={this}
-                  aria-labelledby="contained-modal-title"
-                  bsSize="large"
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title">
-                      <ButtonGroup bStyle="primary" bSize="xsmall">
-                        <ButtonToolbar>
-                          <Button
-                            onClick={()=>{ this.getLastDayDataPoints() }}
-                          >
-                            Last day
-                          </Button>
-                          <Button
-                            onClick={()=>{ this.getLastWeekDataPoints() }}
-                          >
-                            Last week
-                          </Button>
-                          <Button
-                            onClick={()=>{ this.getLastMonthDataPoints() }}
-                          >
-                            Last month
-                          </Button>
-                        </ButtonToolbar>
-                      </ButtonGroup>
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} group={ this.state.group } />
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button onClick={this.handleHide}>Close</Button>
-                  </Modal.Footer>
-                </Modal>
-              </div>
             </div>
           </Row>
         </Grid>
