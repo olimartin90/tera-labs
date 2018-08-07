@@ -15,11 +15,12 @@ class DataBoard extends Component {
       groups: [],
       group: {},
       sensor: {},
-      dataBoard: []
+      dataBoard: [],
+      markers: []
+
     }
   }
 
-<<<<<<< HEAD
 
  // Handles the display of line chart modal
   handleHide() {
@@ -29,8 +30,9 @@ class DataBoard extends Component {
  componentWillReceiveProps(nextProps){
    this.state.currentUser = nextProps.currentUser
    this.getGroupsFromJSON(this.state.currentUser.userId)
-   console.log("This is what I receive:", this.props.groups)
+
    console.log('dashboard state: ', this.state)
+
  }
 
  // Gets the whole groups object based on the user
@@ -72,6 +74,7 @@ class DataBoard extends Component {
   }
 
 
+
   render() {
     return (
       <div>
@@ -82,21 +85,29 @@ class DataBoard extends Component {
                 <div className="databoard">
                   {
                     this.props.dataBoard.map((data, index) =>
+
                       <div key={index}>
                         <Grid>
                           <Row className="show-grid">
 
-                            <Col className="databoardcol"xs={12} md={8}>
-                              <Button
-                                className="databoardbutton"
-                                block
-                                onClick={() => { this.getSensor(this.state.groups, 1, index) }}
+                            <Col xs={8} md={8}>
+                              {
+                                data.data_value < data.data_min || data.data_value > data.data_max
 
-                              >
-                                <h4>
-                                  {data.data_type}
-                                </h4>
-                              </Button>
+                                  ? (<Button bsStyle="success" bsSize="xsmall" className="databoardbutton" block active
+                                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                                    <h4>
+                                      {data.data_type}
+                                    </h4>
+                                    </Button>)
+
+                                  : (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
+                                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                                      <h4>
+                                        {data.data_type}
+                                      </h4>
+                                      </Button>)
+                              }
                             </Col>
                             <Col xs={6} md={4}>
                               <h4 className= "datavalueh4">

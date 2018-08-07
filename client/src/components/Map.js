@@ -13,7 +13,7 @@ const style = {
   width: '100%',
   height: '100%',
   position: "absolute",
-  zIndex: "3",
+
 }
 
 class SensorMap extends Component {
@@ -196,7 +196,9 @@ class SensorMap extends Component {
           const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
           data.push({
             data_type: sensor.data_type,
-            data_value: mostRecentValue
+            data_value: mostRecentValue,
+            data_min: sensor.set_min,
+            data_max: sensor.set_max
           })
         })
         this.setState({ dataBoard: data })
@@ -545,7 +547,7 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} />
+            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} />
 
 
             {/* **************** Databoard ****************** */}

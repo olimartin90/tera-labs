@@ -159,7 +159,7 @@ html {
 }
 
 .databoard {
-
+ z-index: 9999;
   border: 1px solid red;
 }
 .databoardbutton {
