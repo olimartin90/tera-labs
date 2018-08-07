@@ -162,6 +162,10 @@ html {
   height: 52vh;
 }
 
+.databoardbutton {
+  margin-bottom: 5px;
+}
+
 #footer {
   bottom: 0;
   background-color: #F6BB42;

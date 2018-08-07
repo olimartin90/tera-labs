@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
-import Popup from "reactjs-popup";
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
 import GoogleMapIconYellow from '../map-marker-yellow.png'
@@ -16,7 +15,6 @@ const style = {
   position: "absolute",
   zIndex: "3",
 }
-
 
 class SensorMap extends Component {
   constructor(props) {
@@ -40,9 +38,6 @@ class SensorMap extends Component {
       dataBoard: []
     }
   }
-
-
-
 
 
   // *********** ADD SENSORS FEATURE BELOW *********************
@@ -137,7 +132,6 @@ class SensorMap extends Component {
               const addMarker = this.state.markers.concat(newMarker)
               this.setState({ markers: addMarker })
             }
-            console.log("markers", this.setState.markers.length);
           })
           .catch(error => console.log(error));
       })
@@ -185,7 +179,6 @@ class SensorMap extends Component {
       const addMarker = this.state.markers.concat(newMarker)
       this.state.markers = addMarker
     }
-    console.log("number of markrreerrrs", this.state.markers.length)
   }
 
   // *********** DATABOARD FEATURE *********************
@@ -199,27 +192,19 @@ class SensorMap extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
       .then(res => {
-        console.log("Response:", res.data.group_sensors[0])
         res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
-          console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
-          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(a.updated_at)) - (new Date(b.updated_at))) })[0].data_value
+          const mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
           data.push({
             data_type: sensor.data_type,
             data_value: mostRecentValue
           })
         })
-        console.log(data)
         this.setState({ dataBoard: data })
       })
 
-
-
     if (this.state.isHidden) {
-      console.log("is hidden")
     } else {
-      console.log("is shown")
     }
-    console.log(data)
     this.setState({ dataBoard: data })
   }
 
@@ -232,20 +217,14 @@ class SensorMap extends Component {
       for (var dataType of types_of_data) {
         if (item[dataType]) {
           const dataObj = item[dataType]
-          console.log("dataa:", item)
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
             item.alert += 1;
-            console.log("you're in deep shit. Alert: ", item.alert)
 
           } else {
-            console.log("everythings alright")
           }
         } else {
-          console.log("undefineddddddddddddddd")
         }
       }
-
-      console.log("Item:::::", item.Aeration)
 
       // *************** icon change if alert ********************
       if (item.alert === 0) {
@@ -272,28 +251,25 @@ class SensorMap extends Component {
           <div>
             <Col md={1}></Col>
             <Col md={4}>
-              <h3>Lighthouse Labs Farm</h3>
+              <div>
+                <h3>Lighthouse Labs Farm</h3>
+              </div>
             </Col>
             <Col md={4}>
-              {/* <div> */}
-              <h3>{this.state.markers.length} Group of Sensors</h3>
-              {/* </div> */}
-            </Col>
-            {/* <Col md={2}>
               <div>
-              <p>holla</p>
+                <h3>{this.state.markers.length} Group of Sensors</h3>
               </div>
-            </Col> */}
+            </Col>
             <Col md={3}>
-              {/* <div> */}
-              {/* <ReactWeather
-                forecast="today"
-                apikey="ba2b14c881784efb99f150704180608"
-                type="geo"
-                lat="45.5017"
-                lon="-73.5673"
-              /> */}
-              {/* </div> */}
+              <div>
+                <ReactWeather
+                  forecast="today"
+                  apikey="ba2b14c881784efb99f150704180608"
+                  type="geo"
+                  lat="45.5017"
+                  lon="-73.5673"
+                />
+              </div>
             </Col>
           </div>
         </Row>
@@ -569,28 +545,8 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <div className="databoard">
-              {
-                this.state.dataBoard.map((data, index) =>
-                  <div key={index}>
-                    <Grid>
-                      <Row className="show-grid">
-                        <Col xs={12} md={8}>
-                          <h4>
-                            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} />
-                          </h4>
-                        </Col>
-                        <Col xs={6} md={4}>
-                          <h4>
-                            <p>{data.data_value}</p>
-                          </h4>
-                        </Col>
-                      </Row>
-                    </Grid>
-                  </div>
-                )
-              }
-            </div>
+            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} />
+
 
             {/* **************** Databoard ****************** */}
 
