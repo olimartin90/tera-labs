@@ -34,7 +34,8 @@ class SensorMap extends Component {
       longitudeValue: 0,
       hideSensorInfo: true,
       show: false,  // show state for the Add Sensors Modal
-      dataBoard: []
+      dataBoard: [],
+      initialCenterPoint: {lat: 45.212059, lng: -73.738771 }
     }
   }
 
@@ -174,11 +175,14 @@ class SensorMap extends Component {
         newMarker[data_type] = newSensorSetting
 
       }
-
+      let newCenterPoint = {lat: marker.latitude , lng: marker.longitude}
       const addMarker = this.state.markers.concat(newMarker)
       this.state.markers = addMarker
+      this.setState({initialCenterPoint: newCenterPoint})
     }
   }
+
+
 
   // *********** DATABOARD FEATURE *********************
 
@@ -244,6 +248,10 @@ class SensorMap extends Component {
         )
       }
     })
+
+   
+    console.log("Markerrrrrrrrr",this.state.markers)
+
 
     // ***************** Marker generator ***************************
 
@@ -563,10 +571,9 @@ class SensorMap extends Component {
               <Map className="embed-responsive-item"
                 google={this.props.google}
                 style={style}
-                initialCenter={{
-                  lat: 45.212059,
-                  lng: -73.738771
-                }}
+                initialCenter={
+                  this.state.initialCenterPoint
+                }
                 zoom={15}
                 onClick={this.onMapClicked}
               >
