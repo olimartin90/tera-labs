@@ -47,7 +47,7 @@ class SensorMap extends Component {
 
   // *********** ADD SENSORS FEATURE BELOW *********************
 
-  handleAddSensors(e) {
+handleAddSensors(e) {
     e.preventDefault();
     const name = this.name.value
     const latitude = this.latitude.value
@@ -77,7 +77,21 @@ class SensorMap extends Component {
         user_id: this.props.currentUser.userId,
         name: name,
         latitude: latitude,
-        longitude: longitude
+        longitude: longitude,
+        single_sensors: [
+          {
+            // group_sensor_id: getGrId,
+            data_type: "Soil Moisture",
+            set_min: set_min_sm,
+            set_max: set_max_sm
+          },
+          {
+            // group_sensor_id: getGrId,
+            data_type: "Aeration",
+            set_min: set_min_ae,
+            set_max: set_max_ae
+          }
+        ]
       })
       .then(response => {
         this.handleClose();
@@ -90,80 +104,80 @@ class SensorMap extends Component {
               const addMarker = this.state.markers.concat(newMarker)
               this.setState({ markers: addMarker })
             }
-            const getGrId = response.data.slice(response.data.length - 1)[0].id
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Soil Moisture",
-                  set_min: set_min_sm,
-                  set_max: set_max_sm
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Aeration",
-                  set_min: set_min_ae,
-                  set_max: set_max_ae
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Soil Temp",
-                  set_min: set_min_st,
-                  set_max: set_max_st
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Nitrate",
-                  set_min: set_min_ni,
-                  set_max: set_max_ni
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Phosphorus",
-                  set_min: set_min_phos,
-                  set_max: set_max_phos
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Salinity",
-                  set_min: set_min_sa,
-                  set_max: set_max_sa
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Respiration",
-                  set_min: set_min_re,
-                  set_max: set_max_re
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "pH",
-                  set_min: set_min_pH,
-                  set_max: set_max_pH
-                })
-            axios
-              .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
-                {
-                  group_sensor_id: getGrId,
-                  data_type: "Potassium",
-                  set_min: set_min_pota,
-                  set_max: set_max_pota
-                })
-              .catch(error => console.log(error));
+            // const getGrId = response.data.slice(response.data.length - 1)[0].id
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Soil Moisture",
+            //       set_min: set_min_sm,
+            //       set_max: set_max_sm
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Aeration",
+            //       set_min: set_min_ae,
+            //       set_max: set_max_ae
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Soil Temp",
+            //       set_min: set_min_st,
+            //       set_max: set_max_st
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Nitrate",
+            //       set_min: set_min_ni,
+            //       set_max: set_max_ni
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Phosphorus",
+            //       set_min: set_min_phos,
+            //       set_max: set_max_phos
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Salinity",
+            //       set_min: set_min_sa,
+            //       set_max: set_max_sa
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Respiration",
+            //       set_min: set_min_re,
+            //       set_max: set_max_re
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "pH",
+            //       set_min: set_min_pH,
+            //       set_max: set_max_pH
+            //     })
+            // axios
+            //   .post(`http://localhost:3001/api/v1/users/1/group_sensors/${getGrId}/single_sensors`,
+            //     {
+            //       group_sensor_id: getGrId,
+            //       data_type: "Potassium",
+            //       set_min: set_min_pota,
+            //       set_max: set_max_pota
+            //     })
+            //   .catch(error => console.log(error));
           })
           .catch(error => console.log(error));
       })
@@ -214,77 +228,6 @@ class SensorMap extends Component {
 
     }
   }
-
-
-
-    // axios
-    //
-    //   .get(`http://localhost:3001/api/v1/group_sensors_data/1`)
-    //   .then(res => {
-    //     console.log("Response:", res)
-    //     console.log("GroupSensors:", res.data.group_sensors) // These are the 3 group_sensors.
-    //     console.log("SingleSensors", res.data.group_sensors[0].single_sensors)
-    //     console.log("SingleSensorsMin", res.data.group_sensors[0].single_sensors[0].set_min)
-    //     console.log("SingleSensorsDataValue", res.data.group_sensors[0].single_sensors[0].data_points)
-    //
-    //
-    //     res.data.group_sensors.filter(groupsensor=>groupsensor.id === marker.id)[0].single_sensors.map(sensor=>{
-    //         const mostRecentValue = sensor.data_points.sort((a,b)=>{
-    //           return (
-    //             (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].data_value
-    //         data.push({
-    //           data_type: sensor.data_type,
-    //           data_value: mostRecentValue
-    //         })
-    //         console.log("MostRecentValue:", mostRecentValue);
-
-
-
-            // const mostRecentMinValue = single_sensors.sort((a,b)=> {
-            //   return (
-            //     (new Date(a.updated_at)) - (new Date(b.updated_at)))})[0].set_min
-            //     console.log("Set_Min:", sensor.single_sensors_set_min)
-
-
-            // console.log("Min:", res.data.group_sensors[0].single_sensors[0].set_min)
-            // console.log("Max:", res.data.group_sensors[0].single_sensors[0].set_max )
-        // })
-
-
-        // *********** TEST FUNCTION ****************** //
-        // getValidationState() {
-        //   const style = <Label bsStyle="success">{data.data_type}</Label>
-        //   const warning style = <Label bsStyle="warning">{data.data_type}</Label>
-        //   console.log("This is the mostRecentValue: "mostRecentValue);
-        //   if ({data.data_value} > {data.group_sensors[0].single_sensors[0].set_min} || {data.data_value} > {data.group_sensors[0].single_sensors[0].set_max)
-        //     return <Label bsStyle="success">{data.data_type}</Label>;
-        //   else
-        //   return style;
-        // }
-        // handleChange(e) {
-        //   this.setState({ value: e.target.value });
-        // }
-        // render() {
-        //   return (
-        //     <form>
-        //       <FormGroup
-        //         controlId="formBasicText"
-        //         validationState={this.getValidationState()}
-        //       >
-        //         <ControlLabel>Working example with validation</ControlLabel>
-        //         <FormControl
-        //           type="text"
-        //           value={this.state.value}
-        //           placeholder="Enter text"
-        //           onChange={this.handleChange}
-        //         />
-        //         <FormControl.Feedback />
-        //         <HelpBlock>Validation is based on string length.</HelpBlock>
-        //       </FormGroup>
-        //     </form>
-        //   );
-        // }
-        //
 
     // *********** DATABOARD FEATURE *********************
 

@@ -43,7 +43,7 @@ class DataBoard extends Component {
 
  // Gets a specific sensor in groups props by groupId and button that was pressed
  getSensor(groups, groupId, sensorIndex){
-   this.getGroupsFromJSON(this.state.currentUser.userId)
+   this.getGroupsFromJSON(localStorage.getItem("user_id"))
    groups.forEach(group => {
      if(group.id === groupId){
        this.setState({ group: group, show: true });
