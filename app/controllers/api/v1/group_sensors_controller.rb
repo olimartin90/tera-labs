@@ -12,12 +12,19 @@ module Api::V1
     end
 
     def create
-      group = GroupSensor.new(group_params)
+      group = GroupSensor.create(group_params)
       params[:single_sensors].each do |sensor|
-        group.single_sensors.new(data_type: sensor[:data_type], set_min: sensor[:set_min], set_max: sensor[:set_max])
-        puts "Single Sensors: #{sensor[:data_type]}"
+        group.single_sensors.create(
+          data_type: sensor[:data_type],
+          set_min: sensor[:set_min],
+          set_max: sensor[:set_max]
+        )
+        puts "rails sensor: #{sensor[:data_type]}"
+        group.single_sensors.last.datapoints.create(
+          data_value: 0,
+          date_epoch: Time.now.to_i * 1000
+        )
       end
-      group.save
       render json: group
     end
 
