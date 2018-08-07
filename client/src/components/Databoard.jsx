@@ -17,6 +17,7 @@ class DataBoard extends Component {
       sensor: {},
       dataBoard: [],
     }
+    this.getGroupsFromJSON(localStorage.getItem("user_id"))
   }
 
 
@@ -25,12 +26,12 @@ class DataBoard extends Component {
     this.setState({ show: false });
   }
 
+
  componentWillReceiveProps(nextProps){
    this.state.currentUser = nextProps.currentUser
    this.getGroupsFromJSON(this.state.currentUser.userId)
 
    console.log('dashboard state: ', this.state)
-
  }
 
  // Gets the whole groups object based on the user
@@ -125,7 +126,7 @@ class DataBoard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      <ButtonGroup bStyle="primary" bSize="xsmall">
+                      <ButtonGroup bsStyle="primary" bsSize="xsmall">
                         <ButtonToolbar>
                           <Button
                             onClick={() => { this.getLastDayDataPoints() }}
