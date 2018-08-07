@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
 import GoogleMapIconYellow from '../map-marker-yellow.png'
@@ -35,6 +35,7 @@ class SensorMap extends Component {
       longitudeValue: 0,
       hideSensorInfo: true,
       show: false,  // show state for the Add Sensors Modal
+      open: true,  // show state for the Weather toggle
       dataBoard: []
     }
   }
@@ -218,7 +219,7 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
-            item.alert += 1;
+            item.alert = 1;
 
           } else {
           }
@@ -241,42 +242,42 @@ class SensorMap extends Component {
         )
       }
     })
-
     // ***************** Marker generator ***************************
-
 
     return (
       <Grid>
+
+        {/* ***************** NOTIFICATION BAR *************************** */}
         <Row>
           <div>
             <Col md={1}></Col>
-            <Col md={4}>
-              <div>
-                <h3>Lighthouse Labs Farm</h3>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div>
-                <h3>{this.state.markers.length} Group of Sensors</h3>
-              </div>
-            </Col>
             <Col md={3}>
+              <h3>{this.props.currentUser.companyName}</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={3}>
+              <h3>{this.state.markers.length} Units Sensors</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={2}>
               <div>
                 <ReactWeather
                   forecast="today"
                   apikey="ba2b14c881784efb99f150704180608"
                   type="geo"
-                  lat="45.5017"
-                  lon="-73.5673"
+                  lat={this.props.currentUser.latitude}
+                  lon={this.props.currentUser.longitude}
                 />
               </div>
             </Col>
           </div>
         </Row>
+        {/* ***************** NOTIFICATION BAR *************************** */}
+
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
-          <div class="fixed-bottom">
+          <div className="fixed-bottom">
             <Col md={9}></Col>
             {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col" md={2}>
@@ -561,8 +562,8 @@ class SensorMap extends Component {
                 google={this.props.google}
                 style={style}
                 initialCenter={{
-                  lat: 45.212059,
-                  lng: -73.738771
+                  lat: this.props.currentUser.latitude,
+                  lng: this.props.currentUser.longitude
                 }}
                 zoom={15}
                 onClick={this.onMapClicked}

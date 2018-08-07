@@ -22,16 +22,22 @@ class App extends Component {
         currentUser: {
           email: localStorage.getItem("email"),
           userId: localStorage.getItem("user_id"),
+          companyName: localStorage.getItem("company_name"),
+          latitude: localStorage.getItem("latitude"),
+          longitude: localStorage.getItem("longitude")
         }
       })
     }
   }
 
-  updateCurrentUser(email, userId) {
+  updateCurrentUser(email, userId, companyName, latitude, longitude) {
     this.setState({
       currentUser: {
         email: email,
-        userId: userId
+        userId: userId,
+        companyName: companyName,
+        latitude: latitude,
+        longitude: longitude
       }
     })
   }
