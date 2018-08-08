@@ -22,41 +22,6 @@ class DataBoard extends Component {
   }
 
 
-// ******************** TEST FUNCTION ******************** //
-
-  // class Example extends React.Component {
-  //   constructor(props, context) {
-  //     super(props, context);
-  //
-  //     this.state = {
-  //
-  //     };
-  //   }
-  //
-  //   render() {
-  //     return (
-  //       <div>
-  //         <Button onClick={() => this.setState({ open: !this.state.open })}>
-  //           click
-  //         </Button>
-  //         <Collapse in={this.state.open}>
-  //           <div>
-  //             <Well>
-  //               Anim pariatur cliche reprehenderit, enim eiusmod high life
-  //               accusamus terry richardson ad squid. Nihil anim keffiyeh
-  //               helvetica, craft beer labore wes anderson cred nesciunt sapiente
-  //               ea proident.
-  //             </Well>
-  //           </div>
-  //         </Collapse>
-  //       </div>
-  //     );
-  //   }
-  // }
-  //
-  // render(<Example />);
-
-  // ***************************************************************************** //
 
   // Handles the display of line chart modal
   handleHide() {
@@ -67,8 +32,6 @@ class DataBoard extends Component {
   componentWillReceiveProps(nextProps) {
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
-
-    console.log('dashboard state: ', this.state)
   }
 
   // Gets the whole groups object based on the user
@@ -78,6 +41,7 @@ class DataBoard extends Component {
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
         this.setState({ groups: response.data.group_sensors })
+
       })
       .catch(error => console.log(error));
   }
@@ -110,22 +74,24 @@ class DataBoard extends Component {
   }
 
   render() {
+    console.log(this.props.dbButtonShow)
     const showDataboard = (!this.props.dbButtonShow) ?
     this.props.dataBoard.map((data, index) =>
 
-      <div className="test" key={index}>
+      <div key={index}>
+      {console.log("rendering empty databoard")}
         <Grid>
           <Row className="show-grid">
-          <Col md={6}> </Col>
-          <Col xs={3} md={4} >
+          <Col md={5}> </Col>
+          <Col xs={3} md={7} >
 
             {
-                 (<Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
+                 <Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
                           onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
                     <div className="data_type_value">
                       <h4> {data.data_type} </h4>
                     </div>
-                  </Button>)
+                  </Button>
             }
           </Col>
         </Row>
@@ -134,12 +100,12 @@ class DataBoard extends Component {
   )
       : this.props.dataBoard.map((data, index) =>
 
-        <div className="test" key={index}>
+        <div key={index}>
           <Grid>
             <Row className="show-grid">
 
-            <Col md={6}> </Col>
-            <Col xs={3} md={4} >
+            <Col md={5}> </Col>
+            <Col xs={3} md={8} >
 
               {
                 data.data_value < data.data_min || data.data_value > data.data_max
