@@ -269,11 +269,6 @@ class SensorMap extends Component {
         })
         this.setState({ dataBoard: data })
       })
-
-    if (this.state.isHidden) {
-    } else {
-    }
-    // this.setState({ dataBoard: data })
   }
 
   render() {
@@ -326,6 +321,7 @@ class SensorMap extends Component {
             <Col md={4}>
               <div>
                 <h3>{this.state.markers.length} Group of Sensors</h3>
+
               </div>
             </Col>
             <Col md={3}>
@@ -344,6 +340,8 @@ class SensorMap extends Component {
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
+        <Col md={1}></Col>
+
           <div className="fixed-bottom">
             <Col md={9}></Col>
             {/* <Row className="add-sensors-row2"> */}

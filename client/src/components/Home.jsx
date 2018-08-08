@@ -73,8 +73,8 @@ class Home extends Component {
             <Col xs={12} sm={12} md={4}>
               <div className="section0">
                 <h1 className="teralabs" > Tera Labs </h1>
-                <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
-                <Link activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor soil health  </p>
+                <Link className="scrollDown "activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
                   More Info
                 </Link>
               </div>

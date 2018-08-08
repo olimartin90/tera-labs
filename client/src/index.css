@@ -84,6 +84,26 @@ html {
   width: 75%;
 }
 
+.scrollDown {
+  border: none;
+   font-family: inherit;
+   font-size: inherit;
+   color: inherit;
+   background: none;
+   cursor: pointer;
+   padding: 25px 80px;
+   display: inline-block;
+   margin: 15px 30px;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 700;
+   outline: none;
+   position: relative;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   transition: all 0.3s;
+}
+
 .loginregisterform {
   margin-top: 200px;
 }
@@ -172,31 +192,32 @@ html {
 
 }
 .data_type_value>h4 {
-
+font-family: 'Montserrat', sans-serif;
+font-weight: bolder;
 }
 
 .data_type_value>p {
+
+  font-family: 'Oswald', sans-serif;
   margin-left: 10px;
   font-size: 20px;
   display: flex;
   align-self: baseline;
 }
 .databoardbutton {
-  height: 25%;
+
   width: 100%;
   margin-bottom: 5px;
+  box-shadow: 10px 10px 10px  #e0e0e0
+
 
 }
 .custom-class {
-  background-color: #ccffdd;
+  background-color: #80ed6a;
 }
-.databoardsucessbutton {
-  height: 25%;
-  width: 100%;
-  margin-bottom: 5px;
-
+.custom-class2 {
+  background-color: #d1463c;
 }
-
 .show-grid {
   display: flex;
   align-items: center;
@@ -277,11 +298,9 @@ html {
     display: flex;
     justify-content: center;
   }
-}
-
-@media (max-width: 1220px) {
 
 }
+
 
 @media (max-width: 635px) {
    .graphimage {
