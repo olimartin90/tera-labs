@@ -296,13 +296,8 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
-<<<<<<< HEAD
             dataObj.alert = 1;
            item.alert = 1;
-=======
-            item.alert = 1;
-
->>>>>>> master
           } else {
             dataObj.alert = 0;
           }
@@ -327,14 +322,6 @@ class SensorMap extends Component {
         )
       }
     })
-<<<<<<< HEAD
-
-   
-    console.log("Markerrrrrrrrr",this.state.markers)
-
-
-=======
->>>>>>> master
     // ***************** Marker generator ***************************
 
     return (
@@ -375,11 +362,7 @@ class SensorMap extends Component {
             {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col">
 
-<<<<<<< HEAD
-              <div className="modal-container" >
-=======
               <div className="modal-container">
->>>>>>> master
                 <Button
                   className="modal-container-button"
                   // positon="float right"
@@ -627,13 +610,8 @@ class SensorMap extends Component {
                   <Modal.Footer>
                     <Button
                       bsStyle="primary"
-<<<<<<< HEAD
-                      bsSize="large"
-                      onClick={this.handleAddSensors }>Submit</Button>
-=======
                       bsSize="medium"
                       onClick={this.handleAddSensors}>Submit</Button>
->>>>>>> master
                   </Modal.Footer>
                 </Modal>
               </div>
@@ -666,16 +644,10 @@ class SensorMap extends Component {
               <Map className="embed-responsive-item"
                 google={this.props.google}
                 style={style}
-<<<<<<< HEAD
-                initialCenter={
-                  this.state.initialCenterPoint
-                }
-=======
                 initialCenter={{
                   lat: this.props.currentUser.latitude,
                   lng: this.props.currentUser.longitude
                 }}
->>>>>>> master
                 zoom={15}
                 onClick={this.onMapClicked}
               >
