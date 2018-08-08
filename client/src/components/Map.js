@@ -243,7 +243,7 @@ class SensorMap extends Component {
     }
   }
 
-  // *********** DATABOARD FEATURE *********************
+
 
   // *********** DATABOARD FEATURE BELOW *********************
 
@@ -259,8 +259,8 @@ class SensorMap extends Component {
             if(sensor.data_points.length > 0){
               mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
             }
-            console.log('Sensor empty?', sensor.data_points)
             data.push({
+
             data_type: sensor.data_type,
             data_value: mostRecentValue,
             data_min: sensor.set_min,
@@ -340,17 +340,16 @@ class SensorMap extends Component {
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
-        <Col md={1}></Col>
-
           <div className="fixed-bottom">
-            <Col md={9}></Col>
+            <Col md={10}></Col>
             {/* <Row className="add-sensors-row2"> */}
-            <Col className="add-sensors-col" md={2}>
+            <Col className="add-sensors-col" >
 
-              <div className="modal-container" style={{ height: 200 }}>
+              <div className="modal-container" >
                 <Button
+                  className="modal-container-button"
                   bsStyle="primary"
-                  bsSize="large"
+                  bsSize="medium"
                   onClick={() => this.setState({ show: true })}
                 >
                   Add Sensors

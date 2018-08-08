@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 class Logout extends Component {
 
@@ -17,6 +16,9 @@ class Logout extends Component {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("email");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("company_name");
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
     this.setState({
       toHome: true
     })
@@ -27,7 +29,6 @@ class Logout extends Component {
       return <Redirect to='/' />
     }
     return (
-      // <Button className="logoutButton" onClick={this.handleLogout}>Sign Out</Button>
       <span className="logoutButton" onClick={this.handleLogout}>Sign Out</span>
     )
   };

@@ -88,7 +88,7 @@ html {
   border: none;
    font-family: inherit;
    font-size: inherit;
-   color: inherit;
+   color: #edf1f7;
    background: none;
    cursor: pointer;
    padding: 25px 80px;
@@ -356,6 +356,15 @@ font-weight: bolder;
     height: 175px;
     margin-left: 0px;
   }
+}
+
+/* .modal-container {
+  border: 1px solid red;
+} */
+
+.modal-container-button {
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 /* .add-sensors-row {
