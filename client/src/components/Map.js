@@ -250,8 +250,6 @@ class SensorMap extends Component {
     }
   }
 
-
-
   // *********** DATABOARD FEATURE *********************
 
   // *********** DATABOARD FEATURE BELOW *********************
@@ -296,7 +294,7 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
-            dataObj.alert = 1;
+           dataObj.alert = 1;
            item.alert = 1;
           } else {
             dataObj.alert = 0;
