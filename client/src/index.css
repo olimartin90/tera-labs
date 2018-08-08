@@ -77,7 +77,7 @@ html {
   position: relative;
   left: 0;
   right: 0;
-  margin-top: 100px;
+  margin-top: 150px;
   color: white;
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
@@ -125,7 +125,7 @@ html {
 }
 
 .loginregisterform {
-  margin-top: 200px;
+  margin-top: 245px;
 }
 
 .form-horizontal {
@@ -141,6 +141,7 @@ html {
   height: 450px;
   margin-left: 50px;
   box-shadow: 10px 10px 20px lightgray;
+  border: 1px solid #d3d3d347;
 }
 
 .mapimage {
@@ -183,22 +184,40 @@ html {
 
 
 /* ******** /DataBoard *************/
+/* .navbar-full {
+  border: 1px solid red;
+  margin-bottom: -20px; 
+  padding-bottom: 20px;
+ } */
+ 
+ .navbar-brand {
+   display: flex;
+   align-items: center;
+ }
+ 
+ .navbar-brand>img {
+   width: 65px;
+   padding: 7px 14px;
+ }
+
 .dashboard_page {
   background-color: #d3d3d330
 }
-.weather_div {
-  background-color: white;
-  padding: 10px;
-  box-shadow: 10px 10px 10px  #e0e0e0
-}
-.navbar-brand {
-  display: flex;
-  align-items: center;
+
+.top-cont {
+  background-image: url("/agri-land4.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: 115vh;
+  z-index: 1;
 }
 
-.navbar-brand>img {
-  width: 65px;
-  padding: 7px 14px;
+.weather-div {
+  background-color: white;
+  padding: 10px;
+  box-shadow: 1px 1px 5px  #e0e0e0
 }
 
 .databoard {
@@ -242,6 +261,7 @@ font-weight: bolder;
   display: flex;
   align-items: center;
 }
+
 .databoardbutton {
   margin-bottom: 5px;
   min-width: 165px;
@@ -383,8 +403,13 @@ font-weight: bolder;
 } */
 
 .modal-container-button {
-  margin-top: 40px;
+  margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.alert {
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 /* .add-sensors-row {

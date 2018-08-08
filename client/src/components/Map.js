@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
-import GoogleMapIconGreen from '../map-marker-green.png'
-import GoogleMapIconRed from '../map-marker-red.png'
-import DataBoard from './Databoard'
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import GoogleMapIconGreen from '../map-marker-green.png';
+import GoogleMapIconRed from '../map-marker-red.png';
+import DataBoard from './Databoard';
+import AlertDismissable from './AlertDismissable';
 
 const axios = require('axios');
 
@@ -26,7 +27,6 @@ class SensorMap extends Component {
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
-
     this.state = {
       markers: [],
       nameValue: "",
@@ -38,7 +38,6 @@ class SensorMap extends Component {
       dataBoard: []
     }
   }
-
 
   // *********** ADD SENSORS FEATURE BELOW *********************
 
@@ -206,7 +205,7 @@ class SensorMap extends Component {
   // *************** marker generator Below *********************
   componentWillReceiveProps(nextProps) {
     const groups = nextProps.groups
-    if( !this.state.markers[0] || groups[0].id !== this.state.markers[0].id){
+    if (!this.state.markers[0] || groups[0].id !== this.state.markers[0].id) {
       for (var marker of groups) {
 
         const newMarker = {
@@ -242,10 +241,10 @@ class SensorMap extends Component {
           newMarker[data_type] = newSensorSetting
 
         }
-        let newCenterPoint = {lat: marker.latitude , lng: marker.longitude}
+        let newCenterPoint = { lat: marker.latitude, lng: marker.longitude }
         const addMarker = this.state.markers.concat(newMarker)
         this.state.markers = addMarker
-        this.setState({initialCenterPoint: newCenterPoint})
+        this.setState({ initialCenterPoint: newCenterPoint })
       }
     }
   }
@@ -254,7 +253,7 @@ class SensorMap extends Component {
   // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
-    this.setState({ dbButtonShow: !this.state.dbButtonShow})
+    this.setState({ dbButtonShow: !this.state.dbButtonShow })
     let data = []
 
     axios
@@ -262,10 +261,10 @@ class SensorMap extends Component {
       .then(res => {
         res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
           let mostRecentValue = 0
-            if(sensor.data_points.length > 0){
-              mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
-            }
-            data.push({
+          if (sensor.data_points.length > 0) {
+            mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
+          }
+          data.push({
 
             data_type: sensor.data_type,
             data_value: mostRecentValue,
@@ -291,18 +290,10 @@ class SensorMap extends Component {
 
             dataObj.alert = 1;
             item.alert = 1;
-
           } else {
             dataObj.alert = 0;
           }
-
-
-          console.log("hollllaaaaaaaaaaaa",dataObj)
-
-        } else {
         }
-
-
       }
 
       // *************** icon change if alert ********************
@@ -321,43 +312,49 @@ class SensorMap extends Component {
 
 
     return (
+
       <Grid>
+
+        {/* ***************** NOTIFICATION BAR *************************** */}
         <Row>
           <div>
             <Col md={1}></Col>
-            <Col md={4}>
-              <div>
-                <h3>Lighthouse Labs Farm</h3>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div>
-                <h3>{this.state.markers.length} Group of Sensors</h3>
-
-              </div>
-            </Col>
             <Col md={3}>
-              <div className="weather_div">
+              <h3>{this.props.currentUser.companyName}</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={3}>
+              <h3>{this.state.markers.length} Units Sensors</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={2}>
+              <div className="weather-div">
                 <ReactWeather
                   forecast="today"
                   apikey="ba2b14c881784efb99f150704180608"
                   type="geo"
-                  lat="45.5017"
-                  lon="-73.5673"
+                  lat={this.props.currentUser.latitude}
+                  lon={this.props.currentUser.longitude}
                 />
               </div>
             </Col>
           </div>
+        </Row>
+        {/* ***************** NOTIFICATION BAR *************************** */}
+        <Row>
+          <Col md={2}></Col>
+          <Col md={8}>
+            <AlertDismissable
+              className="alert" />
+          </Col>
         </Row>
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
           <div className="fixed-bottom">
             <Col md={10}></Col>
-            {/* <Row className="add-sensors-row2"> */}
-            <Col className="add-sensors-col" >
-
-              <div className="modal-container" >
+            <Col className="add-sensors-col">
+              <div className="modal-container">
                 <Button
                   className="modal-container-button"
                   bsStyle="primary"
