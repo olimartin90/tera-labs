@@ -19,7 +19,6 @@ module Api::V1
           set_min: sensor[:set_min],
           set_max: sensor[:set_max]
         )
-        puts "rails sensor: #{sensor[:data_type]}"
         group.single_sensors.last.datapoints.create(
           data_value: 0,
           date_epoch: Time.now.to_i * 1000

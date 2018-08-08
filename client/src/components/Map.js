@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Panel } from 'react-bootstrap';
 import GoogleMapIconGreen from '../map-marker-green.png'
 import GoogleMapIconRed from '../map-marker-red.png'
 import DataBoard from './Databoard'
@@ -257,7 +257,7 @@ class SensorMap extends Component {
   // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
-    this.setState({ dbButtonShow: !this.state.dbButtonShow})
+    this.setState({ dbButtonShow: !this.state.dbButtonShow })
     let data = []
 
     axios
@@ -265,11 +265,11 @@ class SensorMap extends Component {
       .then(res => {
         res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
           let mostRecentValue = 0
-            if(sensor.data_points.length > 0){
-              mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
-            }
-            console.log('Sensor empty?', sensor.data_points)
-            data.push({
+          if (sensor.data_points.length > 0) {
+            mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
+          }
+          console.log('Sensor empty?', sensor.data_points)
+          data.push({
             data_type: sensor.data_type,
             data_value: mostRecentValue,
             data_min: sensor.set_min,
@@ -296,8 +296,13 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
+<<<<<<< HEAD
             dataObj.alert = 1;
            item.alert = 1;
+=======
+            item.alert = 1;
+
+>>>>>>> master
           } else {
             dataObj.alert = 0;
           }
@@ -322,58 +327,69 @@ class SensorMap extends Component {
         )
       }
     })
+<<<<<<< HEAD
 
    
     console.log("Markerrrrrrrrr",this.state.markers)
 
 
+=======
+>>>>>>> master
     // ***************** Marker generator ***************************
-
 
     return (
       <Grid>
+
+        {/* ***************** NOTIFICATION BAR *************************** */}
         <Row>
           <div>
             <Col md={1}></Col>
-            <Col md={4}>
-              <div>
-                <h3>Lighthouse Labs Farm</h3>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div>
-                <h3>{this.state.markers.length} Group of Sensors</h3>
-              </div>
-            </Col>
             <Col md={3}>
-              <div className="weather_div">
+              <h3>{this.props.currentUser.companyName}</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={3}>
+              <h3>{this.state.markers.length} Units Sensors</h3>
+            </Col>
+            <Col md={1}></Col>
+            <Col md={2}>
+              <div>
                 <ReactWeather
                   forecast="today"
                   apikey="ba2b14c881784efb99f150704180608"
                   type="geo"
-                  lat="45.5017"
-                  lon="-73.5673"
+                  lat={this.props.currentUser.latitude}
+                  lon={this.props.currentUser.longitude}
                 />
               </div>
             </Col>
           </div>
         </Row>
+        {/* ***************** NOTIFICATION BAR *************************** */}
+
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
           <div className="fixed-bottom">
-            <Col md={9}></Col>
+            <Col md={10}></Col>
             {/* <Row className="add-sensors-row2"> */}
-            <Col className="add-sensors-col" md={2}>
+            <Col className="add-sensors-col">
 
+<<<<<<< HEAD
               <div className="modal-container" >
+=======
+              <div className="modal-container">
+>>>>>>> master
                 <Button
+                  className="modal-container-button"
+                  // positon="float right"
                   bsStyle="primary"
-                  bsSize="large"
+                  bsSize="medium"
                   onClick={() => this.setState({ show: true })}
                 >
                   Add Sensors
               </Button>
+                {/* <Col md={2}></Col> */}
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
@@ -611,8 +627,13 @@ class SensorMap extends Component {
                   <Modal.Footer>
                     <Button
                       bsStyle="primary"
+<<<<<<< HEAD
                       bsSize="large"
                       onClick={this.handleAddSensors }>Submit</Button>
+=======
+                      bsSize="medium"
+                      onClick={this.handleAddSensors}>Submit</Button>
+>>>>>>> master
                   </Modal.Footer>
                 </Modal>
               </div>
@@ -645,9 +666,16 @@ class SensorMap extends Component {
               <Map className="embed-responsive-item"
                 google={this.props.google}
                 style={style}
+<<<<<<< HEAD
                 initialCenter={
                   this.state.initialCenterPoint
                 }
+=======
+                initialCenter={{
+                  lat: this.props.currentUser.latitude,
+                  lng: this.props.currentUser.longitude
+                }}
+>>>>>>> master
                 zoom={15}
                 onClick={this.onMapClicked}
               >

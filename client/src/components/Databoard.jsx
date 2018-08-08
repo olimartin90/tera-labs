@@ -21,44 +21,44 @@ class DataBoard extends Component {
   }
 
 
- // Handles the display of line chart modal
+  // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
 
 
- componentWillReceiveProps(nextProps){
-   this.state.currentUser = nextProps.currentUser
-   this.getGroupsFromJSON(this.state.currentUser.userId)
+  componentWillReceiveProps(nextProps) {
+    this.state.currentUser = nextProps.currentUser
+    this.getGroupsFromJSON(this.state.currentUser.userId)
 
-   console.log('dashboard state: ', this.state)
- }
+    console.log('dashboard state: ', this.state)
+  }
 
- // Gets the whole groups object based on the user
- getGroupsFromJSON(userId) {
-   const thisUser = parseInt(userId);
-   axios
-     .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
-     .then(response => {
-       this.setState({ groups: response.data.group_sensors })
-     })
-     .catch(error => console.log(error));
- }
+  // Gets the whole groups object based on the user
+  getGroupsFromJSON(userId) {
+    const thisUser = parseInt(userId);
+    axios
+      .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
+      .then(response => {
+        this.setState({ groups: response.data.group_sensors })
+      })
+      .catch(error => console.log(error));
+  }
 
- // Gets a specific sensor in groups props by groupId and button that was pressed
- getSensor(groups, groupId, sensorIndex){
-   this.getGroupsFromJSON(localStorage.getItem("user_id"))
-   groups.forEach(group => {
-     if(group.id === groupId){
-       this.setState({ group: group, show: true });
-       group.single_sensors.forEach(sensor => {
-         if(group.single_sensors.indexOf(sensor) === sensorIndex){
-           this.setState({ sensor: sensor, show: true });
-         }
-       })
-     }
-   })
- }
+  // Gets a specific sensor in groups props by groupId and button that was pressed
+  getSensor(groups, groupId, sensorIndex) {
+    this.getGroupsFromJSON(localStorage.getItem("user_id"))
+    groups.forEach(group => {
+      if (group.id === groupId) {
+        this.setState({ group: group, show: true });
+        group.single_sensors.forEach(sensor => {
+          if (group.single_sensors.indexOf(sensor) === sensorIndex) {
+            this.setState({ sensor: sensor, show: true });
+          }
+        })
+      }
+    })
+  }
 
   getLastDayDataPoints() {
     console.log('Last day datapoints... coming soon')
@@ -73,38 +73,38 @@ class DataBoard extends Component {
   }
 
   render() {
-    const showDataboard =  (!this.props.dbButtonShow) ?  <div>  </div>
-    : this.props.dataBoard.map((data, index) =>
+    const showDataboard = (!this.props.dbButtonShow) ? <div>  </div>
+      : this.props.dataBoard.map((data, index) =>
 
-      <div key={index}>
-        <Grid>
-          <Row className="show-grid">
+        <div key={index}>
+          <Grid>
+            <Row className="show-grid">
 
-            <Col xs={3} md={8}>
-              {
-                data.data_value < data.data_min || data.data_value > data.data_max
+              <Col xs={3} md={8}>
+                {
+                  data.data_value < data.data_min || data.data_value > data.data_max
 
-                  ? (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
-                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                    ? (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
+                      onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
                       <div className="data_type_value">
                         <h4>  {data.data_type} </h4>
                         <p> {data.data_value} </p>
                       </div>
                     </Button>)
 
-                  : (<Button bsClass='custom-class' bsSize="xsmall" className="databoardsucessbutton" block active
-                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                       <div className="data_type_value">
-                         <h4>  {data.data_type} </h4>
-                         <p> {data.data_value} </p>
-                       </div>
-                     </Button>)
-              }
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-    )
+                    : (<Button bsClass='custom-class' bsSize="xsmall" className="databoardsucessbutton" block active
+                      onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                      <div className="data_type_value">
+                        <h4>  {data.data_type} </h4>
+                        <p> {data.data_value} </p>
+                      </div>
+                    </Button>)
+                }
+              </Col>
+            </Row>
+          </Grid>
+        </div>
+      )
 
     return (
       <div>

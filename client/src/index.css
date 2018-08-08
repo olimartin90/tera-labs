@@ -339,11 +339,15 @@ html {
   }
 }
 
-.weather-box {
-  border: solid black 1px;
-  padding-bottom: 15px;
-  padding-left: 15px;
+/* .modal-container {
+  border: 1px solid red;
+} */
+
+.modal-container-button {
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
+
 /* .add-sensors-row {
   border: 1px solid red;
 }
@@ -355,3 +359,4 @@ html {
 .add-sensors-row2 {
   border: 1px solid red;
 } */
+
