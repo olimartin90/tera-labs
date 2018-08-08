@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Modal, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Label, Collapse, Well, Fade } from 'react-bootstrap';
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 
@@ -12,6 +12,7 @@ class DataBoard extends Component {
 
     this.state = {
       show: false,
+      open: false,
       groups: [],
       group: {},
       sensor: {},
@@ -20,6 +21,42 @@ class DataBoard extends Component {
     this.getGroupsFromJSON(localStorage.getItem("user_id"))
   }
 
+
+// ******************** TEST FUNCTION ******************** //
+
+  // class Example extends React.Component {
+  //   constructor(props, context) {
+  //     super(props, context);
+  //
+  //     this.state = {
+  //
+  //     };
+  //   }
+  //
+  //   render() {
+  //     return (
+  //       <div>
+  //         <Button onClick={() => this.setState({ open: !this.state.open })}>
+  //           click
+  //         </Button>
+  //         <Collapse in={this.state.open}>
+  //           <div>
+  //             <Well>
+  //               Anim pariatur cliche reprehenderit, enim eiusmod high life
+  //               accusamus terry richardson ad squid. Nihil anim keffiyeh
+  //               helvetica, craft beer labore wes anderson cred nesciunt sapiente
+  //               ea proident.
+  //             </Well>
+  //           </div>
+  //         </Collapse>
+  //       </div>
+  //     );
+  //   }
+  // }
+  //
+  // render(<Example />);
+
+  // ***************************************************************************** //
 
   // Handles the display of line chart modal
   handleHide() {
@@ -73,10 +110,32 @@ class DataBoard extends Component {
   }
 
   render() {
-    const showDataboard = (!this.props.dbButtonShow) ? <div>  </div>
+    const showDataboard = (!this.props.dbButtonShow) ?
+    this.props.dataBoard.map((data, index) =>
+
+      <div className="test" key={index}>
+        <Grid>
+          <Row className="show-grid">
+
+
+          <Col xs={3} md={12} >
+
+            {
+                 (<Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
+                          onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                    <div className="data_type_value">
+                      <h4> {data.data_type} </h4>
+                    </div>
+                  </Button>)
+            }
+          </Col>
+        </Row>
+      </Grid>
+    </div>
+  )
       : this.props.dataBoard.map((data, index) =>
 
-        <div key={index}>
+        <div className="test" key={index}>
           <Grid>
             <Row className="show-grid">
 
@@ -113,9 +172,9 @@ class DataBoard extends Component {
       <div>
         <Grid className="top-cont">
           <Row>
-            <div>
-              <div className="modal-container" style={{ height: 100 }}>
-                <div className="databoard">
+          <div>
+           <div>
+            <div className="databoard">
                   {
                     showDataboard
                   }

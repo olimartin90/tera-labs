@@ -228,8 +228,7 @@ font-weight: bolder;
 
   width: 100%;
   margin-bottom: 5px;
-  box-shadow: 10px 10px 10px  #e0e0e0
-
+  border-radius: 10px;
 
 }
 .custom-class {
@@ -247,11 +246,6 @@ font-weight: bolder;
   min-width: 165px;
 }
 
-.databoardsucessbutton {
-  margin-bottom: 5px;
-  min-width: 165px;
-  color: green;
-}
 
 #footer {
   bottom: 0;

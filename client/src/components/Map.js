@@ -254,7 +254,7 @@ class SensorMap extends Component {
   // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
-    this.setState({ dbButtonShow: !this.state.dbButtonShow})
+    this.setState({ dbButtonShow: !this.state.dbButtonShow})         // First line to our fucking problem lets roll baby
     let data = []
 
     axios
@@ -295,14 +295,7 @@ class SensorMap extends Component {
           } else {
             dataObj.alert = 0;
           }
-
-
-          console.log("hollllaaaaaaaaaaaa",dataObj)
-
-        } else {
         }
-
-
       }
 
       // *************** icon change if alert ********************
@@ -622,7 +615,14 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
+            <DataBoard
+            groups={this.props.groups}
+            currentUser={this.props.currentUser}
+            groupID={this.state.groupID}
+            dataBoard={this.state.dataBoard}
+            markers={this.state.markers}
+            dbButtonShow={this.state.dbButtonShow}
+            open={this.state.open} />
 
 
             {/* **************** Databoard ****************** */}
