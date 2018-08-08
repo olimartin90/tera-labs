@@ -15,14 +15,22 @@ user1 = User.create!({
   first_name: 'Olivier',
   last_name: 'Martin',
   email: 'olivier@example.com',
-  password: '1q2w3e'
+  password: '1q2w3e',
+  phone: '5142689002',
+  company_name: 'Ferme O. Martin & Fils',
+  latitude: 45.2852,
+  longitude: -72.6872
 })
 
 user2 = User.create!({
   first_name: 'Phil',
   last_name: 'Bolduc',
   email: 'phil@example.com',
-  password: '1q2w3e'
+  password: '1q2w3e',
+  phone: '4189329375',
+  company_name: 'Ferme P. Bolduc & Fils',
+  latitude: 46.7830,
+  longitude: -71.2861
 })
 
 

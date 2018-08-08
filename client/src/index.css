@@ -339,10 +339,20 @@ html {
   }
 }
 
+<<<<<<< HEAD
 .weather-box {
   border: solid black 1px;
   padding-bottom: 15px;
   padding-left: 15px;
+=======
+/* .modal-container {
+  border: 1px solid red;
+} */
+
+.modal-container-button {
+  margin-top: 40px;
+  margin-bottom: 10px;
+>>>>>>> 30a4238b3eca5ec6640682206b02a32aafdf77f5
 }
 
 /* .add-sensors-row {

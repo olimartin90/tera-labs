@@ -35,10 +35,20 @@ class Login extends Component {
         this.setState({
           toDashboard: true
         })
-        this.props.updateCurrentUser(response.data.user.email, response.data.user.id);
+        this.props.updateCurrentUser(
+          response.data.user.email,
+          response.data.user.id,
+          response.data.user.company_name,
+          response.data.user.latitude,
+          response.data.user.longitude
+        );
+        console.log(response.data.user, "usseerrr")
         localStorage.setItem("auth_token", response.data.auth_token);
         localStorage.setItem("email", response.data.user.email);
         localStorage.setItem("user_id", response.data.user.id);
+        localStorage.setItem("company_name", response.data.user.company_name);
+        localStorage.setItem("latitude", response.data.user.latitude);
+        localStorage.setItem("longitude", response.data.user.longitude);
       })
       .catch(error => {
         console.log(error)
@@ -52,8 +62,10 @@ class Login extends Component {
     const email = this.register_email.value
     const password = this.register_password.value
     const password_confirmation = this.password_confirmation.value
-    const company_name = this.company_name.value
     const phone = this.phone.value
+    const company_name = this.company_name.value
+    const latitude = this.latitude.value
+    const longitude = this.longitude.value
     axios.post('/api/v1/users', {
       user: {
         first_name: first_name,
@@ -61,12 +73,20 @@ class Login extends Component {
         email: email,
         password: password,
         password_confirmation: password_confirmation,
-        company_name: company_name,
         phone: phone,
+        company_name: company_name,
+        latitude: latitude,
+        longitude: longitude
       }
     })
       .then(response => {
-        this.props.updateCurrentUser(response.data.email, response.data.id);
+        this.props.updateCurrentUser(
+          response.data.user.email,
+          response.data.user.id,
+          response.data.user.company_name,
+          response.data.user.latitude,
+          response.data.user.longitude
+        );
         this.handleClose();
       })
       .catch(error => {
@@ -133,7 +153,7 @@ class Login extends Component {
               <Form horizontal>
                 <FormGroup controlId="formHorizontalFirstName">
                   <Col componentClass={ControlLabel} sm={2}>
-                    First Name
+                    Name
                           </Col>
                   <Col sm={10}>
                     <FormControl inputRef={(ref) => { this.first_name = ref }} name="firstName" type="fistName" placeholder="First Name" />
@@ -142,8 +162,7 @@ class Login extends Component {
 
                 <FormGroup controlId="formHorizontalLastName">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Last Name
-                          </Col>
+                  </Col>
                   <Col sm={10}>
                     <FormControl inputRef={(ref) => { this.last_name = ref }} name="lastName" type="lastName" placeholder="Last Name" />
                   </Col>
@@ -169,19 +188,9 @@ class Login extends Component {
 
                 <FormGroup controlId="formHorizontalPasswordConfirmation">
                   <Col componentClass={ControlLabel} sm={2}>
-                    Password Confirmation
-                          </Col>
+                  </Col>
                   <Col sm={10}>
                     <FormControl inputRef={(ref) => { this.password_confirmation = ref }} name="passwordConfirmation" type="password" placeholder="Password Confirmation" />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup controlId="formHorizontalCompanyName">
-                  <Col componentClass={ControlLabel} sm={2}>
-                    Company Name
-                          </Col>
-                  <Col sm={10}>
-                    <FormControl inputRef={(ref) => { this.company_name = ref }} name="companyName" type="companyName" placeholder="Company Name" />
                   </Col>
                 </FormGroup>
 
@@ -193,6 +202,29 @@ class Login extends Component {
                     <FormControl inputRef={(ref) => { this.phone = ref }} name="phone" type="phone" placeholder="Phone" />
                   </Col>
                 </FormGroup>
+
+                <FormGroup controlId="formHorizontalCompanyName">
+                  <Col componentClass={ControlLabel} sm={2}>
+                    Company
+                          </Col>
+                  <Col sm={10}>
+                    <FormControl inputRef={(ref) => { this.company_name = ref }} name="companyName" type="companyName" placeholder="Company Name" />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup controlId="formHorizontalCompanyName">
+                  <Col componentClass={ControlLabel} sm={2}>
+                    Location
+                          </Col>
+                  <Col sm={5}>
+                    <FormControl inputRef={(ref) => { this.latitude = ref }} name="latitude" type="latitude" placeholder="Latitude" />
+                  </Col>
+                  <Col sm={5}>
+                    <FormControl inputRef={(ref) => { this.longitude = ref }} name="longitude" type="longitude" placeholder="Longitude" />
+                  </Col>
+                </FormGroup>
+
+
               </Form>
 
             </Modal.Body>

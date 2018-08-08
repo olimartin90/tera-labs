@@ -40,8 +40,10 @@ module Api::V1
         :email,
         :password,
         :password_confirmation,
-        :company_name,
         :phone,
+        :company_name,
+        :latitude,
+        :longitude,
         :avatar
       )
     end
