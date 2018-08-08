@@ -11,7 +11,7 @@ SingleSensor.destroy_all
 GroupSensor.destroy_all
 User.destroy_all
 
-user1 = User.create!({
+User.create({
   first_name: 'Olivier',
   last_name: 'Martin',
   email: 'olivier@example.com',
@@ -22,7 +22,7 @@ user1 = User.create!({
   longitude: -72.6872
 })
 
-user2 = User.create!({
+User.create({
   first_name: 'Phil',
   last_name: 'Bolduc',
   email: 'phil@example.com',
@@ -33,119 +33,186 @@ user2 = User.create!({
   longitude: -71.2861
 })
 
-
-group1 = user1.group_sensors.create!({
-  name: '0512',
-  latitude: 45.212059,
-  longitude: -73.743148
-})
-
-group2 = user1.group_sensors.create!({
-  name: '0513',
-  latitude: 45.212301,
-  longitude: -73.738771
-})
-
-group3 = user1.group_sensors.create!({
-  name: '0514',
-  latitude: 45.209618,
-  longitude: -73.741979
-})
-
-
-moisture = group1.single_sensors.create!({
-  data_type: "Soil Moisture",
-  set_min: 0.2,
-  set_max: 0.8
-})
-
-aeration = group1.single_sensors.create!({
-  data_type: "Aeration",
-  set_min: 15,
-  set_max: 23
-})
-
-temp = group1.single_sensors.create!({
-  data_type: "Soil Temp",
-  set_min: 44,
-  set_max: 58
-})
-
-nitrate = group1.single_sensors.create!({
-  data_type: "Nitrate",
-  set_min: 74,
-  set_max: 89
-})
-
-phosphorus = group1.single_sensors.create!({
-  data_type: "Phosphorus",
-  set_min: 74,
-  set_max: 89
-})
-
-salinity = group1.single_sensors.create!({
-  data_type: "Salinity",
-  set_min: 0.4,
-  set_max: 1
-})
-
-respiration = group1.single_sensors.create!({
-  data_type: "Respiration",
-  set_min: 0.02,
-  set_max: 0.08
-})
-
-ph = group1.single_sensors.create!({
-  data_type: "pH",
-  set_min: 6,
-  set_max: 7
-})
-
-potassium = group1.single_sensors.create!({
-  data_type: "Potassium",
-  set_min: 80,
-  set_max: 90
-})
-
-dateSc = Time.now.to_i - 180000
-dateMs = dateSc * 1000
-
-750.times do
-  dateMs += 3_600_000
-  moisture.datapoints.create!({
-    data_value: rand(0.1..0.2).round(1),
-    date_epoch: dateMs
+2.times do |u| u += 1
+  GroupSensor.create({
+    name: '0512',
+    latitude: 45.212059,
+    longitude: -73.743148,
+    user_id: u
   })
-  aeration.datapoints.create!({
-    data_value: rand(16.2..22.6).round(1),
-    date_epoch: dateMs
+
+  GroupSensor.create({
+    name: '0513',
+    latitude: 45.212301,
+    longitude: -73.738771,
+    user_id: u
   })
-  temp.datapoints.create!({
-    data_value: rand(45..56),
-    date_epoch: dateMs
-  })
-  nitrate.datapoints.create!({
-    data_value: rand(75..92),
-    date_epoch: dateMs
-  })
-  phosphorus.datapoints.create!({
-    data_value: rand(74..88),
-    date_epoch: dateMs
-  })
-  salinity.datapoints.create!({
-    data_value: rand(0.4..0.9).round(1),
-    date_epoch: dateMs
-  })
-  respiration.datapoints.create!({
-    data_value: rand(0.02..0.07).round(2),
-    date_epoch: dateMs
-  })
-  ph.datapoints.create!({
-    data_value: rand(6.1..6.8).round(1),
-    date_epoch: dateMs
-  })
-  potassium.datapoints.create!({
-    data_value: rand(81..88),
-    date_epoch: dateMs
+
+  GroupSensor.create({
+    name: '0514',
+    latitude: 45.209618,
+    longitude: -73.741979,
+    user_id: u
   })
 end
+
+
+3.times do |i| i += 1
+  SingleSensor.create({
+    data_type: "Soil Moisture",
+    set_min: 0.2,
+    set_max: 0.8,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Aeration",
+    set_min: 15,
+    set_max: 23,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Soil Temp",
+    set_min: 44,
+    set_max: 58,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Nitrate",
+    set_min: 74,
+    set_max: 89,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Phosphorus",
+    set_min: 74,
+    set_max: 89,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Salinity",
+    set_min: 0.4,
+    set_max: 1,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Respiration",
+    set_min: 0.02,
+    set_max: 0.08,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "pH",
+    set_min: 6,
+    set_max: 7,
+    group_sensor_id: i
+  })
+
+  SingleSensor.create({
+    data_type: "Potassium",
+    set_min: 80,
+    set_max: 90,
+    group_sensor_id: i
+  })
+end
+
+3.times do |x| x *= 9
+  dateSc = Time.now.to_i + 180000
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(0.1..0.2).round(1),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(16.2..22.6).round(1),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(45..56),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(75..92),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(74..88),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(0.4..0.9).round(1),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(0.02..0.07).round(2),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(6.1..6.8).round(1),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+  dateMs = dateSc * 1000
+  x += 1
+  50.times do
+    dateMs -= 3_600_000
+    Datapoint.create({
+      data_value: rand(81..88),
+      date_epoch: dateMs,
+      single_sensor_id: x
+    })
+  end
+end
+
