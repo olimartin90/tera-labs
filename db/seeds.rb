@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Datapoint.destroy_all
+SingleSensor.destroy_all
+GroupSensor.destroy_all
 User.destroy_all
 
 user1 = User.create!({
@@ -30,7 +33,6 @@ user2 = User.create!({
   longitude: -71.2861
 })
 
-GroupSensor.destroy_all
 
 group1 = user1.group_sensors.create!({
   name: '0512',
@@ -49,8 +51,6 @@ group3 = user1.group_sensors.create!({
   latitude: 45.209618,
   longitude: -73.741979
 })
-
-SingleSensor.destroy_all
 
 
 moisture = group1.single_sensors.create!({
@@ -106,8 +106,6 @@ potassium = group1.single_sensors.create!({
   set_min: 80,
   set_max: 90
 })
-
-Datapoint.destroy_all
 
 dateSc = Time.now.to_i - 180000
 dateMs = dateSc * 1000
