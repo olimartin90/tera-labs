@@ -35,7 +35,8 @@ class SensorMap extends Component {
       hideSensorInfo: true,
       show: false,  // show state for the Add Sensors Modal
       dbButtonShow: false,
-      dataBoard: []
+      dataBoard: [],
+      group: {}
     }
   }
 
@@ -259,7 +260,9 @@ class SensorMap extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${this.props.currentUser.userId}`)
       .then(res => {
-        res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
+        let group = res.data.group_sensors.filter(x => x.id === marker.id)[0]
+        this.setState({ group: group })
+        group.single_sensors.map(sensor => {
           let mostRecentValue = 0
           if (sensor.data_points.length > 0) {
             mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
@@ -303,14 +306,12 @@ class SensorMap extends Component {
         )
       } else {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+           <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       }
     })
 
     // ***************** Marker generator ***************************
-
-
     return (
 
       <Grid>
@@ -340,16 +341,18 @@ class SensorMap extends Component {
             </Col>
           </div>
         </Row>
-        {/* ***************** NOTIFICATION BAR *************************** */}
+
+        {/* ***************** Alert Notification Bar *************************** */}
+
         <Row>
           <Col md={2}></Col>
           <Col md={8}>
-            <AlertDismissable
-              className="alert" />
+           <AlertDismissable markers={this.state.markers} className="alert" />
           </Col>
         </Row>
 
         {/* ****************** Add Sensors Modal ****************** */}
+
         <Row className="add-sensors-row">
           <div className="fixed-bottom">
             <Col md={10}></Col>
@@ -619,7 +622,7 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
+            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
 
             {/* **************** Databoard ****************** */}
@@ -635,8 +638,8 @@ class SensorMap extends Component {
                 google={this.props.google}
                 style={style}
                 initialCenter={{
-                  lat: 45.212059,
-                  lng: -73.738771
+                  lat: this.props.currentUser.latitude,
+                  lng: this.props.currentUser.longitude
                 }}
                 zoom={15}
                 onClick={this.onMapClicked}
@@ -659,5 +662,5 @@ class SensorMap extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyCRmv6SaTr9BTMU7yeXHarnU3v5zYGaLMk")
+  apiKey: ("AIzaSyDlhr1PA-f7rbAzKfeendNYI8M0cvdVt5M")
 })(SensorMap)

@@ -18,8 +18,8 @@ User.create({
   password: '1q2w3e',
   phone: '5142689002',
   company_name: 'Ferme O. Martin & Fils',
-  latitude: 45.2852,
-  longitude: -72.6872
+  latitude: 45.212139,
+  longitude: -73.739222
 })
 
 User.create({
@@ -129,7 +129,7 @@ end
   50.times do
     dateMs -= 3_600_000
     Datapoint.create({
-      data_value: rand(0.1..0.2).round(1),
+      data_value: rand(0.3..0.6).round(1),
       date_epoch: dateMs,
       single_sensor_id: x
     })
