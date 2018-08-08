@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Modal, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Label, Collapse, Well, Fade } from 'react-bootstrap';
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 
@@ -12,6 +12,7 @@ class DataBoard extends Component {
 
     this.state = {
       show: false,
+      open: false,
       groups: [],
       group: {},
       sensor: {},
@@ -19,6 +20,7 @@ class DataBoard extends Component {
     }
     this.getGroupsFromJSON(localStorage.getItem("user_id"))
   }
+
 
 
   // Handles the display of line chart modal
@@ -30,8 +32,6 @@ class DataBoard extends Component {
   componentWillReceiveProps(nextProps) {
     this.state.currentUser = nextProps.currentUser
     this.getGroupsFromJSON(this.state.currentUser.userId)
-
-    console.log('dashboard state: ', this.state)
   }
 
   // Gets the whole groups object based on the user
@@ -41,6 +41,7 @@ class DataBoard extends Component {
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
         this.setState({ groups: response.data.group_sensors })
+
       })
       .catch(error => console.log(error));
   }
@@ -73,15 +74,38 @@ class DataBoard extends Component {
   }
 
   render() {
-    const showDataboard = (!this.props.dbButtonShow) ? <div>  </div>
+    console.log(this.props.dbButtonShow)
+    const showDataboard = (!this.props.dbButtonShow) ?
+    this.props.dataBoard.map((data, index) =>
+
+      <div key={index}>
+      {console.log("rendering empty databoard")}
+        <Grid>
+          <Row className="show-grid">
+          <Col md={5}> </Col>
+          <Col xs={3} md={7} >
+
+            {
+                 <Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
+                          onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                    <div className="data_type_value">
+                      <h4> {data.data_type} </h4>
+                    </div>
+                  </Button>
+            }
+          </Col>
+        </Row>
+      </Grid>
+    </div>
+  )
       : this.props.dataBoard.map((data, index) =>
 
         <div key={index}>
           <Grid>
             <Row className="show-grid">
 
-
-            <Col xs={3} md={12} >
+            <Col md={5}> </Col>
+            <Col xs={3} md={8} >
 
               {
                 data.data_value < data.data_min || data.data_value > data.data_max
@@ -113,9 +137,9 @@ class DataBoard extends Component {
       <div>
         <Grid className="top-cont">
           <Row>
-            <div>
-              <div className="modal-container" style={{ height: 100 }}>
-                <div className="databoard">
+          <div>
+           <div>
+            <div className="databoard">
                   {
                     showDataboard
                   }
