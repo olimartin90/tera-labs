@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Panel } from 'react-bootstrap';
-import GoogleMapIconGreen from '../map-marker-green.png'
-import GoogleMapIconRed from '../map-marker-red.png'
-import DataBoard from './Databoard'
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import GoogleMapIconGreen from '../map-marker-green.png';
+import GoogleMapIconRed from '../map-marker-red.png';
+import DataBoard from './Databoard';
+import AlertDismissable from './AlertDismissable';
 
 const axios = require('axios');
 
@@ -26,7 +27,6 @@ class SensorMap extends Component {
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
-
     this.state = {
       markers: [],
       nameValue: "",
@@ -38,7 +38,6 @@ class SensorMap extends Component {
       dataBoard: []
     }
   }
-
 
   // *********** ADD SENSORS FEATURE BELOW *********************
 
@@ -172,7 +171,7 @@ class SensorMap extends Component {
         // this.componentWillReceiveProps(this.props.currentUser.userId)
         this.handleClose();
         window.location.reload();
-        // let getElement = this.state.markers.length 
+        // let getElement = this.state.markers.length
 
         // axios
         //   .get(`http://localhost:3001/api/v1/users/${user_id}/group_sensors/${getElement}`)
@@ -206,9 +205,9 @@ class SensorMap extends Component {
   // *************** marker generator Below *********************
   componentWillReceiveProps(nextProps) {
     const groups = nextProps.groups
-    if( !this.state.markers[0] || groups[0].id !== this.state.markers[0].id){
+    if (!this.state.markers[0] || groups[0].id !== this.state.markers[0].id) {
       for (var marker of groups) {
-  
+
         const newMarker = {
           id: marker.id,
           name: marker.name,
@@ -217,42 +216,39 @@ class SensorMap extends Component {
           data: marker.single_sensors,
           alert: 0
         }
-  
+
         for (var sensor of marker.single_sensors) {
           let data_type = sensor.data_type
           let sensorMin = sensor.set_min
           let data_typeMin = data_type + "Min"
-  
+
           let sensorMax = sensor.set_max
           let data_typeMax = data_type + "Max"
-  
+
           const newData = 0;
-  
+
           for (var data of sensor.data_points) {
-  
+
             newData = data.data_value;
-  
+
           }
-  
+
           const newSensorSetting = {
             data_typeMin: sensorMin,
             data_typeMax: sensorMax,
             data_value: newData
           }
           newMarker[data_type] = newSensorSetting
-  
+
         }
-        let newCenterPoint = {lat: marker.latitude , lng: marker.longitude}
+        let newCenterPoint = { lat: marker.latitude, lng: marker.longitude }
         const addMarker = this.state.markers.concat(newMarker)
         this.state.markers = addMarker
-        this.setState({initialCenterPoint: newCenterPoint})
+        this.setState({ initialCenterPoint: newCenterPoint })
       }
     }
   }
 
-
-
-  // *********** DATABOARD FEATURE *********************
 
   // *********** DATABOARD FEATURE BELOW *********************
 
@@ -268,8 +264,8 @@ class SensorMap extends Component {
           if (sensor.data_points.length > 0) {
             mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
           }
-          console.log('Sensor empty?', sensor.data_points)
           data.push({
+
             data_type: sensor.data_type,
             data_value: mostRecentValue,
             data_min: sensor.set_min,
@@ -278,11 +274,6 @@ class SensorMap extends Component {
         })
         this.setState({ dataBoard: data })
       })
-
-    if (this.state.isHidden) {
-    } else {
-    }
-    // this.setState({ dataBoard: data })
   }
 
   render() {
@@ -296,19 +287,13 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
+
             dataObj.alert = 1;
-           item.alert = 1;
+            item.alert = 1;
           } else {
             dataObj.alert = 0;
           }
-
-
-          console.log("hollllaaaaaaaaaaaa",dataObj)
-          
-        } else {
         }
-
-
       }
 
       // *************** icon change if alert ********************
@@ -322,9 +307,12 @@ class SensorMap extends Component {
         )
       }
     })
+
     // ***************** Marker generator ***************************
 
+
     return (
+
       <Grid>
 
         {/* ***************** NOTIFICATION BAR *************************** */}
@@ -340,7 +328,7 @@ class SensorMap extends Component {
             </Col>
             <Col md={1}></Col>
             <Col md={2}>
-              <div>
+              <div className="weather-div">
                 <ReactWeather
                   forecast="today"
                   apikey="ba2b14c881784efb99f150704180608"
@@ -353,26 +341,28 @@ class SensorMap extends Component {
           </div>
         </Row>
         {/* ***************** NOTIFICATION BAR *************************** */}
-
+        <Row>
+          <Col md={2}></Col>
+          <Col md={8}>
+            <AlertDismissable
+              className="alert" />
+          </Col>
+        </Row>
 
         {/* ****************** Add Sensors Modal ****************** */}
         <Row className="add-sensors-row">
           <div className="fixed-bottom">
             <Col md={10}></Col>
-            {/* <Row className="add-sensors-row2"> */}
             <Col className="add-sensors-col">
-
               <div className="modal-container">
                 <Button
                   className="modal-container-button"
-                  // positon="float right"
                   bsStyle="primary"
                   bsSize="medium"
                   onClick={() => this.setState({ show: true })}
                 >
                   Add Sensors
               </Button>
-                {/* <Col md={2}></Col> */}
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
@@ -610,7 +600,7 @@ class SensorMap extends Component {
                   <Modal.Footer>
                     <Button
                       bsStyle="primary"
-                      bsSize="medium"
+                      bsSize="large"
                       onClick={this.handleAddSensors}>Submit</Button>
                   </Modal.Footer>
                 </Modal>
@@ -645,8 +635,8 @@ class SensorMap extends Component {
                 google={this.props.google}
                 style={style}
                 initialCenter={{
-                  lat: this.props.currentUser.latitude,
-                  lng: this.props.currentUser.longitude
+                  lat: 45.212059,
+                  lng: -73.738771
                 }}
                 zoom={15}
                 onClick={this.onMapClicked}

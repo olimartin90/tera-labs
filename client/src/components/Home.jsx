@@ -73,8 +73,8 @@ class Home extends Component {
             <Col xs={12} sm={12} md={4}>
               <div className="section0">
                 <h1 className="teralabs" > Tera Labs </h1>
-                <p className="teralabsdescription"> TeraLabs is a precision agriculture company dedicated to helping farmers around the world monitor and manage soil health to increase crop productivity </p>
-                <Link activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                <p className="teralabsdescription"> A precision agriculture company dedicated to helping farmers around the world monitor soil health  </p>
+                <Link className="scrollDown "activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
                   More Info
                 </Link>
               </div>
@@ -92,7 +92,7 @@ class Home extends Component {
           <Row id="row2">
             <Col className="collast" xs={12} sm={10} md={8} lg={6}>
 
-              <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graphexample2.jpg'} alt="" />
+              <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graph-pH.png'} alt="" />
 
             </Col>
             <Col xs={12} sm={10} md={8} lg={6}>
@@ -101,13 +101,16 @@ class Home extends Component {
                 <p className="p1"> Our sensors report every minute, 24 hours a day, 7 days a week, giving you the best opportunity to track how input affects your soil quality </p>
                 <p className="p1"> Gets alerts when sensors detect poor soil conditions for your crops, so you can take proactice measures before problems occur. </p>
                 <p className="p1"> View historic averages reported for each sensor </p>
+                <Link className="scrollDown2" activeClass="active" to="row3" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                  More Info
+                </Link>
               </div>
             </Col>
           </Row>
 
           <Row className="row3">
             <Col className="collast2" xs={12} sm={12} md={8} lg={6}>
-              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map.JPG'} alt="" />
+              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map-sensors.png'} alt="" />
             </Col>
             <Col xs={12} sm={12} md={8} lg={6}>
               <div className="section2">

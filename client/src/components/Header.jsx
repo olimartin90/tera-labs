@@ -10,7 +10,7 @@ class Header extends Component {
   render() {
     return (
 
-      <Navbar inverse collapseOnSelect>
+      <Navbar className="navbar-full" inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <img src={process.env.PUBLIC_URL + '/agriculture-tech.png'} />

@@ -80,38 +80,41 @@ class DataBoard extends Component {
           <Grid>
             <Row className="show-grid">
 
-              <Col xs={3} md={8}>
-                {
-                  data.data_value < data.data_min || data.data_value > data.data_max
 
-                    ? (<Button bsStyle="danger" bsSize="xsmall" className="databoardbutton" block active
-                      onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+            <Col xs={3} md={12} >
+
+              {
+                data.data_value < data.data_min || data.data_value > data.data_max
+
+                  ? (<Button bsClass="custom-class2" bsSize="xsmall" className="databoardbutton" block active
+                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
                       <div className="data_type_value">
-                        <h4>  {data.data_type} </h4>
+                        <h4> {data.data_type} </h4>
                         <p> {data.data_value} </p>
                       </div>
                     </Button>)
 
-                    : (<Button bsClass='custom-class' bsSize="xsmall" className="databoardsucessbutton" block active
-                      onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                      <div className="data_type_value">
-                        <h4>  {data.data_type} </h4>
-                        <p> {data.data_value} </p>
-                      </div>
-                    </Button>)
-                }
-              </Col>
-            </Row>
-          </Grid>
-        </div>
-      )
+                  : (<Button bsClass="custom-class" bsSize="xsmall" className="databoardbutton" block active
+                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                       <div className="data_type_value">
+                         <h4> {data.data_type} </h4>
+                         <p> {data.data_value} </p>
+                       </div>
+                     </Button>)
+              }
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    )
+
 
     return (
       <div>
         <Grid className="top-cont">
           <Row>
             <div>
-              <div className="modal-container" style={{ height: 200 }}>
+              <div className="modal-container" style={{ height: 100 }}>
                 <div className="databoard">
                   {
                     showDataboard
