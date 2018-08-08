@@ -66,7 +66,7 @@ html {
 }
  .teralabs {
    margin-top: 60px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Fjalla One', sans-serif;
   font-weight: bolder;
   color: white;
   font-size: 6vw;
@@ -77,10 +77,10 @@ html {
   position: relative;
   left: 0;
   right: 0;
-  margin-top: 150px;
+  margin-top: 100px;
   color: white;
   font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   width: 75%;
 }
 
@@ -89,6 +89,26 @@ html {
    font-family: inherit;
    font-size: inherit;
    color: #edf1f7;
+   background: none;
+   cursor: pointer;
+   padding: 25px 80px;
+   display: inline-block;
+   margin: 15px 30px;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 700;
+   outline: none;
+   position: relative;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   transition: all 0.3s;
+}
+
+.scrollDown2 {
+  border: none;
+   font-family: inherit;
+   font-size: inherit;
+   color: black;
    background: none;
    cursor: pointer;
    padding: 25px 80px;
@@ -378,4 +398,3 @@ font-weight: bolder;
 .add-sensors-row2 {
   border: 1px solid red;
 } */
-
