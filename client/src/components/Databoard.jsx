@@ -116,9 +116,8 @@ class DataBoard extends Component {
       <div className="test" key={index}>
         <Grid>
           <Row className="show-grid">
-
-
-          <Col xs={3} md={12} >
+          <Col md={6}> </Col>
+          <Col xs={3} md={4} >
 
             {
                  (<Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
@@ -139,8 +138,8 @@ class DataBoard extends Component {
           <Grid>
             <Row className="show-grid">
 
-
-            <Col xs={3} md={12} >
+            <Col md={6}> </Col>
+            <Col xs={3} md={4} >
 
               {
                 data.data_value < data.data_min || data.data_value > data.data_max
