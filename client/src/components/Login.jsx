@@ -110,37 +110,33 @@ class Login extends Component {
       <div>
         <Form horizontal className="form-horizontal">
           <FormGroup controlId="formHorizontalEmail">
-            <Col componentClass={ControlLabel} sm={2}>
-              Email
-                    </Col>
+            <Col componentClass={ControlLabel} sm={1}>
+            </Col>
             <Col sm={10}>
               <FormControl inputRef={(ref) => { this.login_email = ref }} name="email" type="email" placeholder="Email" />
             </Col>
           </FormGroup>
 
           <FormGroup controlId="formHorizontalPassword">
-            <Col componentClass={ControlLabel} sm={2}>
-              Password
-                    </Col>
+            <Col componentClass={ControlLabel} sm={1}>
+            </Col>
             <Col sm={10}>
               <FormControl inputRef={(ref) => { this.login_password = ref }} name="password" type="password" placeholder="Password" />
             </Col>
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
+            <Col sm={1}></Col>
+            <Col sm={2}>
+              <Button onClick={this.handleLogin}>Sign in</Button>
+            </Col>
+            <Col sm={4}>
               <Checkbox>Remember me</Checkbox>
             </Col>
           </FormGroup>
 
           <FormGroup>
-            <Col smOffset={2} sm={10}>
-              <Button onClick={this.handleLogin}>Sign in</Button>
-            </Col>
-          </FormGroup>
-
-          <FormGroup>
-            <Col smOffset={2} sm={10}>
+            <Col smOffset={1} sm={4}>
               <a hef="#" onClick={this.handleShow}>Register Here</a>
             </Col>
           </FormGroup>

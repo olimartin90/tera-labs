@@ -171,7 +171,7 @@ class SensorMap extends Component {
         // this.componentWillReceiveProps(this.props.currentUser.userId)
         this.handleClose();
         window.location.reload();
-        // let getElement = this.state.markers.length 
+        // let getElement = this.state.markers.length
 
         // axios
         //   .get(`http://localhost:3001/api/v1/users/${user_id}/group_sensors/${getElement}`)
@@ -250,9 +250,6 @@ class SensorMap extends Component {
   }
 
 
-
-  // *********** DATABOARD FEATURE *********************
-
   // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
@@ -267,8 +264,8 @@ class SensorMap extends Component {
           if (sensor.data_points.length > 0) {
             mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
           }
-          console.log('Sensor empty?', sensor.data_points)
           data.push({
+
             data_type: sensor.data_type,
             data_value: mostRecentValue,
             data_min: sensor.set_min,
@@ -277,11 +274,6 @@ class SensorMap extends Component {
         })
         this.setState({ dataBoard: data })
       })
-
-    if (this.state.isHidden) {
-    } else {
-    }
-    // this.setState({ dataBoard: data })
   }
 
   render() {
@@ -295,19 +287,13 @@ class SensorMap extends Component {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
+
             dataObj.alert = 1;
             item.alert = 1;
           } else {
             dataObj.alert = 0;
           }
-
-
-          console.log("hollllaaaaaaaaaaaa", dataObj)
-
-        } else {
         }
-
-
       }
 
       // *************** icon change if alert ********************
@@ -321,7 +307,9 @@ class SensorMap extends Component {
         )
       }
     })
+
     // ***************** Marker generator ***************************
+
 
     return (
 
@@ -353,7 +341,6 @@ class SensorMap extends Component {
           </div>
         </Row>
         {/* ***************** NOTIFICATION BAR *************************** */}
-
         <Row>
           <Col md={2}></Col>
           <Col md={8}>
@@ -613,7 +600,7 @@ class SensorMap extends Component {
                   <Modal.Footer>
                     <Button
                       bsStyle="primary"
-                      bsSize="medium"
+                      bsSize="large"
                       onClick={this.handleAddSensors}>Submit</Button>
                   </Modal.Footer>
                 </Modal>
@@ -648,8 +635,8 @@ class SensorMap extends Component {
                 google={this.props.google}
                 style={style}
                 initialCenter={{
-                  lat: this.props.currentUser.latitude,
-                  lng: this.props.currentUser.longitude
+                  lat: 45.212059,
+                  lng: -73.738771
                 }}
                 zoom={15}
                 onClick={this.onMapClicked}
