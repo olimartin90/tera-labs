@@ -33,6 +33,7 @@ class SensorMap extends Component {
       longitudeValue: 0,
       hideSensorInfo: true,
       dbButtonShow: false,
+      group: {},
       dataBoard: [
         { data_type: "Soil Moisture" },
         { data_type: "Aeration" },
@@ -104,8 +105,9 @@ class SensorMap extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${this.props.currentUser.userId}`)
       .then(res => {
-
-        res.data.group_sensors.filter(x => x.id === marker.id)[0].single_sensors.map(sensor => {
+        let group = res.data.group_sensors.filter(x => x.id === marker.id)[0]
+        this.setState({ group: group })
+        group.single_sensors.map(sensor => {
           let mostRecentValue = 0
           if (sensor.data_points.length > 0) {
             mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
@@ -154,14 +156,12 @@ class SensorMap extends Component {
         )
       } else {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+           <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       }
     })
 
     // ***************** Marker generator ***************************
-
-
     return (
 
       <Grid>
@@ -191,13 +191,13 @@ class SensorMap extends Component {
             </Col>
           </div>
         </Row>
-        {/* ***************** NOTIFICATION BAR *************************** */}
+
+        {/* ***************** Alert Notification Bar *************************** */}
 
         <Row>
           <Col md={2}></Col>
           <Col md={8}>
-            <AlertDismissable
-              className="alert" />
+           <AlertDismissable markers={this.state.markers} className="alert" />
           </Col>
         </Row>
 
@@ -205,21 +205,15 @@ class SensorMap extends Component {
 
         <Row className="test3">
 
-
-
           <Col md={1}>
 
           </Col>
           <Col md={3}>
 
             {/* **************** Databoard ****************** */}
-            <DataBoard
-              groups={this.props.groups}
-              currentUser={this.props.currentUser}
-              dataBoard={this.state.dataBoard}
-              markers={this.state.markers}
-              dbButtonShow={this.state.dbButtonShow}
-            />
+
+            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
+
             {/* **************** Databoard ****************** */}
 
           </Col>
