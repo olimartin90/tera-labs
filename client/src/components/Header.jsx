@@ -21,16 +21,16 @@ class Header extends Component {
         <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={1} href="#">
-              About Us
+              Home
             </NavItem>
             <NavItem eventKey={2} href="#">
-              Contact
+              My Account
             </NavItem>
             <NavDropdown eventKey={3} title="Quick Links" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Home</MenuItem>
-              <MenuItem eventKey={3.2}>Whats New</MenuItem>
-              <MenuItem eventKey={3.3}>Support</MenuItem>
-              <MenuItem eventKey={3.4}>My Account</MenuItem>
+              <MenuItem eventKey={3.1}>Whats New</MenuItem>
+              <MenuItem eventKey={3.2}>Support</MenuItem>
+              <MenuItem eventKey={3.3}>About Us</MenuItem>
+              <MenuItem eventKey={3.4}>Contact</MenuItem>
             </NavDropdown>
           </Nav>
           <Nav pullRight>
