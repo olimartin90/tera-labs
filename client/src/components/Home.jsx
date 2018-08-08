@@ -92,7 +92,7 @@ class Home extends Component {
           <Row id="row2">
             <Col className="collast" xs={12} sm={10} md={8} lg={6}>
 
-              <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graphexample2.jpg'} alt="" />
+              <img className="graphimage img-responsive" src={process.env.PUBLIC_URL + '/graph-pH.png'} alt="" />
 
             </Col>
             <Col xs={12} sm={10} md={8} lg={6}>
@@ -107,7 +107,7 @@ class Home extends Component {
 
           <Row className="row3">
             <Col className="collast2" xs={12} sm={12} md={8} lg={6}>
-              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map.JPG'} alt="" />
+              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map-sensors.png'} alt="" />
             </Col>
             <Col xs={12} sm={12} md={8} lg={6}>
               <div className="section2">
