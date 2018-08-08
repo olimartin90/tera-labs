@@ -12,7 +12,7 @@ const style = {
   width: '100%',
   height: '100%',
   position: "absolute",
-  zIndex: "3",
+
 }
 
 class SensorMap extends Component {
@@ -34,8 +34,8 @@ class SensorMap extends Component {
       longitudeValue: 0,
       hideSensorInfo: true,
       show: false,  // show state for the Add Sensors Modal
-      dataBoard: [],
-      initialCenterPoint: {lat: 45.212059, lng: -73.738771 }
+      dbButtonShow: false,
+      dataBoard: []
     }
   }
 
@@ -257,7 +257,7 @@ class SensorMap extends Component {
   // *********** DATABOARD FEATURE BELOW *********************
 
   onMarkerClick(props, marker, e) {
-    this.setState({ isHidden: !this.state.isHidden })
+    this.setState({ dbButtonShow: !this.state.dbButtonShow})
     let data = []
 
     axios
@@ -271,7 +271,9 @@ class SensorMap extends Component {
             console.log('Sensor empty?', sensor.data_points)
             data.push({
             data_type: sensor.data_type,
-            data_value: mostRecentValue
+            data_value: mostRecentValue,
+            data_min: sensor.set_min,
+            data_max: sensor.set_max
           })
         })
         this.setState({ dataBoard: data })
@@ -344,7 +346,7 @@ class SensorMap extends Component {
               </div>
             </Col>
             <Col md={3}>
-              <div>
+              <div className="weather_div">
                 <ReactWeather
                   forecast="today"
                   apikey="ba2b14c881784efb99f150704180608"
@@ -628,7 +630,7 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} />
+            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
 
             {/* **************** Databoard ****************** */}
