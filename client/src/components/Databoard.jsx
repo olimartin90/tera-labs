@@ -151,7 +151,7 @@ class DataBoard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} group={this.state.group} />
+                    <SingleSensor sensor={this.state.sensor} group={this.state.group} getGroups={this.props.getGroups} updateMarkerAlerts={this.props.updateMarkerAlerts}/>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>

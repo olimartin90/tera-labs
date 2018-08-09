@@ -24,6 +24,9 @@ class SensorMap extends Component {
     this.handleAddSensors = this.handleAddSensors.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.updateMarkerAlerts = this.updateMarkerAlerts.bind(this);
+    this.createMarkers = this.createMarkers.bind(this);
+
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
@@ -200,10 +203,66 @@ class SensorMap extends Component {
     this.setState({ show: true });
   }
 
+
   // *********** ADD SENSORS FEATURE ABOVE *********************
+
+  // componentWillUpdate() {
+  //   this.createMarkers()
+  //   console.log("componentWillUpdate----------------------")
+  // }
+
+createMarkers(){
+  console.log("props =================",this.props.groups)
+  const groups = this.props.groups
+  if (!this.state.markers[0] || groups[0].id !== this.state.markers[0].id) {
+    for (var marker of groups) {
+
+      const newMarker = {
+        id: marker.id,
+        name: marker.name,
+        latitude: marker.latitude,
+        longitude: marker.longitude,
+        data: marker.single_sensors,
+        alert: 0
+      }
+
+      for (var sensor of marker.single_sensors) {
+        let data_type = sensor.data_type
+        let sensorMin = sensor.set_min
+        let data_typeMin = data_type + "Min"
+
+        let sensorMax = sensor.set_max
+        let data_typeMax = data_type + "Max"
+
+        const newData = 0;
+
+        for (var data of sensor.data_points) {
+
+          newData = data.data_value;
+
+        }
+
+        const newSensorSetting = {
+          data_typeMin: sensorMin,
+          data_typeMax: sensorMax,
+          data_value: newData
+        }
+        newMarker[data_type] = newSensorSetting
+
+      }
+      let newCenterPoint = { lat: marker.latitude, lng: marker.longitude }
+      const addMarker = this.state.markers.concat(newMarker)
+      this.state.markers = addMarker
+      this.setState({ initialCenterPoint: newCenterPoint })
+      // console.log("this.componentWillReceiveProps***********************")
+    }
+  }
+}
+
 
   // *************** marker generator Below *********************
   componentWillReceiveProps(nextProps) {
+    console.log("willReceiveProps============")
     const groups = nextProps.groups
     if (!this.state.markers[0] || groups[0].id !== this.state.markers[0].id) {
       for (var marker of groups) {
@@ -245,10 +304,15 @@ class SensorMap extends Component {
         const addMarker = this.state.markers.concat(newMarker)
         this.state.markers = addMarker
         this.setState({ initialCenterPoint: newCenterPoint })
+        console.log("this.componentWillReceiveProps***********************")
       }
     }
+    this.updateMarkerAlerts()
   }
+// componentDidMount() {
+//   this.updateMarkerAlerts()
 
+// }
 
   // *********** DATABOARD FEATURE BELOW *********************
 
@@ -276,18 +340,18 @@ class SensorMap extends Component {
       })
   }
 
-  render() {
-    // *************** return the markers from the state and send it to the final return ****************
-    let markers = this.state.markers;
+  updateMarkerAlerts() {
     let types_of_data = ["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
+    console.log("*********** updateMarkerAlert ********")
 
-    const listOfMarkers = markers.map((item, index) => {
+    let updatedMarkers = this.state.markers.map(item => {
       item.alert = 0;
+      // console.log("lidtOfMarkers")
       for (var dataType of types_of_data) {
         if (item[dataType]) {
           const dataObj = item[dataType]
           if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
-
+            
             dataObj.alert = 1;
             item.alert = 1;
           } else {
@@ -295,15 +359,47 @@ class SensorMap extends Component {
           }
         }
       }
+      return item
+    })
+
+    // console.log("markerAlerts ==============",updatedMarkers)
+
+    this.state.markers = updatedMarkers
+  }
+
+  render() {
+    // this.createMarkers()
+    // this.updateMarkerAlerts()
+    // this.test()
+    // *************** return the markers from the state and send it to the final return ****************
+    let markers = this.state.markers;
+    // let types_of_data = ["Aeration", "Nitrate", "Phosphorus", "Potassium", "Respiration", "Salinity", "Soil Moisture", "Soil Temp", "pH"];
+
+    const listOfMarkers = markers.map((item, index) => {
+      console.log("listOfMarkers", item)
+      // item.alert = 0;
+      // console.log("lidtOfMarkers")
+      // for (var dataType of types_of_data) {
+      //   if (item[dataType]) {
+      //     const dataObj = item[dataType]
+      //     if (dataObj.data_value < dataObj.data_typeMin || dataObj.data_value > dataObj.data_typeMax) {
+
+      //       dataObj.alert = 1;
+      //       item.alert = 1;
+      //     } else {
+      //       dataObj.alert = 0;
+      //     }
+      //   }
+      // }
 
       // *************** icon change if alert ********************
-      if (item.alert === 0) {
+      if (item.alert && item.alert === 1) {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconGreen} position={{ lat: item.latitude, lng: item.longitude }} />
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       } else {
         return (
-          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconGreen} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       }
     })
@@ -619,7 +715,7 @@ class SensorMap extends Component {
 
             {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
+            <DataBoard groups={this.props.groups} getGroups={this.props.getGroups} currentUser={this.props.currentUser} updateMarkerAlerts={this.updateMarkerAlerts} groupID={this.state.groupID} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
 
             {/* **************** Databoard ****************** */}
@@ -659,5 +755,5 @@ class SensorMap extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyCRmv6SaTr9BTMU7yeXHarnU3v5zYGaLMk")
+  apiKey: ("AIzaSyD0b_sCpiIBPX1II0iAjCbgN6o0nJp-Fgk")
 })(SensorMap)

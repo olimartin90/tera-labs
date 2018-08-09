@@ -30,6 +30,7 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
+        console.log("axios dashboard-----------------")
         this.setState({ groups: response.data.group_sensors })
       })
       .catch(error => console.log(error));
@@ -44,7 +45,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser}  />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} getGroups={this.getGroupsFromJSON} />
             </div>
           </Row>
         </Grid>

@@ -31,6 +31,8 @@ class SingleSensor extends Component {
   componentWillUnmount(){
     clearInterval(this.interval);
     this.chart.destroy();
+    this.props.updateMarkerAlerts()
+    this.props.getGroups(1)
   }
 
   // Loads all datapoints from db and adds them to the datapoints array
@@ -66,6 +68,7 @@ class SingleSensor extends Component {
         })
         .then(response => {
           this.addDataPointToChart(last.x + 3600000, this.state.yValue)
+          console.log("postDataPointCompleted999999999999999")
         })
         .catch(error => console.log(error));
     }
