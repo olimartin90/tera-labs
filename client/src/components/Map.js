@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Alert, Panel } from 'react-bootstrap';
 import GoogleMapIconGreen from '../map-marker-green.png';
 import GoogleMapIconRed from '../map-marker-red.png';
 import DataBoard from './Databoard';
@@ -175,19 +175,23 @@ class SensorMap extends Component {
             </Col>
             <Col md={1}></Col>
             <Col md={3}>
-              <h3>{this.state.markers.length} Units Sensors</h3>
+
             </Col>
             <Col md={1}></Col>
             <Col md={2}>
-              <div className="weather-div">
-                <ReactWeather
-                  forecast="today"
-                  apikey="ba2b14c881784efb99f150704180608"
-                  type="geo"
-                  lat={this.props.currentUser.latitude}
-                  lon={this.props.currentUser.longitude}
-                />
-              </div>
+            <Panel bsStyle="primary">
+              <Panel.Body>
+                <div className="weather-div">
+                  <ReactWeather
+                    forecast="today"
+                    apikey="ba2b14c881784efb99f150704180608"
+                    type="geo"
+                    lat={this.props.currentUser.latitude}
+                    lon={this.props.currentUser.longitude}
+                  />
+                </div>
+              </Panel.Body>
+            </Panel>
             </Col>
           </div>
         </Row>
@@ -201,53 +205,62 @@ class SensorMap extends Component {
           </Col>
         </Row>
 
-        <AddSensors currentUserId={this.props.currentUser.userId} />
 
         <Row className="test3">
+        <Col md={2}></Col>
+        <Col md={8}>
+          <Panel bsStyle="primary">
+            <Panel.Heading>
+              <Panel.Title>
+                <h3>{this.state.markers.length} Units Sensors</h3>
+              </Panel.Title>
+            </Panel.Heading>
+            <Panel.Body>
+              <Col md={3}>
 
-          <Col md={1}>
+              {/* **************** Databoard ****************** */}
 
-          </Col>
-          <Col md={3}>
+                <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
-            {/* **************** Databoard ****************** */}
+              {/* **************** Databoard ****************** */}
 
-            <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
-            {/* **************** Databoard ****************** */}
+              {/* **************** MAP ************** */}
 
-          </Col>
+              </Col>
+
+                <Col md={9}>
+
+                  <div className="embed-responsive map-wrapper container">
+                    <div className="col"></div>
+                    <Map className="embed-responsive-item"
+                      google={this.props.google}
+                      style={style}
+                      initialCenter={{
+                        lat: this.props.currentUser.latitude,
+                        lng: this.props.currentUser.longitude
+                      }}
+                      zoom={15}
+                      onClick={this.onMapClicked}
+                    >
+                      {listOfMarkers}
+                    </Map>
+                    <div className="col"></div>
+                  </div>
+
+                </Col>
+
+            </Panel.Body>
+            <Panel.Footer>
+              <Col mdOffset={10}>
+                <AddSensors currentUserId={this.props.currentUser.userId} />
+              </Col>
+            </Panel.Footer>
+          </Panel>
+        </Col>
 
           {/* **************** MAP ************** */}
 
-          <Col md={7}>
-            <div className="embed-responsive map-wrapper container">
-              <div className="col"></div>
-              <Map className="embed-responsive-item"
-                google={this.props.google}
-                style={style}
-                initialCenter={{
-                  lat: this.props.currentUser.latitude,
-                  lng: this.props.currentUser.longitude
-                }}
-                zoom={15}
-                onClick={this.onMapClicked}
-              >
-                {listOfMarkers}
-              </Map>
-              <div className="col"></div>
-            </div>
-
-
-          </Col>
-          <Col md={1}></Col>
-
-          {/* **************** MAP ************** */}
-
-          {/* ******************************************* */}
-
-
-          {/* ********************************************* */}
         </Row>
 
       </Grid >

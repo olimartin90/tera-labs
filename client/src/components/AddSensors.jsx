@@ -163,20 +163,20 @@ class AddSensors extends Component {
     return (
 
       <Grid>
+      <Button
+        className="modal-container-button"
+        bsStyle="primary"
+        bsSize="large"
+        onClick={() => this.setState({ show: true })}
+      >
+        Add Unit
+      </Button>
 
         <Row className="add-sensors-row">
           <div className="fixed-bottom">
             <Col md={10}></Col>
             <Col className="add-sensors-col">
               <div className="modal-container">
-                <Button
-                  className="modal-container-button"
-                  bsStyle="primary"
-                  bsSize="medium"
-                  onClick={() => this.setState({ show: true })}
-                >
-                  Add Sensors
-              </Button>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>

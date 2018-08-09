@@ -87,7 +87,7 @@ class DataBoard extends Component {
 
             {
                  <Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
-                          onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                          onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
                     <div className="data_type_value">
                       <h4> {data.data_type} </h4>
                     </div>
