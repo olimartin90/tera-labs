@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Row, Modal, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap';
 import Header from "./Header";
 import SensorMap from "./Map";
-import SingleSensor from "./SingleSensor";
 
 const axios = require('axios');
 
@@ -44,7 +43,7 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser}  />
+              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} />
             </div>
           </Row>
         </Grid>
