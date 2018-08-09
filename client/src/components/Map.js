@@ -96,6 +96,7 @@ class SensorMap extends Component {
 
   // *********** DATABOARD FEATURE BELOW *********************
 
+
   onMarkerClick(props, marker, e) {
     console.log("marker was clicked")
 
@@ -108,12 +109,13 @@ class SensorMap extends Component {
         let group = res.data.group_sensors.filter(x => x.id === marker.id)[0]
         this.setState({ group: group })
         group.single_sensors.map(sensor => {
+
           let mostRecentValue = 0
           if (sensor.data_points.length > 0) {
             mostRecentValue = sensor.data_points.sort((a, b) => { return ((new Date(b.updated_at)) - (new Date(a.updated_at))) })[0].data_value
           }
           data.push({
-
+            group_sensor_name: marker.name,
             data_type: sensor.data_type,
             data_value: mostRecentValue,
             data_min: sensor.set_min,
