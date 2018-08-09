@@ -163,13 +163,12 @@ class AddSensors extends Component {
     return (
 
       <Grid>
-      <Button
-        className="modal-container-button"
-        bsStyle="primary"
-        bsSize="large"
-        onClick={() => this.setState({ show: true })}
-      >
-        Add Unit
+        <Button
+          className="modal-container-button"
+          bsSize="medium"
+          onClick={() => this.setState({ show: true })}
+        >
+          Add Unit
       </Button>
 
         <Row className="add-sensors-row">
@@ -178,252 +177,252 @@ class AddSensors extends Component {
             <Col className="add-sensors-col">
               <div className="modal-container">
 
-              <Modal show={this.state.show} onHide={this.handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Add Sensors</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Add Sensors</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
 
-                  <Form horizontal>
-                    <FormGroup controlId="formHorizontalName">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Name
+                    <Form horizontal>
+                      <FormGroup controlId="formHorizontalName">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Name
                             </Col>
-                      <Col sm={10}>
-                        <FormControl inputRef={(ref) => { this.name = ref }} name="name" type="text" placeholder="Name" />
-                      </Col>
-                    </FormGroup>
+                        <Col sm={10}>
+                          <FormControl inputRef={(ref) => { this.name = ref }} name="name" type="text" placeholder="Name" />
+                        </Col>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalLocation">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Location
+                      <FormGroup controlId="formHorizontalLocation">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Location
                             </Col>
-                      <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.latitude = ref }} name="latitude" type="text" placeholder="Latitude" />
-                      </Col>
-                      <Col sm={5}>
-                        <FormControl inputRef={(ref) => { this.longitude = ref }} name="longitude" type="text" placeholder="Longitude" />
-                      </Col>
-                    </FormGroup>
+                        <Col sm={5}>
+                          <FormControl inputRef={(ref) => { this.latitude = ref }} name="latitude" type="text" placeholder="Latitude" />
+                        </Col>
+                        <Col sm={5}>
+                          <FormControl inputRef={(ref) => { this.longitude = ref }} name="longitude" type="text" placeholder="Longitude" />
+                        </Col>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalLocation">
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={3}>
-                        Minimum
+                      <FormGroup controlId="formHorizontalLocation">
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={3}>
+                          Minimum
                             </Col>
-                      <Col componentClass={ControlLabel} sm={5}>
-                        Maximum
+                        <Col componentClass={ControlLabel} sm={5}>
+                          Maximum
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalMoisture">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Moisture
+                      <FormGroup controlId="formHorizontalMoisture">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Moisture
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_sm = ref }} name="min" type="text" defaultValue="0.2" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        awc
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_sm = ref }} name="min" type="text" defaultValue="0.2" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          awc
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_sm = ref }} name="max" type="text" defaultValue="0.8" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        awc
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_sm = ref }} name="max" type="text" defaultValue="0.8" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          awc
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalAeration">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Aeration
+                      <FormGroup controlId="formHorizontalAeration">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Aeration
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_ae = ref }} name="min" type="text" defaultValue="15" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        %
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_ae = ref }} name="min" type="text" defaultValue="15" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          %
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_ae = ref }} name="max" type="text" defaultValue="23" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        %
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_ae = ref }} name="max" type="text" defaultValue="23" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          %
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalSoilTemp">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Temperature
+                      <FormGroup controlId="formHorizontalSoilTemp">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Temperature
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_st = ref }} name="min" type="text" defaultValue="44" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        °F
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_st = ref }} name="min" type="text" defaultValue="44" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          °F
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_st = ref }} name="max" type="text" defaultValue="58" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        °F
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_st = ref }} name="max" type="text" defaultValue="58" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          °F
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalNitrate">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Nitrate
+                      <FormGroup controlId="formHorizontalNitrate">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Nitrate
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_ni = ref }} name="min" type="text" defaultValue="74" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_ni = ref }} name="min" type="text" defaultValue="74" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_ni = ref }} name="max" type="text" defaultValue="89" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_ni = ref }} name="max" type="text" defaultValue="89" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalPhosphorus">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Phosphorus
+                      <FormGroup controlId="formHorizontalPhosphorus">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Phosphorus
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_phos = ref }} name="min" type="text" defaultValue="74" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_phos = ref }} name="min" type="text" defaultValue="74" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_phos = ref }} name="max" type="text" defaultValue="89" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_phos = ref }} name="max" type="text" defaultValue="89" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalSalinity">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Salinity
+                      <FormGroup controlId="formHorizontalSalinity">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Salinity
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_sa = ref }} name="min" type="text" defaultValue="0.4" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        dS/m
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_sa = ref }} name="min" type="text" defaultValue="0.4" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          dS/m
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_sa = ref }} name="max" type="text" defaultValue="1" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        dS/m
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_sa = ref }} name="max" type="text" defaultValue="1" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          dS/m
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalRespiration">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Respiration
+                      <FormGroup controlId="formHorizontalRespiration">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Respiration
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_re = ref }} name="min" type="text" defaultValue="0.02" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        %
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_re = ref }} name="min" type="text" defaultValue="0.02" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          %
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_re = ref }} name="max" type="text" defaultValue="0.08" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        %
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_re = ref }} name="max" type="text" defaultValue="0.08" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          %
                             </Col>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalpH">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        pH
+                      <FormGroup controlId="formHorizontalpH">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          pH
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_pH = ref }} name="min" type="text" defaultValue="6" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={3}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_pH = ref }} name="max" type="text" defaultValue="7" />
-                      </Col>
-                    </FormGroup>
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_pH = ref }} name="min" type="text" defaultValue="6" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={3}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_pH = ref }} name="max" type="text" defaultValue="7" />
+                        </Col>
+                      </FormGroup>
 
-                    <FormGroup controlId="formHorizontalPotassium">
-                      <Col componentClass={ControlLabel} sm={2}>
-                        Potassium
+                      <FormGroup controlId="formHorizontalPotassium">
+                        <Col componentClass={ControlLabel} sm={2}>
+                          Potassium
                             </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_min_pota = ref }} name="min" type="text" defaultValue="80" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={1}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_min_pota = ref }} name="min" type="text" defaultValue="80" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                      <Col componentClass={ControlLabel} sm={2}>
-                      </Col>
-                      <Col sm={2}>
-                        <FormControl inputRef={(ref) => { this.set_max_pota = ref }} name="max" type="text" defaultValue="90" />
-                      </Col>
-                      <Col componentClass={ControlLabel} sm={1}>
-                        ppm
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+                        <Col sm={2}>
+                          <FormControl inputRef={(ref) => { this.set_max_pota = ref }} name="max" type="text" defaultValue="90" />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={1}>
+                          ppm
                             </Col>
-                    </FormGroup>
-                  </Form>
+                      </FormGroup>
+                    </Form>
 
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    bsStyle="primary"
-                    bsSize="large"
-                    onClick={this.handleAddSensors}>Submit</Button>
-                </Modal.Footer>
-              </Modal>
-            </div >
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      className="btn-submit"
+                      bsSize="medium"
+                      onClick={this.handleAddSensors}>Submit</Button>
+                  </Modal.Footer>
+                </Modal>
+              </div >
 
-          </Col>
-          <Col md={1}></Col>
-        </div>
-      </Row>
+            </Col>
+            <Col md={1}></Col>
+          </div>
+        </Row>
       </Grid>
 
     )

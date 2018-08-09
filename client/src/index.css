@@ -1,4 +1,3 @@
-
 html {
   min-height: 100%;
   position: relative;
@@ -11,9 +10,6 @@ html {
  }
 
 /* First background image */
-
-
-
 
 .row1 {
     background-image: url("/paysage1dd.png");
@@ -217,13 +213,12 @@ html {
  }
 
 .dashboard_page {
-  /* background-color: #d3d3d330 */
   background-image: url("/agri-land4.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  max-height: 115vh;
+  max-height: 130vh;
   z-index: 1;
 }
 
@@ -239,36 +234,42 @@ html {
  display: flex;
  align-content: flex-end;
  flex-direction: column;
-
 }
-.data_type_value {
 
+.data_type_value {
   display: flex;
   justify-content: space-between;
-
 }
+
 .data_type_value>h4 {
 font-family: 'Montserrat', sans-serif;
 font-weight: bolder;
-
 }
 
 .data_type_value>p {
-
   font-family: 'Oswald', sans-serif;
   margin-left: 10px;
   font-size: 20px;
   display: flex;
   align-self: baseline;
 }
-.databoardbutton {
 
+.databoardbutton {
   width: 100%;
   margin-bottom: 5px;
-  border-radius: 10px;
+  border-radius: 4px;
   min-width: 165px;
-
+  transition-duration: 0.4s;
+  color: white;
 }
+
+.databoardbutton:hover {
+  background-color: lightgray;
+  color: #101010;
+  border-color: #101010;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .custom-class {
   background-color: #80ed6a;
 }
@@ -277,7 +278,10 @@ font-weight: bolder;
 }
 
 .custom-class3 {
-  background-color: #d4e1f7;
+  color: white;
+  background-color:#b4a384;
+  border-color: #221f26;
+  /* background-color: #d4e1f7; */
   font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
 }
@@ -290,20 +294,20 @@ font-weight: bolder;
    padding: 10px;
    font-size: 20px;
    background-color: white;
-
 }
 
-
-
-
 #footer {
-  bottom: 0;
+  bottom: -30px;
   background-color: #F6BB42;
 }
 
 .footer-social-media-icone {
   width: 35px;
   height: 35px;
+}
+
+.copy-right {
+  padding-left: 15px;
 }
 
 .number2 {
@@ -317,12 +321,6 @@ font-weight: bolder;
 
 .top-cont {
   padding-bottom: 15%;
-}
-
-.col2 {
-  /* display: flex;
-  justify-content: flex-end; */
-  border: 1px solid red;
 }
 
 @media (max-width: 1199px) {
@@ -352,8 +350,8 @@ font-weight: bolder;
   .row3 {
     flex-direction: column;
     align-content: center;
-
   }
+
   .collast2 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -361,9 +359,7 @@ font-weight: bolder;
     display: flex;
     justify-content: center;
   }
-
 }
-
 
 @media (max-width: 635px) {
    .graphimage {
@@ -421,14 +417,45 @@ font-weight: bolder;
   }
 }
 
+.panel-default>.panel-heading {
+  color: #101010;
+  background-color: #101010;
+  border-color: #101010;
+}
+
+.group-name {
+  color: lightgray;
+}
 
 .modal-container-button {
   margin-top: 10px;
   margin-bottom: 10px;
+  float: right;
+  color: white;
+  background-color:#b4a384;
+  border-color: #221f26;
+}
+
+.modal-container-button:hover {
+  color: lightgray;
+  background-color: #101010;
+  border-color: #101010;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.btn-submit {
+  color: white;
+  background-color:#b4a384;
+  border-color: #221f26;
+}
+
+.btn-submit:hover {
+  color: lightgray;
+  background-color: #101010;
+  border-color: #101010;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .alert {
   margin-top: 30px;
-  margin-bottom: 20px;
 }
-

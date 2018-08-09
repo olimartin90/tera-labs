@@ -74,8 +74,8 @@ class Home extends Component {
               <div className="section0">
                 <h1 className="teralabs" > Tera Labs </h1>
                 <p className="teralabsdescription"> A precision agriculture company dedicated to helping farmers around the world monitor soil health  </p>
-                <Link className="scrollDown "activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
-                 <i class="fas fa-arrow-circle-down"></i>
+                <Link className="scrollDown " activeClass="active" to="row2" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                  <i class="fas fa-arrow-circle-down"></i>
                   More Info
                 </Link>
               </div>
@@ -103,7 +103,7 @@ class Home extends Component {
                 <p className="p1"> Gets alerts when sensors detect poor soil conditions for your crops, so you can take proactice measures before problems occur. </p>
                 <p className="p1"> View historic averages reported for each sensor </p>
                 <Link className="scrollDown2" activeClass="active" to="row3" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
-                 <i class="fas fa-arrow-circle-down"></i>
+                  <i class="fas fa-arrow-circle-down"></i>
                   More Info
                 </Link>
               </div>
@@ -112,7 +112,7 @@ class Home extends Component {
 
           <Row className="row3">
             <Col className="collast2" xs={12} sm={12} md={8} lg={6}>
-              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map-sensors.png'} alt="" />
+              <img className="mapimage img-responsive" src={process.env.PUBLIC_URL + '/map-sensor2.png'} alt="" />
             </Col>
             <Col xs={12} sm={12} md={8} lg={6}>
               <div className="section2">
@@ -120,9 +120,9 @@ class Home extends Component {
                 <p className="p2"> Our color-coded system makes it easy to get a sense of whats happening without needing to dig deep. </p>
                 <p className="p2"> Pinpoint problem areas and compare soil between zones. </p>
 
-                 <a className="scrollUp"onClick={this.scrollToTop}>
-                 <i class="far fa-arrow-alt-circle-up"></i>
-                 Scroll Up
+                <a className="scrollUp" onClick={this.scrollToTop}>
+                  <i class="far fa-arrow-alt-circle-up"></i>
+                  Scroll Up
                  </a>
               </div>
             </Col>
