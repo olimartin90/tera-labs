@@ -166,7 +166,7 @@ class SensorMap extends Component {
           <div>
             <Col md={1}></Col>
             <Col md={3}>
-              <h3>{this.props.currentUser.companyName}</h3>
+              <h2><u>{this.props.currentUser.companyName}</u></h2>
             </Col>
 
             {/* ***************** Alert Notification Bar *************************** */}
@@ -175,45 +175,45 @@ class SensorMap extends Component {
             </Col>
             <Col md={1}></Col>
             <Col md={2}>
-            <Panel bsStyle="primary">
-              <Panel.Body>
-                <div>
-                  <ReactWeather
-                    forecast="today"
-                    apikey="ba2b14c881784efb99f150704180608"
-                    type="geo"
-                    lat={this.props.currentUser.latitude}
-                    lon={this.props.currentUser.longitude}
-                  />
-                </div>
-              </Panel.Body>
-            </Panel>
+              <Panel bsStyle="primary">
+                <Panel.Body>
+                  <div>
+                    <ReactWeather
+                      forecast="today"
+                      apikey="ba2b14c881784efb99f150704180608"
+                      type="geo"
+                      lat={this.props.currentUser.latitude}
+                      lon={this.props.currentUser.longitude}
+                    />
+                  </div>
+                </Panel.Body>
+              </Panel>
             </Col>
           </div>
         </Row>
 
         <Row className="test3">
-        <Col md={2}></Col>
-        <Col md={8}>
-          <Panel bsStyle="primary">
-            <Panel.Heading>
-              <Panel.Title>
-                <h3>  {this.state.group.name}</h3>
-              </Panel.Title>
-            </Panel.Heading>
-            <Panel.Body>
-              <Col md={3}>
+          <Col md={1}></Col>
+          <Col md={10}>
+            <Panel>
+              <Panel.Heading>
+                <Panel.Title className="group-name">
+                  <h4>{this.state.group.name}</h4>
+                </Panel.Title>
+              </Panel.Heading>
+              <Panel.Body>
+                <Col md={3}>
 
-              {/* **************** Databoard ****************** */}
+                  {/* **************** Databoard ****************** */}
 
-                <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
+                  <DataBoard groups={this.props.groups} currentUser={this.props.currentUser} group={this.state.group} dataBoard={this.state.dataBoard} markers={this.state.markers} dbButtonShow={this.state.dbButtonShow} />
 
-              {/* **************** Databoard ****************** */}
+                  {/* **************** Databoard ****************** */}
 
 
-              {/* **************** MAP ************** */}
+                  {/* **************** MAP ************** */}
 
-              </Col>
+                </Col>
 
                 <Col md={9}>
 
@@ -236,14 +236,14 @@ class SensorMap extends Component {
 
                 </Col>
 
-            </Panel.Body>
-            <Panel.Footer>
-              <Col mdOffset={10}>
-                <AddSensors currentUserId={this.props.currentUser.userId} />
-              </Col>
-            </Panel.Footer>
-          </Panel>
-        </Col>
+              </Panel.Body>
+              <Panel.Footer>
+                <Col mdOffset={10}>
+                  <AddSensors currentUserId={this.props.currentUser.userId} />
+                </Col>
+              </Panel.Footer>
+            </Panel>
+          </Col>
 
           {/* **************** MAP ************** */}
 
