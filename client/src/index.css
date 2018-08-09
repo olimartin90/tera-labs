@@ -6,9 +6,8 @@ html {
 }
 
  .container {
-   margin: 0;
+   margin: auto;
    width: 100%;
-
  }
 
 /* First background image */
@@ -422,9 +421,6 @@ font-weight: bolder;
   }
 }
 
-/* .modal-container {
-  border: 1px solid red;
-} */
 
 .modal-container-button {
   margin-top: 10px;
@@ -436,14 +432,3 @@ font-weight: bolder;
   margin-bottom: 20px;
 }
 
-.add-sensors-row {
-  border: 1px solid red;
-}
-
-.add-sensors-col {
-  border: 1px solid red;
-}
-
-.add-sensors-row2 {
-  border: 1px solid red;
-}
