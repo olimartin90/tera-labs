@@ -12,7 +12,10 @@ html {
  }
 
 /* First background image */
-
+.test {
+   font-size: 20px;
+   background-color: white;
+}
 .row1 {
     background-image: url("/paysage1dd.png");
     background-attachment: fixed;
@@ -257,6 +260,12 @@ font-weight: bolder;
 }
 .custom-class2 {
   background-color: #d1463c;
+}
+
+.custom-class3 {
+  background-color: #d1463c;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
 }
 .show-grid {
   display: flex;
