@@ -158,9 +158,9 @@ class SingleSensor extends Component {
 
     this.chart.options.data[0].legendText = ` ${this.props.sensor.data_type}: ${this.state.yValue} ${this.state.unit}`;
 
-    if (this.state.datapoints.length > 50 ) {
-      this.state.datapoints.shift();
-    }
+    // if (this.state.datapoints.length > 50 ) {
+    //   this.state.datapoints.shift();
+    // }
 
     this.chart.render();
   }

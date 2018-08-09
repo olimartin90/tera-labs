@@ -230,7 +230,6 @@ html {
 
 .databoard {
  z-index: 9999;
- border: 1px solid red;
  display: flex;
  align-content: flex-end;
  flex-direction: column;
@@ -264,27 +263,46 @@ font-weight: bolder;
 }
 
 .databoardbutton:hover {
-  background-color: lightgray;
-  color: #101010;
+  color: white;
+  background-color:#968971;
   border-color: #101010;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .custom-class {
-  background-color: #80ed6a;
+  background-color: #65bf53;
 }
+
+.custom-class:hover {
+  color: white;
+  background-color: #968971;
+  border-color: #968971;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+}
+
 .custom-class2 {
   background-color: #d1463c;
 }
 
-.custom-class3 {
+.custom-class2:hover {
   color: white;
-  background-color:#b4a384;
-  border-color: #221f26;
-  /* background-color: #d4e1f7; */
+  background-color: #968971;
+  border-color: #968971;
   font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
 }
+
+.custom-class3 {
+  color: white;
+  background-color:#968971;
+  border-color: #101010;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+}
+
 .show-grid {
   display: flex;
   align-items: center;
@@ -307,7 +325,7 @@ font-weight: bolder;
 }
 
 .copy-right {
-  padding-left: 15px;
+  padding-left: 30px;
 }
 
 .number2 {
@@ -417,10 +435,23 @@ font-weight: bolder;
   }
 }
 
+.panel {
+  background-color: #ffffff80;
+  border: none;
+}
+
 .panel-default>.panel-heading {
-  color: #101010;
   background-color: #101010;
-  border-color: #101010;
+  border: none;
+}
+
+.panel-title {
+  margin-left: 20px;
+}
+
+.panel-footer {
+  border: none;
+  padding: 0;
 }
 
 .group-name {
@@ -430,10 +461,10 @@ font-weight: bolder;
 .modal-container-button {
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-right: 20px;
   float: right;
   color: white;
-  background-color:#b4a384;
-  border-color: #221f26;
+  background-color: #968971;
 }
 
 .modal-container-button:hover {
@@ -458,4 +489,16 @@ font-weight: bolder;
 
 .alert {
   margin-top: 30px;
+}
+
+.company-name {
+  font-weight: 600;
+}
+
+.container-fluid {
+  padding: 20px;
+}
+
+#footer {
+  background-color: #f4e8d1;
 }

@@ -166,7 +166,7 @@ class SensorMap extends Component {
           <div>
             <Col md={1}></Col>
             <Col md={3}>
-              <h2><u>{this.props.currentUser.companyName}</u></h2>
+              <h2 className="company-name">{this.props.currentUser.companyName}</h2>
             </Col>
 
             {/* ***************** Alert Notification Bar *************************** */}
@@ -198,7 +198,7 @@ class SensorMap extends Component {
             <Panel>
               <Panel.Heading>
                 <Panel.Title className="group-name">
-                  <h4>{this.state.group.name}</h4>
+                  <h3>{this.state.group.name}</h3>
                 </Panel.Title>
               </Panel.Heading>
               <Panel.Body>
