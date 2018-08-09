@@ -12,10 +12,10 @@ html {
  }
 
 /* First background image */
-.test {
-   font-size: 20px;
-   background-color: white;
-}
+
+
+
+
 .row1 {
     background-image: url("/paysage1dd.png");
     background-attachment: fixed;
@@ -112,6 +112,26 @@ html {
    font-family: inherit;
    font-size: inherit;
    color: black;
+   background: none;
+   cursor: pointer;
+   padding: 25px 80px;
+   display: inline-block;
+   margin: 15px 30px;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 700;
+   outline: none;
+   position: relative;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   transition: all 0.3s;
+}
+
+.scrollUp {
+  border: none;
+   font-family: inherit;
+   font-size: inherit;
+   color: white;
    background: none;
    cursor: pointer;
    padding: 25px 80px;
@@ -225,6 +245,10 @@ html {
 
 .databoard {
  z-index: 9999;
+ border: 1px solid red;
+ display: flex;
+ align-content: flex-end;
+ flex-direction: column;
 
 }
 .data_type_value {
@@ -263,13 +287,20 @@ font-weight: bolder;
 }
 
 .custom-class3 {
-  background-color: #d1463c;
+  background-color: #d4e1f7;
   font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
 }
 .show-grid {
   display: flex;
   align-items: center;
+}
+
+.groupSensorName {
+   padding: 10px;
+   font-size: 20px;
+   background-color: white;
+
 }
 
 

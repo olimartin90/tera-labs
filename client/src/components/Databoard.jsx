@@ -88,7 +88,7 @@ class DataBoard extends Component {
                         <h4> {data.data_type} </h4>
                       </div>
                     </Button>
-              }
+                }
             </Col>
           </Row>
         </Grid>
@@ -147,9 +147,9 @@ class DataBoard extends Component {
             <div className="databoard">
 
               {(this.props.dataBoard[0].group_sensor_name != '') &&
-                <p className='test'>
+                <h4 className='test'>
                 {this.props.dataBoard[0].group_sensor_name}
-                </p>
+                </h4>
               }
 
                   {
