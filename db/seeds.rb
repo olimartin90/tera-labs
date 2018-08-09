@@ -12,12 +12,12 @@ GroupSensor.destroy_all
 User.destroy_all
 
 User.create({
-  first_name: 'Olivier',
-  last_name: 'Martin',
-  email: 'olivier@example.com',
+  first_name: 'Georges',
+  last_name: 'Champion',
+  email: 'georges@lightfarm.com',
   password: '1q2w3e',
-  phone: '5142689002',
-  company_name: 'Ferme O. Martin & Fils',
+  phone: '5141234567',
+  company_name: 'Light Farm Inc.',
   latitude: 45.212139,
   longitude: -73.739222
 })
