@@ -47,10 +47,10 @@ class DataBoard extends Component {
   }
 
   // Gets a specific sensor in groups props by groupId and button that was pressed
-  getSensor(groups, groupId, sensorIndex) {
+  getSensor(groups, grp, sensorIndex) {
     this.getGroupsFromJSON(localStorage.getItem("user_id"))
     groups.forEach(group => {
-      if (group.id === groupId) {
+      if (group.id === grp.id) {
         this.setState({ group: group, show: true });
         group.single_sensors.forEach(sensor => {
           if (group.single_sensors.indexOf(sensor) === sensorIndex) {
@@ -111,7 +111,7 @@ class DataBoard extends Component {
                 data.data_value < data.data_min || data.data_value > data.data_max
 
                   ? (<Button bsClass="custom-class2" bsSize="xsmall" className="databoardbutton" block active
-                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                            onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
                       <div className="data_type_value">
                         <h4> {data.data_type} </h4>
                         <p> {data.data_value} </p>
@@ -119,7 +119,7 @@ class DataBoard extends Component {
                     </Button>)
 
                   : (<Button bsClass="custom-class" bsSize="xsmall" className="databoardbutton" block active
-                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
+                              onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
                        <div className="data_type_value">
                          <h4> {data.data_type} </h4>
                          <p> {data.data_value} </p>
@@ -153,24 +153,22 @@ class DataBoard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      <ButtonGroup bsStyle="primary" bsSize="xsmall">
-                        <ButtonToolbar>
-                          <Button
+                      <ButtonGroup bsStyle="primary" bsSize="small">
+                          <Button left
                             onClick={() => { this.getLastDayDataPoints() }}
                           >
                             Last day
                           </Button>
-                          <Button
+                          <Button middle
                             onClick={() => { this.getLastWeekDataPoints() }}
                           >
                             Last week
                           </Button>
-                          <Button
+                          <Button right
                             onClick={() => { this.getLastMonthDataPoints() }}
                           >
                             Last month
                           </Button>
-                        </ButtonToolbar>
                       </ButtonGroup>
                     </Modal.Title>
                   </Modal.Header>
