@@ -153,24 +153,22 @@ class DataBoard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      <ButtonGroup bsStyle="primary" bsSize="xsmall">
-                        <ButtonToolbar>
-                          <Button
+                      <ButtonGroup bsStyle="primary" bsSize="small">
+                          <Button left
                             onClick={() => { this.getLastDayDataPoints() }}
                           >
                             Last day
                           </Button>
-                          <Button
+                          <Button middle
                             onClick={() => { this.getLastWeekDataPoints() }}
                           >
                             Last week
                           </Button>
-                          <Button
+                          <Button right
                             onClick={() => { this.getLastMonthDataPoints() }}
                           >
                             Last month
                           </Button>
-                        </ButtonToolbar>
                       </ButtonGroup>
                     </Modal.Title>
                   </Modal.Header>
