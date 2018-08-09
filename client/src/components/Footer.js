@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 
 class Footer extends Component {
 	render() {
@@ -9,6 +8,8 @@ class Footer extends Component {
 			<footer className="page-footer">
 				<div id="footer" className="container-fluid">
 					<Row>
+          <Col md={1}></Col>
+					<Col md={10}>
 						<div className="col-12 col-sm-6 col-lg-3">
 							<h6>Quick Links</h6>
 							<ul className="list-unstyled">
@@ -46,10 +47,13 @@ class Footer extends Component {
 								<Image className="footer-social-media-icone" src={process.env.PUBLIC_URL + '/LinkedIn.svg'} alt="171x180" />
 							</ul>
 						</div>
+					</Col>
 					</Row>
-
 					<Row className="copy-right">
+					<Col mdOffset={1}>
 						<span>&copy; 2018 Terra-labs, Inc. All rights reserved. Terms of use and privacy policy.</span>
+					}
+					</Col>
 					</Row>
 
 				</div>
