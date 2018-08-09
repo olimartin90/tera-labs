@@ -218,7 +218,6 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  max-height: 130vh;
   z-index: 1;
 }
 
@@ -338,7 +337,7 @@ font-weight: bolder;
 }
 
 .top-cont {
-  padding-bottom: 15%;
+  padding-bottom: 5%;
 }
 
 @media (max-width: 1199px) {
