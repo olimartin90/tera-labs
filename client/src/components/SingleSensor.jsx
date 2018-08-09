@@ -31,10 +31,13 @@ class SingleSensor extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
     this.chart.destroy();
-    console.log(" >>> willUnmount: ", this.props.currentMarkerId);
+    console.log(
+      " >>> willUnmount currentMarkerId: ",
+      this.props.currentMarkerId
+    );
     this.props.updateDataBoard(this.props.currentMarkerId);
     this.props.updateMarkerAlerts();
-    this.props.getGroups(1);
+    // this.props.getGroups(1);
   }
 
   // Loads all datapoints from db and adds them to the datapoints array

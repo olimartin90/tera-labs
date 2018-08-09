@@ -366,7 +366,7 @@ class SensorMap extends Component {
               data_max: sensor.set_max
             });
           });
-        console.log(">>> databaord data >>> ", data);
+        console.log(">>> databoard data >>> ", data);
         this.setState({ dataBoard: data });
         this.updateMarkersData(markerId);
       });
