@@ -18,8 +18,8 @@ User.create({
   password: '1q2w3e',
   phone: '5142689002',
   company_name: 'Ferme O. Martin & Fils',
-  latitude: 45.2852,
-  longitude: -72.6872
+  latitude: 45.212139,
+  longitude: -73.739222
 })
 
 User.create({
@@ -35,29 +35,43 @@ User.create({
 
 2.times do |u| u += 1
   GroupSensor.create({
-    name: '0512',
-    latitude: 45.212059,
-    longitude: -73.743148,
+    name: 'TL-0512',
+    latitude: 45.216341,
+    longitude: -73.737398,
     user_id: u
   })
 
   GroupSensor.create({
-    name: '0513',
-    latitude: 45.212301,
-    longitude: -73.738771,
+    name: 'TL-0513',
+    latitude: 45.214165,
+    longitude: -73.740960,
     user_id: u
   })
 
   GroupSensor.create({
-    name: '0514',
-    latitude: 45.209618,
-    longitude: -73.741979,
+    name: 'TL-0514',
+    latitude: 45.211988,
+    longitude: -73.744651,
+    user_id: u
+  })
+
+  GroupSensor.create({
+    name: 'TL-0515',
+    latitude: 45.214104,
+    longitude: -73.736411,
+    user_id: u
+  })
+
+  GroupSensor.create({
+    name: 'TL-0516',
+    latitude: 45.212079,
+    longitude: -73.740016,
     user_id: u
   })
 end
 
 
-3.times do |i| i += 1
+5.times do |i| i += 1
   SingleSensor.create({
     data_type: "Soil Moisture",
     set_min: 0.2,
@@ -122,14 +136,14 @@ end
   })
 end
 
-3.times do |x| x *= 9
+5.times do |x| x *= 9
   dateSc = Time.now.to_i + 180000
   dateMs = dateSc * 1000
   x += 1
   50.times do
     dateMs -= 3_600_000
     Datapoint.create({
-      data_value: rand(0.1..0.2).round(1),
+      data_value: rand(0.3..0.6).round(1),
       date_epoch: dateMs,
       single_sensor_id: x
     })

@@ -23,7 +23,7 @@ class AlertDismissable extends Component {
   }
 
   render() {
-    if (this.state.show) {
+    if (this.state.show && this.props.markers.find(item => item.alert > 0)) {
       return (
         <div>
           {/* <Col md={1}></Col>
@@ -31,8 +31,8 @@ class AlertDismissable extends Component {
           <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
             <h3>Data is out of range!</h3>
             <h4>
-              Please make sure to check the appropriate sensors as
-              something seems to be wrong with at least one of the sensors.
+              Data is out of range on at least one of the sensors.
+              For more details, please click on the red probe on the map.
               </h4>
             <p>
               <Button pull-right onClick={this.handleDismiss}>Close</Button>
@@ -43,7 +43,7 @@ class AlertDismissable extends Component {
         </div>
       )
     }
-    return <Button onClick={this.handleShow}>Show Alert</Button>;
+    return this.handleShow;
   }
 }
 
