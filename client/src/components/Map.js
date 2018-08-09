@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactWeather from 'react-open-weather';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Grid, Row, Col, Modal, Button, Form, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Grid, Row, Col } from 'react-bootstrap';
 import GoogleMapIconGreen from '../map-marker-green.png';
 import GoogleMapIconRed from '../map-marker-red.png';
 import DataBoard from './Databoard';
@@ -10,21 +10,18 @@ import AddSensors from './AddSensors';
 
 const axios = require('axios');
 
-const style = {
+var style = {
+  mapTypeId: 'satellite',
   width: '100%',
   height: '100%',
-  position: "absolute",
-
+  position: "absolute"
 }
-
 
 class SensorMap extends Component {
   constructor(props) {
     super(props);
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
-
-
 
     this.state = {
       markers: [],
@@ -94,13 +91,10 @@ class SensorMap extends Component {
     }
   }
 
+
   // *********** DATABOARD FEATURE BELOW *********************
 
-
   onMarkerClick(props, marker, e) {
-    console.log("marker was clicked")
-
-
     let data = []
 
     axios
@@ -122,7 +116,6 @@ class SensorMap extends Component {
             data_max: sensor.set_max
           })
         })
-        console.log("our data:", data)
         this.setState({ dataBoard: data })
         if (!this.state.dbButtonShow) {
           this.setState({ dbButtonShow: true })
@@ -158,7 +151,7 @@ class SensorMap extends Component {
         )
       } else {
         return (
-           <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
+          <Marker onClick={this.onMarkerClick} key={index} name={item.name} id={item.id} icon={GoogleMapIconRed} position={{ lat: item.latitude, lng: item.longitude }} />
         )
       }
     })
@@ -175,9 +168,10 @@ class SensorMap extends Component {
             <Col md={3}>
               <h3>{this.props.currentUser.companyName}</h3>
             </Col>
-            <Col md={1}></Col>
-            <Col md={3}>
-              <h3>{this.state.markers.length} Units Sensors</h3>
+
+            {/* ***************** Alert Notification Bar *************************** */}
+            <Col md={4}>
+              <AlertDismissable markers={this.state.markers} className="alert" />
             </Col>
             <Col md={1}></Col>
             <Col md={2}>
@@ -194,16 +188,22 @@ class SensorMap extends Component {
           </div>
         </Row>
 
-        {/* ***************** Alert Notification Bar *************************** */}
+        {/* <Button>{this.state.markers.length} Units Sensors</Button> */}
 
-        <Row>
-          <Col md={2}></Col>
-          <Col md={8}>
-           <AlertDismissable markers={this.state.markers} className="alert" />
-          </Col>
-        </Row>
+        {/* <Row className="add-sensors-row">
+          <div className="fixed-bottom">
 
+            <Col className="add-sensors-col">
+              <Col md={1}></Col>
+
+              <Col md={10}></Col> */}
+        <span>{this.state.markers.length} Units Sensors</span>
         <AddSensors currentUserId={this.props.currentUser.userId} />
+        {/* </Col>
+            <Col md={1}></Col>
+          </div>
+        </Row> */}
+
 
         <Row className="test3">
 
@@ -215,12 +215,12 @@ class SensorMap extends Component {
             {/* **************** Databoard ****************** */}
 
             <DataBoard
-            groups={this.props.groups}
-            currentUser={this.props.currentUser}
-            group={this.state.group}
-            dataBoard={this.state.dataBoard}
-            markers={this.state.markers}
-            dbButtonShow={this.state.dbButtonShow} />
+              groups={this.props.groups}
+              currentUser={this.props.currentUser}
+              group={this.state.group}
+              dataBoard={this.state.dataBoard}
+              markers={this.state.markers}
+              dbButtonShow={this.state.dbButtonShow} />
 
             {/* **************** Databoard ****************** */}
 
@@ -252,10 +252,6 @@ class SensorMap extends Component {
 
           {/* **************** MAP ************** */}
 
-          {/* ******************************************* */}
-
-
-          {/* ********************************************* */}
         </Row>
 
       </Grid >

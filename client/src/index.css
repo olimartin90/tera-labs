@@ -207,12 +207,6 @@ html {
 
 
 /* ******** /DataBoard *************/
-/* .navbar-full {
-  border: 1px solid red;
-  margin-bottom: -20px;
-  padding-bottom: 20px;
- } */
-
  .navbar-brand {
    display: flex;
    align-items: center;
@@ -224,10 +218,7 @@ html {
  }
 
 .dashboard_page {
-  background-color: #d3d3d330
-}
-
-.top-cont {
+  /* background-color: #d3d3d330 */
   background-image: url("/agri-land4.jpg");
   background-attachment: fixed;
   background-position: center;
@@ -445,7 +436,7 @@ font-weight: bolder;
   margin-bottom: 20px;
 }
 
-/* .add-sensors-row {
+.add-sensors-row {
   border: 1px solid red;
 }
 
@@ -455,4 +446,4 @@ font-weight: bolder;
 
 .add-sensors-row2 {
   border: 1px solid red;
-} */
+}
