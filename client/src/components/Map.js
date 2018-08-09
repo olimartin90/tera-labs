@@ -193,19 +193,32 @@ class SensorMap extends Component {
         </Row>
         {/* ***************** NOTIFICATION BAR *************************** */}
 
-        <Row>
+        {/* <Row>
           <Col md={2}></Col>
           <Col md={8}>
             <AlertDismissable
               className="alert" />
           </Col>
-        </Row>
+        </Row> */}
 
+        {/* <Button>{this.state.markers.length} Units Sensors</Button> */}
+
+        {/* <Row className="add-sensors-row">
+          <div className="fixed-bottom">
+
+            <Col className="add-sensors-col">
+              <Col md={1}></Col>
+
+              <Col md={10}></Col> */}
+        <span>{this.state.markers.length} Units Sensors</span>
         <AddSensors currentUserId={this.props.currentUser.userId} />
+        {/* </Col>
+            <Col md={1}></Col>
+          </div>
+        </Row> */}
+
 
         <Row className="test3">
-
-
 
           <Col md={1}>
 
