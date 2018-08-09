@@ -24,8 +24,6 @@ class SensorMap extends Component {
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
 
-
-
     this.state = {
       markers: [],
       nameValue: "",
@@ -183,7 +181,7 @@ class SensorMap extends Component {
             <Col md={2}>
             <Panel bsStyle="primary">
               <Panel.Body>
-                <div className="weather-div">
+                <div>
                   <ReactWeather
                     forecast="today"
                     apikey="ba2b14c881784efb99f150704180608"
@@ -214,7 +212,7 @@ class SensorMap extends Component {
           <Panel bsStyle="primary">
             <Panel.Heading>
               <Panel.Title>
-                <h3>{this.state.markers.length} Units Sensors</h3>
+                <h3>  {this.state.group.name}</h3>
               </Panel.Title>
             </Panel.Heading>
             <Panel.Body>

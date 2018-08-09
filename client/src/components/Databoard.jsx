@@ -78,8 +78,6 @@ class DataBoard extends Component {
         <div key={index}>
           <Grid>
             <Row className="show-grid">
-              <Col md={5}> </Col>
-              <Col xs={3} md={8} >
 
                 {
                     <Button bsClass="custom-class3" bsSize="xsmall" className="databoardbutton" block active
@@ -89,7 +87,6 @@ class DataBoard extends Component {
                       </div>
                     </Button>
                 }
-            </Col>
           </Row>
         </Grid>
       </div>
@@ -104,9 +101,6 @@ class DataBoard extends Component {
 
     <Grid>
       <Row className="show-grid">
-
-      <Col md={5}> </Col>
-      <Col xs={3} md={8} >
 
         {
           data.data_value < data.data_min || data.data_value > data.data_max
@@ -127,7 +121,6 @@ class DataBoard extends Component {
                  </div>
                </Button>)
         }
-      </Col>
     </Row>
   </Grid>
 </div>
@@ -140,17 +133,11 @@ class DataBoard extends Component {
 
     return (
       <div>
-        <Grid className="top-cont">
+        <Grid >
           <Row>
           <div>
            <div>
-            <div className="databoard">
-
-              {(this.props.dataBoard[0].group_sensor_name != '') &&
-                <h4 className='test'>
-                {this.props.dataBoard[0].group_sensor_name}
-                </h4>
-              }
+            <div >
 
                   {
                     showDataboard
