@@ -37,7 +37,7 @@ class SingleSensor extends Component {
     );
     this.props.updateDataBoard(this.props.currentMarkerId);
     this.props.updateMarkerAlerts();
-    // this.props.getGroups(1);
+    this.props.getGroups(1);
   }
 
   // Loads all datapoints from db and adds them to the datapoints array
@@ -61,12 +61,21 @@ class SingleSensor extends Component {
 
   // Adds datapoints into db as they are created
   AddDataPointsToDB() {
+
+    console.log(">>> AddDataPointsToDB - Group: >>> ", this.props.group)
+
     this.setSensorProperties();
     if (this.props.group.id) {
       // Gets last datapoint in array
       const last = this.state.datapoints.slice(
         this.state.datapoints.length - 1
       )[0];
+
+      console.log(
+        "Posting Data Point to: ",
+        `http://localhost:3000/api/v1/users/${this.props.group.user_id}/group_sensors/${this.props.group.id}/single_sensors/${this.props.sensor.id}/datapoints`
+      );
+
       axios
         .post(
           `http://localhost:3000/api/v1/users/${
