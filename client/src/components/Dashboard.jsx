@@ -1,15 +1,22 @@
-import React, { Component } from 'react';
-import { Grid, Row, Modal, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import React, { Component } from "react";
+import {
+  Grid,
+  Row,
+  Modal,
+  Button,
+  ButtonGroup,
+  ButtonToolbar
+} from "react-bootstrap";
 import Header from "./Header";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 
-const axios = require('axios');
+const axios = require("axios");
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this)
+    this.getGroupsFromJSON = this.getGroupsFromJSON.bind(this);
     this.state = {
       show: false,
       groups: [],
@@ -20,8 +27,8 @@ class Dashboard extends Component {
 
   // Gets groups based on user props from App.jsx
   componentWillReceiveProps(nextProps) {
-    this.state.currentUser = nextProps.currentUser
-    this.getGroupsFromJSON(this.state.currentUser.userId)
+    this.state.currentUser = nextProps.currentUser;
+    this.getGroupsFromJSON(this.state.currentUser.userId);
   }
 
   // Gets the whole groups object based on the user
@@ -30,8 +37,8 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        console.log("axios dashboard-----------------")
-        this.setState({ groups: response.data.group_sensors })
+        console.log(">>> axios dashboard-----------------");
+        this.setState({ groups: response.data.group_sensors });
       })
       .catch(error => console.log(error));
   }
@@ -45,12 +52,16 @@ class Dashboard extends Component {
         <Grid className="top-cont">
           <Row>
             <div>
-              <SensorMap groups={this.state.groups} currentUser={this.props.currentUser} getGroups={this.getGroupsFromJSON} />
+              <SensorMap
+                groups={this.state.groups}
+                currentUser={this.props.currentUser}
+                getGroups={this.getGroupsFromJSON}
+              />
             </div>
           </Row>
         </Grid>
       </div>
-    )
+    );
   }
 }
 

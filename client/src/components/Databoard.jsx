@@ -1,9 +1,22 @@
-import React, { Component } from 'react';
-import { Grid, Row, Col, Modal, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Label } from 'react-bootstrap';
+import React, { Component } from "react";
+import {
+  Grid,
+  Row,
+  Col,
+  Modal,
+  Button,
+  ButtonGroup,
+  ButtonToolbar,
+  Form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  Label
+} from "react-bootstrap";
 import SensorMap from "./Map";
 import SingleSensor from "./SingleSensor";
 
-const axios = require('axios');
+const axios = require("axios");
 
 class DataBoard extends Component {
   constructor(props) {
@@ -15,23 +28,19 @@ class DataBoard extends Component {
       groups: [],
       group: {},
       sensor: {},
-      dataBoard: [],
-    }
-    this.getGroupsFromJSON(localStorage.getItem("user_id"))
+      dataBoard: []
+    };
+    this.getGroupsFromJSON(localStorage.getItem("user_id"));
   }
-
 
   // Handles the display of line chart modal
   handleHide() {
     this.setState({ show: false });
   }
 
-
   componentWillReceiveProps(nextProps) {
-    this.state.currentUser = nextProps.currentUser
-    this.getGroupsFromJSON(this.state.currentUser.userId)
-
-    console.log('dashboard state: ', this.state)
+    this.state.currentUser = nextProps.currentUser;
+    this.getGroupsFromJSON(this.state.currentUser.userId);
   }
 
   // Gets the whole groups object based on the user
@@ -40,14 +49,14 @@ class DataBoard extends Component {
     axios
       .get(`http://localhost:3001/api/v1/group_sensors_data/${thisUser}`)
       .then(response => {
-        this.setState({ groups: response.data.group_sensors })
+        this.setState({ groups: response.data.group_sensors });
       })
       .catch(error => console.log(error));
   }
 
   // Gets a specific sensor in groups props by groupId and button that was pressed
   getSensor(groups, groupId, sensorIndex) {
-    this.getGroupsFromJSON(localStorage.getItem("user_id"))
+    this.getGroupsFromJSON(localStorage.getItem("user_id"));
     groups.forEach(group => {
       if (group.id === groupId) {
         this.setState({ group: group, show: true });
@@ -55,59 +64,72 @@ class DataBoard extends Component {
           if (group.single_sensors.indexOf(sensor) === sensorIndex) {
             this.setState({ sensor: sensor, show: true });
           }
-        })
+        });
       }
-    })
+    });
   }
 
   getLastDayDataPoints() {
-    console.log('Last day datapoints... coming soon')
+    console.log("Last day datapoints... coming soon");
   }
 
   getLastWeekDataPoints() {
-    console.log('Last week datapoints... coming soon')
+    console.log("Last week datapoints... coming soon");
   }
 
   getLastMonthDataPoints() {
-    console.log('Last month datapoints... coming soon')
+    console.log("Last month datapoints... coming soon");
   }
 
   render() {
-    const showDataboard = (!this.props.dbButtonShow) ? <div>  </div>
-      : this.props.dataBoard.map((data, index) =>
-
+    const showDataboard = !this.props.dbButtonShow ? (
+      <div> </div>
+    ) : (
+      this.props.dataBoard.map((data, index) => (
         <div key={index}>
           <Grid>
             <Row className="show-grid">
-
-
-            <Col xs={3} md={12} >
-
-              {
-                data.data_value < data.data_min || data.data_value > data.data_max
-
-                  ? (<Button bsClass="custom-class2" bsSize="xsmall" className="databoardbutton" block active
-                            onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                      <div className="data_type_value">
-                        <h4> {data.data_type} </h4>
-                        <p> {data.data_value} </p>
-                      </div>
-                    </Button>)
-
-                  : (<Button bsClass="custom-class" bsSize="xsmall" className="databoardbutton" block active
-                              onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                       <div className="data_type_value">
-                         <h4> {data.data_type} </h4>
-                         <p> {data.data_value} </p>
-                       </div>
-                     </Button>)
-              }
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-    )
-
+              <Col xs={3} md={12}>
+                {data.data_value < data.data_min ||
+                data.data_value > data.data_max ? (
+                  <Button
+                    bsClass="custom-class2"
+                    bsSize="xsmall"
+                    className="databoardbutton"
+                    block
+                    active
+                    onClick={() => {
+                      this.getSensor(this.state.groups, 1, index);
+                    }}
+                  >
+                    <div className="data_type_value">
+                      <h4> {data.data_type} </h4>
+                      <p> {data.data_value} </p>
+                    </div>
+                  </Button>
+                ) : (
+                  <Button
+                    bsClass="custom-class"
+                    bsSize="xsmall"
+                    className="databoardbutton"
+                    block
+                    active
+                    onClick={() => {
+                      this.getSensor(this.state.groups, 1, index);
+                    }}
+                  >
+                    <div className="data_type_value">
+                      <h4> {data.data_type} </h4>
+                      <p> {data.data_value} </p>
+                    </div>
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          </Grid>
+        </div>
+      ))
+    );
 
     return (
       <div>
@@ -115,11 +137,7 @@ class DataBoard extends Component {
           <Row>
             <div>
               <div className="modal-container" style={{ height: 100 }}>
-                <div className="databoard">
-                  {
-                    showDataboard
-                  }
-                </div>
+                <div className="databoard">{showDataboard}</div>
                 <Modal
                   show={this.state.show}
                   onHide={this.handleHide}
@@ -132,17 +150,23 @@ class DataBoard extends Component {
                       <ButtonGroup bsStyle="primary" bsSize="xsmall">
                         <ButtonToolbar>
                           <Button
-                            onClick={() => { this.getLastDayDataPoints() }}
+                            onClick={() => {
+                              this.getLastDayDataPoints();
+                            }}
                           >
                             Last day
                           </Button>
                           <Button
-                            onClick={() => { this.getLastWeekDataPoints() }}
+                            onClick={() => {
+                              this.getLastWeekDataPoints();
+                            }}
                           >
                             Last week
                           </Button>
                           <Button
-                            onClick={() => { this.getLastMonthDataPoints() }}
+                            onClick={() => {
+                              this.getLastMonthDataPoints();
+                            }}
                           >
                             Last month
                           </Button>
@@ -151,7 +175,14 @@ class DataBoard extends Component {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <SingleSensor sensor={this.state.sensor} group={this.state.group} getGroups={this.props.getGroups} updateMarkerAlerts={this.props.updateMarkerAlerts}/>
+                    <SingleSensor
+                      sensor={this.state.sensor}
+                      group={this.state.group}
+                      getGroups={this.props.getGroups}
+                      updateMarkerAlerts={this.props.updateMarkerAlerts}
+                      updateDataBoard={this.props.updateDataBoard}
+                      currentMarkerId={this.props.currentMarkerId}
+                    />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.handleHide}>Close</Button>
@@ -162,7 +193,7 @@ class DataBoard extends Component {
           </Row>
         </Grid>
       </div>
-    )
+    );
   }
 }
 
