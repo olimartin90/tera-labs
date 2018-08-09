@@ -73,65 +73,70 @@ class DataBoard extends Component {
     console.log('Last month datapoints... coming soon')
   }
 
-  render() {
-    console.log(this.props.dbButtonShow)
-    const showDataboard = (!this.props.dbButtonShow) ?
-    this.props.dataBoard.map((data, index) =>
-
-      <div key={index}>
-      {console.log("rendering empty databoard")}
-        <Grid>
-          <Row className="show-grid">
-          <Col md={5}> </Col>
-          <Col xs={3} md={7} >
-
-            {
-                 <Button bsStyle="primary" bsSize="xsmall" className="databoardbutton" block active
-                          onClick={() => { this.getSensor(this.state.groups, 1, index) }} >
-                    <div className="data_type_value">
-                      <h4> {data.data_type} </h4>
-                    </div>
-                  </Button>
-            }
-          </Col>
-        </Row>
-      </Grid>
-    </div>
-  )
-      : this.props.dataBoard.map((data, index) =>
-
+  drawEmptyBoard() {
+    return (this.props.dataBoard.map((data, index) =>
         <div key={index}>
           <Grid>
             <Row className="show-grid">
+              <Col md={5}> </Col>
+              <Col xs={3} md={8} >
 
-            <Col md={5}> </Col>
-            <Col xs={3} md={8} >
-
-              {
-                data.data_value < data.data_min || data.data_value > data.data_max
-
-                  ? (<Button bsClass="custom-class2" bsSize="xsmall" className="databoardbutton" block active
+                {
+                    <Button bsClass="custom-class3" bsSize="xsmall" className="databoardbutton" block active
                             onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
                       <div className="data_type_value">
                         <h4> {data.data_type} </h4>
-                        <p> {data.data_value} </p>
                       </div>
-                    </Button>)
-
-                  : (<Button bsClass="custom-class" bsSize="xsmall" className="databoardbutton" block active
-                              onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
-                       <div className="data_type_value">
-                         <h4> {data.data_type} </h4>
-                         <p> {data.data_value} </p>
-                       </div>
-                     </Button>)
-              }
+                    </Button>
+                }
             </Col>
           </Row>
         </Grid>
       </div>
-    )
+     )
+   )
+  }
 
+  drawDataBoard()  {
+ return (this.props.dataBoard.map((data, index) =>
+
+  <div key={index}>
+
+    <Grid>
+      <Row className="show-grid">
+
+      <Col md={5}> </Col>
+      <Col xs={3} md={8} >
+
+        {
+          data.data_value < data.data_min || data.data_value > data.data_max
+
+            ? (<Button bsClass="custom-class2" bsSize="xsmall" className="databoardbutton" block active
+                      onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
+                <div className="data_type_value">
+                  <h4> {data.data_type} </h4>
+                  <p> {data.data_value} </p>
+                </div>
+              </Button>)
+
+            : (<Button bsClass="custom-class" bsSize="xsmall" className="databoardbutton" block active
+                        onClick={() => { this.getSensor(this.state.groups, this.props.group, index) }} >
+                 <div className="data_type_value">
+                   <h4> {data.data_type} </h4>
+                   <p> {data.data_value} </p>
+                 </div>
+               </Button>)
+        }
+      </Col>
+    </Row>
+  </Grid>
+</div>
+))
+  }
+
+
+  render() {
+    const showDataboard = (!this.props.dbButtonShow) ? this.drawEmptyBoard() : this.drawDataBoard()
 
     return (
       <div>
@@ -140,6 +145,13 @@ class DataBoard extends Component {
           <div>
            <div>
             <div className="databoard">
+
+              {(this.props.dataBoard[0].group_sensor_name != '') &&
+                <h4 className='test'>
+                {this.props.dataBoard[0].group_sensor_name}
+                </h4>
+              }
+
                   {
                     showDataboard
                   }
@@ -153,22 +165,24 @@ class DataBoard extends Component {
                 >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                      <ButtonGroup bsStyle="primary" bsSize="small">
-                          <Button left
+                      <ButtonGroup bsStyle="primary" bsSize="xsmall">
+                        <ButtonToolbar>
+                          <Button
                             onClick={() => { this.getLastDayDataPoints() }}
                           >
                             Last day
                           </Button>
-                          <Button middle
+                          <Button
                             onClick={() => { this.getLastWeekDataPoints() }}
                           >
                             Last week
                           </Button>
-                          <Button right
+                          <Button
                             onClick={() => { this.getLastMonthDataPoints() }}
                           >
                             Last month
                           </Button>
+                        </ButtonToolbar>
                       </ButtonGroup>
                     </Modal.Title>
                   </Modal.Header>
