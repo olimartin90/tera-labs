@@ -12,7 +12,7 @@ The pins on the map represent each unit placed in different areas on the field w
 
 Rails act as an API and all routes are managed from front-end in React. Live data is created every 5 secs. and saved in a database.
 
-### Project collaborators (alphebetical order)
+### Project collaborators (alphabetical order)
 - Philippe Bolduc
 - Sylvain Goedike
 - Thierry Gribeauval
